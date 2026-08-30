@@ -14,8 +14,36 @@
     rel="stylesheet"
   />
   <link rel="stylesheet" href="css/styles.css" />
+  <!-- The opening reveal needs JS to dismiss itself — without it, don't
+       let it block the page. -->
+  <noscript><style>.intro { display: none !important; }</style></noscript>
 </head>
 <body>
+
+  <!-- ══════════════════════ Opening reveal ══════════════════════ -->
+  <!-- A single photo, split down the middle, that swings open like an
+       opened letter to reveal the site underneath. Skippable by tapping
+       anywhere, opens on its own shortly after. Requires JS — see the
+       noscript rule in styles.css that hides it entirely without JS. -->
+  <div class="intro" id="intro">
+    <div class="intro-half intro-half-left">
+      <img src="images/save-the-date.jpg" alt="Josh and Michal" onerror="this.parentElement.classList.add('img-missing')" />
+      <div class="img-placeholder"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg><span>save-the-date.jpg</span></div>
+    </div>
+    <div class="intro-half intro-half-right">
+      <img src="images/save-the-date.jpg" alt="Josh and Michal" onerror="this.parentElement.classList.add('img-missing')" />
+      <div class="img-placeholder"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg><span>save-the-date.jpg</span></div>
+    </div>
+    <div class="intro-scrim"></div>
+    <div class="intro-text">
+      <p class="intro-eyebrow">Save the Date</p>
+      <p class="intro-names">Josh &amp; Michal</p>
+      <button type="button" class="intro-enter" id="intro-enter" aria-label="Enter site">
+        <span>Enter</span>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+      </button>
+    </div>
+  </div>
 
   <!-- ══════════════════════ Nav ══════════════════════ -->
   <header class="nav">

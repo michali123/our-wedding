@@ -7,6 +7,13 @@ broken, there's just nothing to add yet.
 Drop your files in here with these **exact names** (same folder as this
 README) and they'll appear automatically — no code changes needed.
 
+## Opening reveal (`save-the-date.jpg`) — already added
+
+The photo that splits open like a letter when the site first loads. Already
+in place — replace `save-the-date.jpg` with a different photo any time by
+overwriting the file (keep the same filename). Portrait orientation works
+best, same as the hero strip below.
+
 ## Hero photo strip (top of page, above your names)
 
 5 photos, shown edge-to-edge, 2 visible at a time on mobile (swipe to see

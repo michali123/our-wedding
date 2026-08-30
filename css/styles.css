@@ -40,6 +40,107 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* ── Opening reveal ──────────────────────────────────────── */
+/* One photo, split down the middle, that swings open like an opened
+   letter — tap anywhere (or wait a moment) to reveal the site. */
+
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  /* No background here on purpose: as the two halves slide apart, the
+     growing gap should reveal the real page underneath, not a filler
+     color — that's what makes it read as the photo "opening" onto the
+     site rather than a flash of blank color before a hard cut. */
+  cursor: pointer;
+}
+.intro.closed { display: none; }
+
+.intro-half {
+  position: relative;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  transition: transform 1300ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+.intro.opening .intro-half-left { transform: translateX(-100%); }
+.intro.opening .intro-half-right { transform: translateX(100%); }
+
+.intro-half img {
+  position: absolute;
+  top: 0;
+  width: 200%;
+  height: 100%;
+  object-fit: cover;
+}
+.intro-half-left img { left: 0; }
+.intro-half-right img { right: 0; }
+
+.intro-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(32, 29, 26, 0.15) 0%, rgba(32, 29, 26, 0.45) 100%);
+  transition: opacity 700ms ease;
+}
+.intro.opening .intro-scrim { opacity: 0; }
+
+.intro-text {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--ivory);
+  pointer-events: none;
+  transition: opacity 600ms ease;
+}
+.intro.opening .intro-text { opacity: 0; }
+
+.intro-eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  color: rgba(254, 253, 251, 0.85);
+}
+.intro-names {
+  margin: 0.75rem 0 0;
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  letter-spacing: 0.06em;
+  color: var(--ivory);
+}
+.intro-enter {
+  pointer-events: auto;
+  margin-top: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  border: 1px solid rgba(254, 253, 251, 0.5);
+  border-radius: 9999px;
+  padding: 0.6rem 1.5rem;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--ivory);
+  cursor: pointer;
+  transition: background 200ms ease;
+}
+.intro-enter:hover { background: rgba(254, 253, 251, 0.15); }
+
+@media (min-width: 640px) {
+  .intro-names { font-size: 3.5rem; }
+}
+
 h1, h2, h3 {
   font-family: var(--font-display);
   letter-spacing: 0.01em;

@@ -411,6 +411,11 @@ a { color: inherit; text-decoration: none; }
 }
 .hero-hebrew-date .he { font-family: var(--font-hebrew); }
 
+.hero-venue {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
 .hero-verse {
   margin: 2rem auto 0;
   max-width: 26rem;

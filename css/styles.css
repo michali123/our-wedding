@@ -491,6 +491,33 @@ a { color: inherit; text-decoration: none; }
   gap: 1rem;
 }
 
+/* ── Add to calendar dropdown ─────────────────────────────── */
+.add-cal { position: relative; display: inline-flex; }
+.add-cal-menu {
+  position: absolute;
+  top: calc(100% + 0.6rem);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ivory);
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  padding: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  min-width: 13rem;
+  box-shadow: 0 16px 40px rgba(32, 29, 26, 0.14);
+  z-index: 20;
+}
+.add-cal-menu a {
+  padding: 0.6rem 0.8rem;
+  border-radius: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--ink);
+  text-decoration: none;
+  text-align: left;
+}
+.add-cal-menu a:hover { background: var(--cream); }
+
 @media (min-width: 640px) {
   .hero-title-stacked { font-size: 3.75rem; }
   .hero-title-stacked .amp { font-size: 1.1rem; }

@@ -46,6 +46,33 @@
     });
   }
 
+  // ── Add to calendar dropdowns ───────────────────────────
+  var closeAllCalMenus = function (except) {
+    document.querySelectorAll(".add-cal-menu").forEach(function (menu) {
+      if (menu === except) return;
+      menu.hidden = true;
+      var toggle = menu.previousElementSibling;
+      if (toggle) toggle.setAttribute("aria-expanded", "false");
+    });
+  };
+  document.querySelectorAll(".add-cal-toggle").forEach(function (toggle) {
+    var menu = toggle.nextElementSibling;
+    if (!menu) return;
+    toggle.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var willOpen = menu.hidden;
+      closeAllCalMenus(willOpen ? menu : null);
+      menu.hidden = !willOpen;
+      toggle.setAttribute("aria-expanded", String(willOpen));
+    });
+  });
+  document.addEventListener("click", function () {
+    closeAllCalMenus(null);
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") closeAllCalMenus(null);
+  });
+
   // The hero photo strip scrolls itself via a pure CSS animation (see
   // #hero-photos-track / @keyframes hero-scroll in styles.css) — no JS
   // needed to drive it.

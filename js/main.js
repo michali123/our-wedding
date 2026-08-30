@@ -104,7 +104,7 @@
     });
   });
 
-  // ── Toggle chips (attending / welcome party / dietary) ──
+  // ── Toggle chips (attending / dietary) ──
   document.querySelectorAll("[data-chip-group]").forEach(function (group) {
     var mode = group.getAttribute("data-chip-group"); // "single" or "multi"
     group.querySelectorAll(".chip").forEach(function (chip) {
@@ -224,7 +224,6 @@
         }
       }
 
-      var welcomeParty = chipValue('[data-chip-group="welcome_party"]');
       var dietaryTags = multiChipValues('[data-chip-group="dietary"]');
       var dietaryOther = form.dietary_other.value.trim();
       var dietary = dietaryTags.concat(dietaryOther ? [dietaryOther] : []).join(", ");
@@ -236,10 +235,6 @@
       formData.append("attending", attending === "yes" ? "Joyfully accepts" : "Regretfully declines");
       formData.append("guest_count", attending === "yes" ? String(1 + additionalGuests.length) : "1");
       formData.append("additional_guests", additionalGuests.join(", ") || "None");
-      formData.append(
-        "welcome_party",
-        welcomeParty === "yes" ? "Yes, count us in" : welcomeParty === "no" ? "Can't make it" : "Not specified"
-      );
       formData.append("dietary_restrictions", dietary || "None specified");
       formData.append("address", [
         form.address_line1.value.trim(),

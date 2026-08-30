@@ -656,7 +656,16 @@ section { position: relative; padding: 5rem 0; }
   max-width: 32rem;
   margin: 1.25rem auto 0;
 }
-.travel-toggle-btn { margin-top: 1.5rem; position: relative; z-index: 1; }
+.travel-toggle-wrap {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  margin-top: -2.25rem;
+  transition: margin-top 350ms ease;
+}
+.travel-options-panel.expanded + .travel-toggle-wrap { margin-top: 2rem; }
+.travel-toggle-btn { position: relative; background: var(--ivory); }
 .travel-options-panel {
   margin-top: 1rem;
   position: relative;

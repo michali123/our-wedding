@@ -332,49 +332,36 @@ a { color: inherit; text-decoration: none; }
   background: var(--ivory);
 }
 
-.birds {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 3;
+.birds-static {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
 }
-.bird {
-  position: absolute;
-  width: 38px;
-  height: auto;
-  fill: rgba(244, 243, 240, 0.95);
-  filter: drop-shadow(0 1px 2px rgba(32, 29, 26, 0.3));
-}
-.bird-1 { top: 14%; left: -12%; animation: bird-fly 26s linear infinite; }
-.bird-2 { top: 26%; left: -12%; width: 26px; animation: bird-fly 33s linear infinite; animation-delay: 9s; }
+.bird-static { fill: var(--ink-muted); }
 
 .dove-wing {
   transform-box: fill-box;
   transform-origin: 100% 50%;
   animation: wing-flap 0.5s ease-in-out infinite alternate;
 }
-.dove-wing-right { transform-origin: 0% 50%; }
+.dove-wing-right {
+  transform-origin: 0% 50%;
+  animation-name: wing-flap-right;
+}
 
 @keyframes wing-flap {
   from { transform: rotate(0deg); }
   to { transform: rotate(-22deg); }
 }
-.dove-wing-right { animation-name: wing-flap-right; }
 @keyframes wing-flap-right {
   from { transform: rotate(0deg); }
   to { transform: rotate(22deg); }
 }
 
-@keyframes bird-fly {
-  0% { transform: translate(0, 0); }
-  50% { transform: translate(60vw, -5vh); }
-  100% { transform: translate(125vw, 4vh); }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .bird, .dove-wing { animation: none; }
-  .bird { display: none; }
+  .dove-wing { animation: none; }
 }
 
 .hero-photos-track {
@@ -473,16 +460,12 @@ a { color: inherit; text-decoration: none; }
 }
 
 .divider-floral {
+  display: block;
   width: 100%;
   max-width: 22rem;
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  color: var(--line);
+  height: auto;
   margin: 0.4rem 0;
 }
-.divider-floral-line { flex: 1; height: 1px; background: var(--line); }
-.divider-floral-icon { flex-shrink: 0; width: 30px; height: auto; color: var(--ink-muted); }
 
 .hero-date,
 .hero-date-time,

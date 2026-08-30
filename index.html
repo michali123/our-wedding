@@ -43,35 +43,55 @@
     </nav>
   </header>
 
-  <!-- ══════════════════════ Hero (photo carousel) ══════════════════════ -->
-  <section class="hero" id="top">
-    <div class="hero-carousel" data-carousel data-autoplay="5000">
-      <div class="hero-slide active">
-        <img src="images/hero-1.jpg" alt="Josh and Michal" onerror="this.parentElement.classList.add('img-missing')" />
-        <div class="img-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg><span>images/hero-1.jpg</span></div>
+  <!-- ══════════════════════ Hero ══════════════════════ -->
+  <section id="top">
+    <!-- Flush, edge-to-edge photo strip — swipeable, no overlay text. -->
+    <div class="hero-photos">
+      <div class="hero-photos-track" data-hero-track>
+        <div class="hero-photo-slide">
+          <img src="images/hero-1.jpg" alt="Josh and Michal" onerror="this.parentElement.classList.add('img-missing')" />
+          <div class="img-placeholder"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg><span>hero-1.jpg</span></div>
+        </div>
+        <div class="hero-photo-slide">
+          <img src="images/hero-2.jpg" alt="Josh and Michal" onerror="this.parentElement.classList.add('img-missing')" />
+          <div class="img-placeholder"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg><span>hero-2.jpg</span></div>
+        </div>
+        <div class="hero-photo-slide">
+          <img src="images/hero-3.jpg" alt="Josh and Michal" onerror="this.parentElement.classList.add('img-missing')" />
+          <div class="img-placeholder"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg><span>hero-3.jpg</span></div>
+        </div>
+        <div class="hero-photo-slide">
+          <img src="images/hero-4.jpg" alt="Josh and Michal" onerror="this.parentElement.classList.add('img-missing')" />
+          <div class="img-placeholder"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg><span>hero-4.jpg</span></div>
+        </div>
+        <div class="hero-photo-slide">
+          <img src="images/hero-5.jpg" alt="Josh and Michal" onerror="this.parentElement.classList.add('img-missing')" />
+          <div class="img-placeholder"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg><span>hero-5.jpg</span></div>
+        </div>
       </div>
-      <div class="hero-slide">
-        <img src="images/hero-2.jpg" alt="Josh and Michal" onerror="this.parentElement.classList.add('img-missing')" />
-        <div class="img-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg><span>images/hero-2.jpg</span></div>
-      </div>
-      <div class="hero-slide">
-        <img src="images/hero-3.jpg" alt="Josh and Michal" onerror="this.parentElement.classList.add('img-missing')" />
-        <div class="img-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg><span>images/hero-3.jpg</span></div>
-      </div>
-      <div class="hero-slide">
-        <img src="images/hero-4.jpg" alt="Josh and Michal" onerror="this.parentElement.classList.add('img-missing')" />
-        <div class="img-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg><span>images/hero-4.jpg</span></div>
-      </div>
-      <div class="hero-slide">
-        <img src="images/hero-5.jpg" alt="Josh and Michal" onerror="this.parentElement.classList.add('img-missing')" />
-        <div class="img-placeholder"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg><span>images/hero-5.jpg</span></div>
-      </div>
-      <div class="hero-scrim"></div>
+      <div class="hero-photos-dots" data-hero-dots></div>
     </div>
 
-    <div class="hero-content">
-      <p class="eyebrow eyebrow-hero">We're getting married</p>
-      <h1 class="hero-title">Josh<span class="amp">&amp;</span>Michal</h1>
+    <!-- White info block — names, date, verse, countdown, CTA. -->
+    <div class="hero-info">
+      <svg class="hero-floral" viewBox="0 0 160 160" fill="none" stroke="currentColor" stroke-width="1.1" aria-hidden="true">
+        <circle cx="118" cy="34" r="15" />
+        <circle cx="134" cy="46" r="12" />
+        <circle cx="106" cy="50" r="11" />
+        <circle cx="122" cy="60" r="10" />
+        <path d="M118 34c-4 8-2 16 4 22" stroke-linecap="round" />
+        <path d="M96 66c8 4 16 4 22-2" stroke-linecap="round" />
+        <path d="M88 78c10-2 16-8 18-18" stroke-linecap="round" />
+        <ellipse cx="90" cy="82" rx="7" ry="14" transform="rotate(35 90 82)" />
+        <ellipse cx="100" cy="90" rx="6" ry="12" transform="rotate(55 100 90)" />
+      </svg>
+
+      <p class="eyebrow">We're getting married</p>
+      <h1 class="hero-title-stacked">
+        <span>Josh</span>
+        <span class="amp">&amp;</span>
+        <span>Michal</span>
+      </h1>
       <p class="hero-date">Sunday, January 17, 2027</p>
       <p class="hero-hebrew-date"><span class="he">ט׳ בשבט תשפ״ז</span> &middot; 9 Sh'vat 5787</p>
 
@@ -89,11 +109,9 @@
 
       <div class="hero-cta">
         <a class="btn btn-primary" href="#rsvp">RSVP</a>
-        <a class="btn btn-outline btn-outline-light" href="#details">Event Details</a>
+        <a class="btn btn-outline" href="#details">Event Details</a>
       </div>
     </div>
-
-    <div class="hero-dots" data-carousel-dots></div>
   </section>
 
   <!-- ══════════════════════ Gallery ══════════════════════ -->

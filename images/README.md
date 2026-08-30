@@ -7,10 +7,12 @@ broken, there's just nothing to add yet.
 Drop your files in here with these **exact names** (same folder as this
 README) and they'll appear automatically — no code changes needed.
 
-## Hero carousel (full-screen, top of page)
+## Hero photo strip (top of page, above your names)
 
-5 photos, auto-advancing every 5 seconds. Landscape orientation works best
-(the image fills the screen and gets cropped to fit).
+5 photos, shown edge-to-edge, 2 visible at a time on mobile (swipe to see
+more). **Portrait orientation works best** — the strip is tall and each
+photo gets cropped to fill its column, so a vertical shot (like a
+phone-camera portrait photo) will look best.
 
 ```
 hero-1.jpg
@@ -43,7 +45,7 @@ gallery-8.jpg
 - **File size:** keep each photo under ~500KB if you can (export at ~1600–2000px
   on the long edge) — keeps the site fast to load, especially on phones.
 - **Fewer than 5 hero photos or 8 gallery photos?** Delete the unused
-  `<div class="hero-slide">...</div>` or `<div class="gallery-slide">...</div>`
+  `<div class="hero-photo-slide">...</div>` or `<div class="gallery-slide">...</div>`
   blocks in `index.html` for the ones you're not using — the carousels adapt
   automatically to however many slides are in the markup.
 - Once you commit and push the images, GitHub Pages picks them up

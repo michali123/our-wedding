@@ -327,8 +327,37 @@ a { color: inherit; text-decoration: none; }
    the strip to the viewport; the track itself is exactly as wide as its
    (doubled) content. */
 .hero-photos {
+  position: relative;
   overflow: hidden;
   background: var(--ivory);
+}
+
+.birds {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 3;
+}
+.bird {
+  position: absolute;
+  width: 28px;
+  height: auto;
+  color: rgba(244, 243, 240, 0.92);
+  filter: drop-shadow(0 1px 2px rgba(32, 29, 26, 0.3));
+}
+.bird-1 { top: 16%; left: -8%; animation: bird-fly 24s linear infinite; }
+.bird-2 { top: 30%; left: -8%; width: 20px; animation: bird-fly 30s linear infinite; animation-delay: 7s; }
+.bird-3 { top: 10%; left: -8%; width: 16px; animation: bird-fly 21s linear infinite; animation-delay: 14s; }
+
+@keyframes bird-fly {
+  0% { transform: translate(0, 0); }
+  50% { transform: translate(65vw, -5vh); }
+  100% { transform: translate(140vw, 4vh); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bird { animation: none; display: none; }
 }
 
 .hero-photos-track {

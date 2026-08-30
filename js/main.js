@@ -26,15 +26,22 @@
   // ── Mobile nav ──────────────────────────────────────────
   var navToggle = document.querySelector(".nav-toggle");
   var navMobile = document.querySelector(".nav-mobile");
+  var navToggleLabel = document.querySelector("[data-nav-toggle-label]");
   if (navToggle && navMobile) {
+    var setNavToggleState = function (isOpen) {
+      navToggle.setAttribute("aria-expanded", String(isOpen));
+      if (navToggleLabel) {
+        navToggleLabel.textContent = isOpen ? "Close" : "Menu";
+      }
+    };
     navToggle.addEventListener("click", function () {
       var isOpen = navMobile.classList.toggle("open");
-      navToggle.setAttribute("aria-expanded", String(isOpen));
+      setNavToggleState(isOpen);
     });
     navMobile.querySelectorAll("a").forEach(function (link) {
       link.addEventListener("click", function () {
         navMobile.classList.remove("open");
-        navToggle.setAttribute("aria-expanded", "false");
+        setNavToggleState(false);
       });
     });
   }

@@ -72,7 +72,7 @@ body {
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(180deg, rgba(32, 29, 26, 0.15) 0%, rgba(32, 29, 26, 0.45) 100%);
+  background: radial-gradient(ellipse 60% 45% at 50% 50%, rgba(244, 243, 240, 0.72) 0%, rgba(244, 243, 240, 0.28) 65%, rgba(244, 243, 240, 0.12) 100%);
 }
 
 .intro-text {
@@ -84,7 +84,7 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  color: var(--ivory);
+  color: var(--ink);
 }
 
 .intro-eyebrow {
@@ -92,7 +92,7 @@ body {
   align-items: baseline;
   justify-content: center;
   gap: 0.5rem;
-  color: var(--ivory);
+  color: var(--ink);
 }
 .intro-eyebrow-big {
   font-family: var(--font-display);
@@ -107,7 +107,7 @@ body {
   font-weight: 500;
   font-size: 1.15rem;
   letter-spacing: 0.01em;
-  color: rgba(254, 253, 251, 0.85);
+  color: rgba(32, 29, 26, 0.75);
   position: relative;
   top: -0.6rem;
   margin: 0 -0.15rem;
@@ -117,7 +117,7 @@ body {
   font-family: var(--font-display);
   font-size: 2.5rem;
   letter-spacing: 0.06em;
-  color: var(--ivory);
+  color: var(--ink);
 }
 .intro-enter {
   pointer-events: auto;
@@ -126,7 +126,7 @@ body {
   align-items: center;
   gap: 0.4rem;
   background: none;
-  border: 1px solid rgba(254, 253, 251, 0.5);
+  border: 1px solid rgba(32, 29, 26, 0.5);
   border-radius: 9999px;
   padding: 0.6rem 1.5rem;
   font-family: var(--font-body);
@@ -134,11 +134,11 @@ body {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  color: var(--ivory);
+  color: var(--ink);
   cursor: pointer;
   transition: background 200ms ease;
 }
-.intro-enter:hover { background: rgba(254, 253, 251, 0.15); }
+.intro-enter:hover { background: rgba(32, 29, 26, 0.08); }
 
 @media (min-width: 640px) {
   .intro-names { font-size: 3.5rem; }

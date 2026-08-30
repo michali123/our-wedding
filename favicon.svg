@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-label="Envelope">
-  <rect x="2" y="5" width="20" height="14" rx="2" fill="none" stroke="#201d1a" stroke-width="1.8" />
-  <path d="M3 6.5 L12 13 L21 6.5" fill="none" stroke="#201d1a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Envelope with heart">
+  <path d="M15,35 L50,10 L85,35 L85,85 L15,85 Z" fill="none" stroke="#201d1a" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" />
+  <path d="M15,36 L85,85 M85,36 L15,85" fill="none" stroke="#201d1a" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round" />
+  <path d="M50,62 C40,52 31,46 31,36 C31,27 40,23 50,32 C60,23 69,27 69,36 C69,46 60,52 50,62 Z" fill="#F28FA3" stroke="#B24763" stroke-width="3" stroke-linejoin="round" />
 </svg>

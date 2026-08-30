@@ -121,19 +121,29 @@
     });
   });
 
-  // ── Travel & Stay: show/hide the hotel list ─────────────
+  // ── Travel & Stay: smooth peek/expand of the hotel list ──
   var travelToggle = document.querySelector("[data-travel-toggle]");
   var travelPanel = document.querySelector("[data-travel-panel]");
   if (travelToggle && travelPanel) {
+    var travelCollapsedHeight = window.getComputedStyle(travelPanel).maxHeight;
+    var travelExpanded = false;
+
     travelToggle.addEventListener("click", function () {
-      var willOpen = travelPanel.hidden;
-      travelPanel.hidden = !willOpen;
-      travelToggle.setAttribute("aria-expanded", String(willOpen));
-      travelToggle.textContent = willOpen
+      travelExpanded = !travelExpanded;
+      travelToggle.setAttribute("aria-expanded", String(travelExpanded));
+      travelToggle.textContent = travelExpanded
         ? "Show Fewer Travel & Stay Options"
         : "Show More Travel & Stay Options";
-      if (willOpen) {
-        travelPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+      travelPanel.classList.toggle("expanded", travelExpanded);
+
+      if (travelExpanded) {
+        travelPanel.style.maxHeight = travelPanel.scrollHeight + "px";
+      } else {
+        travelPanel.style.maxHeight = travelPanel.scrollHeight + "px";
+        requestAnimationFrame(function () {
+          travelPanel.style.maxHeight = travelCollapsedHeight;
+        });
+        travelToggle.scrollIntoView({ behavior: "smooth", block: "center" });
       }
     });
   }

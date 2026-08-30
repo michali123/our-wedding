@@ -655,8 +655,27 @@ section { position: relative; padding: 5rem 0; }
   max-width: 32rem;
   margin: 1.25rem auto 0;
 }
-.travel-toggle-btn { margin-top: 1.5rem; }
-.travel-options-panel { margin-top: 1rem; }
+.travel-toggle-btn { margin-top: 1.5rem; position: relative; z-index: 1; }
+.travel-options-panel {
+  margin-top: 1rem;
+  position: relative;
+  overflow: hidden;
+  max-height: 580px;
+  transition: max-height 550ms ease;
+}
+.travel-options-panel::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 7rem;
+  background: linear-gradient(to bottom, transparent, var(--ivory) 88%);
+  opacity: 1;
+  transition: opacity 350ms ease;
+  pointer-events: none;
+}
+.travel-options-panel.expanded::after { opacity: 0; }
 
 .divider {
   margin-top: 1.5rem;

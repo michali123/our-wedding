@@ -329,6 +329,13 @@ a { color: inherit; text-decoration: none; }
   animation: hero-scroll 31s linear infinite;
 }
 
+@media (min-width: 900px) {
+  .hero-photos-track {
+    height: 88vh;
+    max-height: 920px;
+  }
+}
+
 @keyframes hero-scroll {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }

@@ -2,6 +2,18 @@
 (function () {
   "use strict";
 
+  // ── Always land on the intro at the top of the page ──────
+  // Overrides the browser's scroll-position memory and any URL hash
+  // (e.g. a shared #rsvp link) so every load/refresh starts at #top,
+  // underneath the opening reveal.
+  if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
+  }
+  window.scrollTo(0, 0);
+  window.addEventListener("pageshow", function () {
+    window.scrollTo(0, 0);
+  });
+
   // ── Opening reveal ───────────────────────────────────────
   // Plays on every page load/refresh — no "seen it already" skip.
   var intro = document.getElementById("intro");
@@ -12,6 +24,7 @@
     var openIntro = function () {
       if (introOpened) return;
       introOpened = true;
+      window.scrollTo(0, 0);
       intro.classList.add("opening");
       document.documentElement.style.overflow = "";
       setTimeout(function () {
@@ -390,11 +403,18 @@
     });
   }
 
+  // Clean, hash-free URL — so a shared/copied link always opens at the
+  // top of the page (the opening reveal), not scrolled to whatever
+  // section was in the address bar when the button was clicked.
+  var getShareUrl = function () {
+    return window.location.origin + window.location.pathname;
+  };
+
   // ── WhatsApp share ──────────────────────────────────────
   var whatsappBtn = document.getElementById("whatsapp-share");
   if (whatsappBtn) {
     whatsappBtn.addEventListener("click", function () {
-      var url = window.location.href;
+      var url = getShareUrl();
       var text = "You're invited to Josh & Michal's wedding! RSVP here: " + url;
       if (navigator.share) {
         navigator.share({ title: "Our Wedding", text: text, url: url }).catch(function () {});
@@ -410,7 +430,7 @@
     var copyLinkLabel = copyLinkBtn.querySelector("[data-copy-label]");
     var copyResetTimer = null;
     copyLinkBtn.addEventListener("click", function () {
-      var url = window.location.href;
+      var url = getShareUrl();
       var showCopied = function () {
         if (copyLinkLabel) copyLinkLabel.textContent = "Link Copied!";
         clearTimeout(copyResetTimer);

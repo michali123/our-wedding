@@ -121,6 +121,23 @@
     });
   });
 
+  // ── Travel & Stay: show/hide the hotel list ─────────────
+  var travelToggle = document.querySelector("[data-travel-toggle]");
+  var travelPanel = document.querySelector("[data-travel-panel]");
+  if (travelToggle && travelPanel) {
+    travelToggle.addEventListener("click", function () {
+      var willOpen = travelPanel.hidden;
+      travelPanel.hidden = !willOpen;
+      travelToggle.setAttribute("aria-expanded", String(willOpen));
+      travelToggle.textContent = willOpen
+        ? "Show Fewer Travel & Stay Options"
+        : "Show More Travel & Stay Options";
+      if (willOpen) {
+        travelPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+  }
+
   // ── Toggle chips (attending / dietary) ──
   document.querySelectorAll("[data-chip-group]").forEach(function (group) {
     var mode = group.getAttribute("data-chip-group"); // "single" or "multi"
@@ -398,6 +415,19 @@
       } else {
         window.prompt("Copy this link:", url);
       }
+    });
+  }
+
+  // ── Back to top ───────────────────────────────────────────
+  var backToTop = document.getElementById("back-to-top");
+  if (backToTop) {
+    var updateBackToTop = function () {
+      backToTop.classList.toggle("visible", window.scrollY > window.innerHeight);
+    };
+    window.addEventListener("scroll", updateBackToTop, { passive: true });
+    updateBackToTop();
+    backToTop.addEventListener("click", function () {
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
   }
 })();

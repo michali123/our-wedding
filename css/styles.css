@@ -648,6 +648,15 @@ section { position: relative; padding: 5rem 0; }
 
 .section-head { text-align: center; }
 .section-head h2 { margin-top: 0.5rem; font-size: 2.5rem; color: var(--ink); }
+.section-desc {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--ink-muted);
+  max-width: 32rem;
+  margin: 1.25rem auto 0;
+}
+.travel-toggle-btn { margin-top: 1.5rem; }
+.travel-options-panel { margin-top: 1rem; }
 
 .divider {
   margin-top: 1.5rem;
@@ -763,16 +772,10 @@ section { position: relative; padding: 5rem 0; }
   gap: 0.4rem;
 }
 .hotel-icon { color: var(--ink-muted); margin-bottom: 0.5rem; }
-.hotel-desc {
-  font-size: 0.85rem;
-  color: var(--ink-muted);
-  max-width: 24rem;
-  margin: -0.1rem 0 0.15rem;
-}
 .hotel-kicker {
   font-family: var(--font-body);
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.14em;
   color: var(--ink-muted);
@@ -792,7 +795,7 @@ section { position: relative; padding: 5rem 0; }
 }
 .hotel-price {
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 400;
   color: var(--ink);
   margin-top: 0.35rem;
 }
@@ -1028,3 +1031,28 @@ footer.site-footer .date { margin-top: 0.5rem; font-size: 0.9rem; color: var(--i
   white-space: nowrap;
   border: 0;
 }
+
+/* ── Back to top ─────────────────────────────────────────── */
+
+.back-to-top {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 9999px;
+  border: 1px solid var(--ink);
+  background: var(--ivory);
+  color: var(--ink);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(0.5rem);
+  transition: opacity 200ms ease, transform 200ms ease, background 180ms ease, color 180ms ease;
+}
+.back-to-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+.back-to-top:hover { background: var(--ink); color: var(--ivory); }

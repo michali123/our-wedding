@@ -308,4 +308,28 @@
       window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank", "noopener,noreferrer");
     });
   }
+
+  // ── Copy website link ────────────────────────────────────
+  var copyLinkBtn = document.getElementById("copy-link");
+  if (copyLinkBtn) {
+    var copyLinkLabel = copyLinkBtn.querySelector("[data-copy-label]");
+    var copyResetTimer = null;
+    copyLinkBtn.addEventListener("click", function () {
+      var url = window.location.href;
+      var showCopied = function () {
+        if (copyLinkLabel) copyLinkLabel.textContent = "Link Copied!";
+        clearTimeout(copyResetTimer);
+        copyResetTimer = setTimeout(function () {
+          if (copyLinkLabel) copyLinkLabel.textContent = "Copy Website Link";
+        }, 2000);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(showCopied).catch(function () {
+          window.prompt("Copy this link:", url);
+        });
+      } else {
+        window.prompt("Copy this link:", url);
+      }
+    });
+  }
 })();

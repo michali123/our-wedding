@@ -10,8 +10,8 @@
   --font-hebrew: "Frank Ruhl Libre", Georgia, serif;
 
   /* Monochrome, white-themed palette — ink on a soft warm gray, no color
-     accents other than the WhatsApp brand exception and the red error
-     state. --ivory is a gentle off-white rather than stark white: easier
+     accents other than the red error state. --ivory is a gentle off-white
+     rather than stark white: easier
      on the eyes and it gives --ink-muted enough contrast to read
      comfortably (5.4:1 / 4.8:1 against ivory/cream — WCAG AA for normal
      text; the previous near-white background only cleared 3.5–3.8:1). */
@@ -814,21 +814,14 @@ footer.site-footer .names {
 }
 footer.site-footer .date { margin-top: 0.5rem; font-size: 0.9rem; color: var(--ink-muted); }
 
-.whatsapp-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  border-radius: 9999px;
-  padding: 0.65rem 1.25rem;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #fff;
-  background: #25d366; /* WhatsApp brand color — third-party mark, exempt from the site palette */
-  border: none;
-  cursor: pointer;
+.footer-actions {
   margin-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
 }
-.whatsapp-btn:hover { filter: brightness(0.95); }
 
 .footer-note {
   margin-top: 2rem;

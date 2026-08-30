@@ -21,6 +21,17 @@
   <!-- The opening reveal needs JS to dismiss itself — without it, don't
        let it block the page. -->
   <noscript><style>.intro { display: none !important; }</style></noscript>
+
+  <!-- Travelpayouts Drive — affiliate monetization widget for the hotel/travel links -->
+  <script nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1" data-cmp-ab="2">
+    (function () {
+        var script = document.createElement("script");
+        script.async = 1;
+        script.setAttribute("data-cmp-ab","2");
+        script.src = 'https://tp-em.com/NTY4NTAz.js?t=568503';
+        document.head.appendChild(script);
+    })();
+  </script>
 </head>
 <body>
 
@@ -481,6 +492,11 @@
           <a class="map-link hotel-similar-link" href="https://www.google.com/maps/search/hotels+near+Fica+Farms+Homestead+FL" target="_blank" rel="noopener">View similar hotels &#8599;</a>
           <p class="hotel-airbnb-note">Airbnb is also popular in the area if you'd rather have more space.</p>
         </div>
+      </div>
+
+      <div class="stay22-map">
+        <p class="stay22-map-label">Explore hotels &amp; Airbnbs near the venue</p>
+        <iframe id="stay22-widget" width="100%" height="428" src="https://www.stay22.com/embed/6a9487815681985ace927baa" frameborder="0"></iframe>
       </div>
 
       <div class="two-col">

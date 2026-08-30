@@ -14,19 +14,14 @@ of its own — plain HTML/CSS/JS that you can host anywhere for free.
 Every piece of content (names, date, venues, story, FAQ copy) is written
 directly in `index.html` — just edit the text in place.
 
-## 1. Set up the RSVP form (Formspree, free)
+## 1. RSVP form (Formspree, free) — done
 
-The RSVP form needs somewhere to send submissions. This site uses
-[Formspree](https://formspree.io) — free for up to 50 submissions/month,
-no server or database required.
-
-1. Sign up free at [formspree.io](https://formspree.io) and create a new form.
-2. Copy your form's endpoint — it looks like `https://formspree.io/f/abcdwxyz`.
-3. Open `index.html`, find the `<form id="rsvp-form" ...>` tag near the
-   bottom, and replace `YOUR_FORM_ID` in its `action` attribute with your
-   real form ID.
-4. Submissions will land in the email you signed up with, and you can also
-   view/export them from the Formspree dashboard.
+The RSVP form posts to [Formspree](https://formspree.io) (free for up to 50
+submissions/month, no server or database required) — already wired up to
+`https://formspree.io/f/xgaevdbe`. Submissions land in the email that form
+was created with, and you can also view/export them from the Formspree
+dashboard. Nothing further to do here unless you want to point it at a
+different form.
 
 ## 2. Host it for free — GitHub Pages
 

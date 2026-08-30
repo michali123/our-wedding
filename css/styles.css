@@ -230,7 +230,7 @@ a { color: inherit; text-decoration: none; }
   gap: 0.9rem;
 }
 
-.nav-rsvp-mobile {
+.nav-rsvp {
   display: inline-flex;
   align-items: center;
   padding: 0.4rem 0.95rem;
@@ -245,7 +245,7 @@ a { color: inherit; text-decoration: none; }
   background: none;
   transition: background 180ms ease, border-color 180ms ease;
 }
-.nav-rsvp-mobile:hover { background: rgba(32, 29, 26, 0.06); border-color: rgba(32, 29, 26, 0.7); }
+.nav-rsvp:hover { background: rgba(32, 29, 26, 0.06); border-color: rgba(32, 29, 26, 0.7); }
 
 .nav-toggle {
   display: inline-flex;
@@ -282,7 +282,6 @@ a { color: inherit; text-decoration: none; }
 @media (min-width: 700px) {
   .nav-links { display: flex; }
   .nav-toggle { display: none; }
-  .nav-rsvp-mobile { display: none; }
 }
 
 /* ── Buttons ─────────────────────────────────────────────── */

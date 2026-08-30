@@ -5,14 +5,16 @@ of its own — plain HTML/CSS/JS that you can host anywhere for free.
 
 ## What's here
 
-- `index.html` — the whole site (hero, our story, event details, travel,
-  registry, FAQ, RSVP)
+- `index.html` — the whole site (hero photo carousel, photo gallery, event
+  details, travel, registry, FAQ, RSVP)
 - `css/styles.css` — all styling
-- `js/main.js` — countdown timer, mobile nav, FAQ accordion, RSVP form
-  submission
+- `js/main.js` — hero + gallery carousels, countdown timer, mobile nav, FAQ
+  accordion, RSVP form submission
+- `images/` — where your photos go (see `images/README.md` for exact
+  filenames)
 
-Every piece of content (names, date, venues, story, FAQ copy) is written
-directly in `index.html` — just edit the text in place.
+Every piece of content (names, date, venues, FAQ copy) is written directly
+in `index.html` — just edit the text in place.
 
 ## 1. RSVP form (Formspree, free) — done
 
@@ -43,7 +45,8 @@ Everything lives in `index.html`:
   `January 17, 2027`, and update `data-target` on the `<div class="countdown">`
   (an ISO datetime) to match.
 - **Event details** — the three cards inside `<section id="details">`.
-- **Our Story** — the three blocks inside `<section id="story">`.
+- **Photos** — see `images/README.md` for how to add your own; the gallery
+  carousel is `<section id="gallery">`.
 - **FAQ** — the `<div class="faq-item">` blocks inside `<section id="faq">`.
 - **Travel, Registry** — their own `<section>` blocks, currently
   placeholders ("to be announced") — fill in real venues/links once you have

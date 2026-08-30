@@ -481,27 +481,6 @@ section { padding: 5rem 0; }
   .section-head h2 { font-size: 3rem; }
 }
 
-/* ── Our story ───────────────────────────────────────────── */
-
-.story-grid {
-  margin-top: 3.5rem;
-  display: grid;
-  gap: 2.5rem;
-}
-.story-item { text-align: center; }
-.story-number {
-  font-family: var(--font-script);
-  font-size: 2.5rem;
-  color: var(--blush-deep);
-}
-.story-item h3 { margin-top: 0.5rem; font-size: 1.35rem; }
-.story-item p { margin-top: 0.75rem; font-size: 0.9rem; line-height: 1.6; color: var(--ink-muted); }
-
-@media (min-width: 700px) {
-  .story-grid { grid-template-columns: repeat(3, 1fr); }
-  .story-item { text-align: left; }
-}
-
 /* ── Cards / event details ──────────────────────────────── */
 
 .card {

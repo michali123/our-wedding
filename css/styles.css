@@ -91,6 +91,7 @@ body {
   .intro-text {
     justify-content: flex-start;
     padding-top: 12vh;
+    padding-bottom: 6vh;
   }
 }
 
@@ -146,6 +147,10 @@ body {
   transition: background 200ms ease;
 }
 .intro-enter:hover { background: rgba(32, 29, 26, 0.08); }
+
+@media (max-width: 639px) {
+  .intro-enter { margin-top: auto; }
+}
 
 @media (min-width: 640px) {
   .intro-names { font-size: 3.5rem; }
@@ -339,7 +344,12 @@ a { color: inherit; text-decoration: none; }
   gap: 1.5rem;
   margin-bottom: 1rem;
 }
-.bird-static { fill: var(--ink-muted); }
+.bird-static {
+  fill: var(--ivory);
+  stroke: var(--ink-muted);
+  stroke-width: 1.4;
+  paint-order: stroke;
+}
 
 .dove-wing {
   transform-box: fill-box;

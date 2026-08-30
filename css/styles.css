@@ -658,8 +658,9 @@ input[type="number"].field { max-width: 8rem; }
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  border: 1px solid var(--line);
+  border: 1px solid var(--ink);
   background: var(--ivory);
+  color: var(--ink);
   border-radius: 9999px;
   padding: 0.45rem 0.9rem;
   font-size: 0.85rem;

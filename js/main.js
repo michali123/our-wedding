@@ -143,10 +143,13 @@
   // ── Additional guests (named, only shown/relevant when attending) ──
   var attendingGroup = document.querySelector('[data-chip-group="attending"]');
   var guestCountWrap = document.querySelector("[data-guest-count-wrap]");
-  if (attendingGroup && guestCountWrap) {
+  var attendingWrap = document.querySelector("[data-attending-wrap]");
+  if (attendingGroup && (guestCountWrap || attendingWrap)) {
     var syncGuestCount = function () {
       var yes = attendingGroup.querySelector('[data-value="yes"]');
-      guestCountWrap.hidden = !(yes && yes.getAttribute("aria-pressed") === "true");
+      var isAttending = !!(yes && yes.getAttribute("aria-pressed") === "true");
+      if (guestCountWrap) guestCountWrap.hidden = !isAttending;
+      if (attendingWrap) attendingWrap.hidden = !isAttending;
     };
     attendingGroup.addEventListener("chip-change", syncGuestCount);
     syncGuestCount();
@@ -245,6 +248,9 @@
       var dietaryOther = form.dietary_other.value.trim();
       var dietary = dietaryTags.concat(dietaryOther ? [dietaryOther] : []).join(", ");
 
+      var afterParty = chipValue('[data-chip-group="after_party"]');
+      var lateBrunch = chipValue('[data-chip-group="late_brunch"]');
+
       var formData = new FormData();
       formData.append("full_name", fullName);
       formData.append("email", email);
@@ -253,6 +259,8 @@
       formData.append("guest_count", attending === "yes" ? String(1 + additionalGuests.length) : "1");
       formData.append("additional_guests", additionalGuests.join(", ") || "None");
       formData.append("dietary_restrictions", dietary || "None specified");
+      formData.append("after_party", attending === "yes" ? (afterParty === "yes" ? "Yes" : "No") : "N/A");
+      formData.append("late_brunch", attending === "yes" ? (lateBrunch === "yes" ? "Yes" : "No") : "N/A");
       formData.append("address", [
         form.address_line1.value.trim(),
         form.address_line2.value.trim(),

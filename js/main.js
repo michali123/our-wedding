@@ -224,7 +224,7 @@
         cb.setAttribute("data-guest-name", name);
         cb.checked = Object.prototype.hasOwnProperty.call(previouslyChecked, name)
           ? previouslyChecked[name]
-          : true;
+          : false;
         var span = document.createElement("span");
         span.textContent = name;
         label.appendChild(cb);

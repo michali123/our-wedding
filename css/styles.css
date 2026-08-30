@@ -87,6 +87,13 @@ body {
   color: var(--ink);
 }
 
+@media (max-width: 639px) {
+  .intro-text {
+    justify-content: flex-start;
+    padding-top: 12vh;
+  }
+}
+
 .intro-eyebrow {
   display: flex;
   align-items: baseline;

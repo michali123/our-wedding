@@ -301,12 +301,13 @@ a { color: inherit; text-decoration: none; }
 
 .hero-verse {
   margin: 2rem auto 0;
-  max-width: 24rem;
+  max-width: 26rem;
 }
 .hero-verse .he {
   direction: rtl;
   font-family: var(--font-hebrew);
-  font-size: 1.6rem;
+  font-size: 1.35rem;
+  line-height: 1.5;
   color: var(--ink);
 }
 .hero-verse .translation {

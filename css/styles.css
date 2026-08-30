@@ -880,6 +880,11 @@ legend.field-label { padding: 0; margin-bottom: 0.6rem; }
 
 .guest-list { display: flex; flex-direction: column; gap: 0.6rem; }
 .guest-row { display: flex; align-items: center; gap: 0.5rem; }
+
+.party-guest-list { display: flex; flex-direction: column; gap: 0.5rem; }
+.party-guest-row { display: flex; align-items: center; gap: 0.55rem; font-size: 0.9rem; }
+.party-guest-row input[type="checkbox"] { width: 1.05rem; height: 1.05rem; accent-color: var(--ink); flex-shrink: 0; }
+.party-guest-empty { font-size: 0.85rem; color: var(--ink-muted); font-style: italic; }
 .guest-row .field { flex: 1 1 auto; }
 .guest-row .remove-guest-btn {
   flex: 0 0 auto;

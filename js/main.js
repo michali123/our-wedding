@@ -186,9 +186,62 @@
       guestList.appendChild(row);
       addGuestBtn.disabled = guestList.children.length >= MAX_ADDITIONAL_GUESTS;
       input.focus();
+      syncPartyGuestLists();
     };
     addGuestBtn.addEventListener("click", addGuestRow);
   }
+
+  // ── After Party / Late Brunch: per-guest checklist, kept in sync
+  //    with the named guest list above ──
+  var fullNameInput = document.getElementById("full_name");
+  var afterPartyList = document.querySelector("[data-after-party-list]");
+  var lateBrunchList = document.querySelector("[data-late-brunch-list]");
+  var syncPartyGuestLists = function () {
+    if (!afterPartyList && !lateBrunchList) return;
+
+    var names = [];
+    var primaryName = fullNameInput ? fullNameInput.value.trim() : "";
+    names.push(primaryName || "You");
+    if (guestList) {
+      guestList.querySelectorAll("[data-guest-name]").forEach(function (input) {
+        var name = input.value.trim();
+        if (name) names.push(name);
+      });
+    }
+
+    [afterPartyList, lateBrunchList].forEach(function (container) {
+      if (!container) return;
+      var previouslyChecked = {};
+      container.querySelectorAll("input[type=checkbox]").forEach(function (cb) {
+        previouslyChecked[cb.getAttribute("data-guest-name")] = cb.checked;
+      });
+      container.innerHTML = "";
+      names.forEach(function (name) {
+        var label = document.createElement("label");
+        label.className = "party-guest-row";
+        var cb = document.createElement("input");
+        cb.type = "checkbox";
+        cb.setAttribute("data-guest-name", name);
+        cb.checked = Object.prototype.hasOwnProperty.call(previouslyChecked, name)
+          ? previouslyChecked[name]
+          : true;
+        var span = document.createElement("span");
+        span.textContent = name;
+        label.appendChild(cb);
+        label.appendChild(span);
+        container.appendChild(label);
+      });
+    });
+  };
+  if (fullNameInput) fullNameInput.addEventListener("input", syncPartyGuestLists);
+  if (guestList) {
+    guestList.addEventListener("input", function (e) {
+      if (e.target && e.target.hasAttribute("data-guest-name")) syncPartyGuestLists();
+    });
+    var partyObserver = new MutationObserver(syncPartyGuestLists);
+    partyObserver.observe(guestList, { childList: true });
+  }
+  syncPartyGuestLists();
 
   // ── RSVP form submission (Formspree, AJAX) ──────────────
   var form = document.getElementById("rsvp-form");
@@ -248,8 +301,15 @@
       var dietaryOther = form.dietary_other.value.trim();
       var dietary = dietaryTags.concat(dietaryOther ? [dietaryOther] : []).join(", ");
 
-      var afterParty = chipValue('[data-chip-group="after_party"]');
-      var lateBrunch = chipValue('[data-chip-group="late_brunch"]');
+      var checkedNames = function (container) {
+        if (!container) return [];
+        return Array.prototype.map.call(
+          container.querySelectorAll("input[type=checkbox]:checked"),
+          function (cb) { return cb.getAttribute("data-guest-name"); }
+        );
+      };
+      var afterPartyGuests = checkedNames(afterPartyList);
+      var lateBrunchGuests = checkedNames(lateBrunchList);
 
       var formData = new FormData();
       formData.append("full_name", fullName);
@@ -259,8 +319,8 @@
       formData.append("guest_count", attending === "yes" ? String(1 + additionalGuests.length) : "1");
       formData.append("additional_guests", additionalGuests.join(", ") || "None");
       formData.append("dietary_restrictions", dietary || "None specified");
-      formData.append("after_party", attending === "yes" ? (afterParty === "yes" ? "Yes" : "No") : "N/A");
-      formData.append("late_brunch", attending === "yes" ? (lateBrunch === "yes" ? "Yes" : "No") : "N/A");
+      formData.append("after_party_guests", attending === "yes" ? (afterPartyGuests.join(", ") || "None") : "N/A");
+      formData.append("late_brunch_guests", attending === "yes" ? (lateBrunchGuests.join(", ") || "None") : "N/A");
       formData.append("address", [
         form.address_line1.value.trim(),
         form.address_line2.value.trim(),

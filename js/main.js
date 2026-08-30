@@ -56,9 +56,9 @@
     });
   }
 
-  // ── Shared swipeable photo-strip carousel ────────────────
-  // Used for both the hero photo strip and the Photos gallery — a plain
-  // scroll-snap track with optional dot indicators, prev/next arrows, and
+  // ── Swipeable photo-strip carousel ───────────────────────
+  // Powers the hero photo strip — a plain scroll-snap track with optional
+  // dot indicators, prev/next arrows, and
   // optional autoplay (opts.autoplayMs) that loops back to the start,
   // pauses while the user is interacting, and pauses while the tab is
   // hidden so it doesn't churn in the background.
@@ -151,13 +151,6 @@
     track: document.querySelector("[data-hero-track]"),
     dots: document.querySelector("[data-hero-dots]"),
     autoplayMs: 4000,
-  });
-
-  initTrackCarousel({
-    track: document.querySelector("[data-gallery-track]"),
-    dots: document.querySelector("[data-gallery-dots]"),
-    prev: document.querySelector("[data-gallery-prev]"),
-    next: document.querySelector("[data-gallery-next]"),
   });
 
   // ── Countdown ───────────────────────────────────────────

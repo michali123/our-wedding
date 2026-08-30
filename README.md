@@ -5,11 +5,11 @@ of its own — plain HTML/CSS/JS that you can host anywhere for free.
 
 ## What's here
 
-- `index.html` — the whole site (hero photo carousel, photo gallery, event
+- `index.html` — the whole site (opening reveal, hero photo carousel, event
   details, travel, gifts note, FAQ, RSVP)
 - `css/styles.css` — all styling
-- `js/main.js` — hero + gallery carousels, countdown timer, mobile nav, FAQ
-  accordion, RSVP form submission
+- `js/main.js` — opening reveal, hero carousel, countdown timer, mobile nav,
+  FAQ accordion, RSVP form submission
 - `images/` — where your photos go (see `images/README.md` for exact
   filenames)
 
@@ -45,8 +45,8 @@ Everything lives in `index.html`:
   `January 17, 2027`, and update `data-target` on the `<div class="countdown">`
   (an ISO datetime) to match.
 - **Event details** — the three cards inside `<section id="details">`.
-- **Photos** — see `images/README.md` for how to add your own; the gallery
-  carousel is `<section id="gallery">`.
+- **Photos** — the hero photo strip at the top of the page (and the opening
+  reveal) — see `images/README.md` for filenames.
 - **FAQ** — the `<div class="faq-item">` blocks inside `<section id="faq">`.
 - **Travel** — its own `<section>` block, currently placeholders ("to be
   announced") — fill in the real venue/hotel once you have it.

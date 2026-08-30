@@ -29,21 +29,6 @@ hero-4.jpg
 hero-5.jpg
 ```
 
-## Photo gallery (swipeable carousel further down the page)
-
-8 photos, portrait/4:5 orientation works best (they display as tall cards).
-
-```
-gallery-1.jpg
-gallery-2.jpg
-gallery-3.jpg
-gallery-4.jpg
-gallery-5.jpg
-gallery-6.jpg
-gallery-7.jpg
-gallery-8.jpg
-```
-
 ## Tips
 
 - **Format:** `.jpg` (as named above). If you'd rather use `.png` or `.webp`,
@@ -51,9 +36,17 @@ gallery-8.jpg
   `index.html`.
 - **File size:** keep each photo under ~500KB if you can (export at ~1600–2000px
   on the long edge) — keeps the site fast to load, especially on phones.
-- **Fewer than 5 hero photos or 8 gallery photos?** Delete the unused
-  `<div class="hero-photo-slide">...</div>` or `<div class="gallery-slide">...</div>`
-  blocks in `index.html` for the ones you're not using — the carousels adapt
-  automatically to however many slides are in the markup.
+- **Fewer than 5 hero photos?** Delete the unused
+  `<div class="hero-photo-slide">...</div>` blocks in `index.html` for the
+  ones you're not using — the carousel adapts automatically to however many
+  slides are in the markup.
 - Once you commit and push the images, GitHub Pages picks them up
   automatically within a minute or two.
+
+## Not currently used: `gallery-1.jpg`, `gallery-2.jpg`
+
+These two are still in this folder from when there was a separate Photos
+gallery section — that section was removed since the hero strip already
+covers photos, so nothing in `index.html` references them anymore. Left in
+place in case you want to swap one into the hero strip later; delete them
+if you'd rather clean up.

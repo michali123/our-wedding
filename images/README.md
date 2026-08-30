@@ -16,7 +16,7 @@ best, same as the hero strip below.
 
 ## Hero photo strip (top of page, above your names)
 
-7 photos, shown edge-to-edge in a filmstrip that scrolls itself
+6 photos, shown edge-to-edge in a filmstrip that scrolls itself
 continuously and loops — no swiping or tapping needed. Each photo keeps
 its own natural aspect ratio at a shared height rather than being cropped
 into equal-width columns, so both portrait and landscape shots work; a
@@ -29,10 +29,12 @@ hero-3.jpg
 hero-4.jpg
 hero-5.jpg
 hero-6.jpg
-hero-7.jpg
 ```
 
-Adding more? Each new `hero-N.jpg` needs a matching `<div class="hero-photo-slide">` block added **twice** in `index.html` — once in the first (real) set and once in the second (`aria-hidden="true"`) set right after it, in the same order both times. The two sets must stay identical, or the loop will visibly jump where they diverge. Also bump the `36s` in `.hero-photos-track`'s `animation` (in `css/styles.css`) proportionally so the pace per photo doesn't speed up — the comment right above it has the math.
+Keep every hero photo distinct — a repeated shot in the strip is
+noticeable once it's looping continuously.
+
+Adding more? Each new `hero-N.jpg` needs a matching `<div class="hero-photo-slide">` block added **twice** in `index.html` — once in the first (real) set and once in the second (`aria-hidden="true"`) set right after it, in the same order both times. The two sets must stay identical, or the loop will visibly jump where they diverge. Also bump the `31s` in `.hero-photos-track`'s `animation` (in `css/styles.css`) proportionally so the pace per photo doesn't speed up — the comment right above it has the math.
 
 ## Tips
 

@@ -88,12 +88,29 @@ body {
 }
 
 .intro-eyebrow {
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 600;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.5rem;
+  color: var(--ivory);
+}
+.intro-eyebrow-big {
+  font-family: var(--font-display);
+  font-size: 1.9rem;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.32em;
+  letter-spacing: 0.22em;
+}
+.intro-eyebrow-script {
+  font-family: var(--font-script);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.15rem;
+  letter-spacing: 0.01em;
   color: rgba(254, 253, 251, 0.85);
+  position: relative;
+  top: -0.6rem;
+  margin: 0 -0.15rem;
 }
 .intro-names {
   margin: 0.75rem 0 0;
@@ -125,6 +142,8 @@ body {
 
 @media (min-width: 640px) {
   .intro-names { font-size: 3.5rem; }
+  .intro-eyebrow-big { font-size: 2.75rem; }
+  .intro-eyebrow-script { font-size: 1.6rem; top: -0.85rem; }
 }
 
 h1, h2, h3 {
@@ -304,10 +323,10 @@ a { color: inherit; text-decoration: none; }
   height: 64vh;
   min-height: 380px;
   max-height: 640px;
-  /* Duration scales with photo count (currently 7) so the pace per photo
+  /* Duration scales with photo count (currently 6) so the pace per photo
      stays constant as more are added — keep this proportional if you add
      or remove hero-N.jpg slides (~5.2s per photo). */
-  animation: hero-scroll 36s linear infinite;
+  animation: hero-scroll 31s linear infinite;
 }
 
 @keyframes hero-scroll {

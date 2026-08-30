@@ -3,41 +3,24 @@
   "use strict";
 
   // ── Opening reveal ───────────────────────────────────────
-  // Shown once per browser session (sessionStorage) — a repeat visit or a
-  // page refresh mid-browsing shouldn't force guests through it again.
+  // Plays on every page load/refresh — no "seen it already" skip.
   var intro = document.getElementById("intro");
   if (intro) {
-    var seenIntro = false;
-    try {
-      seenIntro = sessionStorage.getItem("introSeen") === "1";
-    } catch (e) {
-      // Storage blocked (private mode, etc.) — just show the intro every time.
-    }
+    document.documentElement.style.overflow = "hidden";
 
-    if (seenIntro) {
-      intro.classList.add("closed");
-    } else {
-      document.documentElement.style.overflow = "hidden";
+    var introOpened = false;
+    var openIntro = function () {
+      if (introOpened) return;
+      introOpened = true;
+      intro.classList.add("opening");
+      document.documentElement.style.overflow = "";
+      setTimeout(function () {
+        intro.classList.add("closed");
+      }, 1300);
+    };
 
-      var introOpened = false;
-      var openIntro = function () {
-        if (introOpened) return;
-        introOpened = true;
-        try {
-          sessionStorage.setItem("introSeen", "1");
-        } catch (e) {
-          // Ignore — worst case it shows again next time.
-        }
-        intro.classList.add("opening");
-        document.documentElement.style.overflow = "";
-        setTimeout(function () {
-          intro.classList.add("closed");
-        }, 1300);
-      };
-
-      intro.addEventListener("click", openIntro);
-      setTimeout(openIntro, 2600);
-    }
+    intro.addEventListener("click", openIntro);
+    setTimeout(openIntro, 2600);
   }
 
   // ── Mobile nav ──────────────────────────────────────────

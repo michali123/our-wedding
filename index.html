@@ -71,9 +71,15 @@
 
   <!-- ══════════════════════ Hero ══════════════════════ -->
   <section id="top">
-    <!-- Flush, edge-to-edge photo strip — swipeable, no overlay text. -->
+    <!-- Flush, edge-to-edge photo strip that scrolls itself continuously —
+         each photo keeps its own natural aspect ratio at a shared height
+         (not forced into equal-width columns), a plain CSS animation, no
+         JS. The slide set is duplicated once so the loop is seamless: the
+         animation runs from translateX(0) to translateX(-50%), and since
+         the second half is identical to the first, the seam is invisible.
+         The duplicate is aria-hidden — it's the same content again. -->
     <div class="hero-photos">
-      <div class="hero-photos-track" data-hero-track>
+      <div class="hero-photos-track">
         <div class="hero-photo-slide">
           <img src="images/hero-1.jpg" alt="Josh and Michal" onerror="this.parentElement.classList.add('img-missing')" />
           <div class="img-placeholder"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg><span>hero-1.jpg</span></div>
@@ -94,8 +100,27 @@
           <img src="images/hero-5.jpg" alt="Josh and Michal" onerror="this.parentElement.classList.add('img-missing')" />
           <div class="img-placeholder"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg><span>hero-5.jpg</span></div>
         </div>
+        <div class="hero-photo-slide" aria-hidden="true">
+          <img src="images/hero-1.jpg" alt="" onerror="this.parentElement.classList.add('img-missing')" />
+          <div class="img-placeholder"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg><span>hero-1.jpg</span></div>
+        </div>
+        <div class="hero-photo-slide" aria-hidden="true">
+          <img src="images/hero-2.jpg" alt="" onerror="this.parentElement.classList.add('img-missing')" />
+          <div class="img-placeholder"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg><span>hero-2.jpg</span></div>
+        </div>
+        <div class="hero-photo-slide" aria-hidden="true">
+          <img src="images/hero-3.jpg" alt="" onerror="this.parentElement.classList.add('img-missing')" />
+          <div class="img-placeholder"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg><span>hero-3.jpg</span></div>
+        </div>
+        <div class="hero-photo-slide" aria-hidden="true">
+          <img src="images/hero-4.jpg" alt="" onerror="this.parentElement.classList.add('img-missing')" />
+          <div class="img-placeholder"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg><span>hero-4.jpg</span></div>
+        </div>
+        <div class="hero-photo-slide" aria-hidden="true">
+          <img src="images/hero-5.jpg" alt="" onerror="this.parentElement.classList.add('img-missing')" />
+          <div class="img-placeholder"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg><span>hero-5.jpg</span></div>
+        </div>
       </div>
-      <div class="hero-photos-dots" data-hero-dots></div>
     </div>
 
     <!-- White info block — names, date, verse, countdown, CTA. -->

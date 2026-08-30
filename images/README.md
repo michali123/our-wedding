@@ -16,10 +16,11 @@ best, same as the hero strip below.
 
 ## Hero photo strip (top of page, above your names)
 
-5 photos, shown edge-to-edge, 2 visible at a time on mobile (swipe to see
-more). **Portrait orientation works best** — the strip is tall and each
-photo gets cropped to fill its column, so a vertical shot (like a
-phone-camera portrait photo) will look best.
+5 photos, shown edge-to-edge in a filmstrip that scrolls itself
+continuously and loops — no swiping or tapping needed. Each photo keeps
+its own natural aspect ratio at a shared height rather than being cropped
+into equal-width columns, so both portrait and landscape shots work; a
+mix of orientations (like the reference site) reads nicely.
 
 ```
 hero-1.jpg

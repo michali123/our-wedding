@@ -299,49 +299,45 @@ a { color: inherit; text-decoration: none; }
 
 /* ── Hero ────────────────────────────────────────────────── */
 
-/* Flush, edge-to-edge photo strip — swipeable, no dark overlay. */
-.hero-photos { background: var(--ivory); }
+/* #top gets the global `section { padding: 5rem 0 }` like every other
+   section — override it to zero so the photo strip sits flush under the
+   nav instead of leaving a blank band above it. */
+#top { padding: 0; }
+
+/* A self-scrolling filmstrip: each photo keeps its own aspect ratio at a
+   shared height (so a portrait crop and a wider one sit naturally side by
+   side, like the reference, instead of being force-cropped into equal
+   columns), scrolling continuously via CSS animation — no JS, no dots,
+   no snap-to-slide. overflow:hidden on the wrapper is what actually crops
+   the strip to the viewport; the track itself is exactly as wide as its
+   (doubled) content. */
+.hero-photos {
+  overflow: hidden;
+  background: var(--ivory);
+}
 
 .hero-photos-track {
   display: flex;
+  width: max-content;
   height: 64vh;
   min-height: 380px;
   max-height: 640px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
+  animation: hero-scroll 26s linear infinite;
 }
-.hero-photos-track::-webkit-scrollbar { display: none; }
-.hero-photos-track { scrollbar-width: none; }
+
+@keyframes hero-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
 
 .hero-photo-slide {
   position: relative;
-  flex: 0 0 50%;
+  flex: 0 0 auto;
   height: 100%;
-  scroll-snap-align: start;
   border-right: 2px solid var(--ivory);
 }
-.hero-photo-slide:last-child { border-right: none; }
-.hero-photo-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-.hero-photos-dots {
-  padding: 1rem 0 0;
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-}
-.hero-photos-dots button {
-  width: 0.4rem;
-  height: 0.4rem;
-  border-radius: 9999px;
-  border: none;
-  background: var(--line);
-  cursor: pointer;
-  padding: 0;
-  transition: all 200ms ease;
-}
-.hero-photos-dots button.active { background: var(--ink); width: 1.1rem; }
+.hero-photo-slide img { height: 100%; width: auto; display: block; }
+.hero-photo-slide.img-missing { width: 40vw; max-width: 320px; }
 
 /* White info block — names, date, verse, countdown, CTA. */
 .hero-info {
@@ -477,12 +473,6 @@ a { color: inherit; text-decoration: none; }
   .hero-title-stacked .amp { font-size: 1.1rem; }
   .countdown .unit { padding: 0 1.75rem; }
   .countdown .unit .value { font-size: 2.75rem; }
-}
-@media (min-width: 700px) {
-  .hero-photo-slide { flex-basis: 33.333%; }
-}
-@media (min-width: 1100px) {
-  .hero-photo-slide { flex-basis: 25%; }
 }
 
 /* ── Section scaffolding ─────────────────────────────────── */

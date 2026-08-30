@@ -779,19 +779,6 @@ section { position: relative; padding: 5rem 0; }
 .hotel-similar-link { font-size: 0.9rem; }
 .hotel-airbnb-note { font-size: 0.9rem; color: var(--ink-muted); }
 
-.stay22-map { margin-top: 3rem; }
-.stay22-map-label {
-  text-align: center;
-  font-weight: 600;
-  margin-bottom: 0.85rem;
-}
-.stay22-map iframe {
-  display: block;
-  width: 100%;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-}
-
 .plain-list {
   margin: 0;
   padding-left: 1.1rem;

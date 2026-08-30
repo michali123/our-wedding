@@ -150,7 +150,7 @@
     });
   });
 
-  // ── Guest count field only matters when attending ───────
+  // ── Additional guests (named, only shown/relevant when attending) ──
   var attendingGroup = document.querySelector('[data-chip-group="attending"]');
   var guestCountWrap = document.querySelector("[data-guest-count-wrap]");
   if (attendingGroup && guestCountWrap) {
@@ -160,6 +160,41 @@
     };
     attendingGroup.addEventListener("chip-change", syncGuestCount);
     syncGuestCount();
+  }
+
+  var MAX_ADDITIONAL_GUESTS = 9; // party of 10 total, including the RSVP'ing guest
+  var guestList = document.querySelector("[data-guest-list]");
+  var addGuestBtn = document.querySelector("[data-add-guest]");
+  if (guestList && addGuestBtn) {
+    var addGuestRow = function () {
+      if (guestList.children.length >= MAX_ADDITIONAL_GUESTS) return;
+      var row = document.createElement("div");
+      row.className = "guest-row";
+
+      var input = document.createElement("input");
+      input.type = "text";
+      input.className = "field";
+      input.placeholder = "Guest name";
+      input.setAttribute("data-guest-name", "");
+
+      var removeBtn = document.createElement("button");
+      removeBtn.type = "button";
+      removeBtn.className = "remove-guest-btn";
+      removeBtn.setAttribute("aria-label", "Remove this guest");
+      removeBtn.innerHTML =
+        '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+      removeBtn.addEventListener("click", function () {
+        row.remove();
+        addGuestBtn.disabled = guestList.children.length >= MAX_ADDITIONAL_GUESTS;
+      });
+
+      row.appendChild(input);
+      row.appendChild(removeBtn);
+      guestList.appendChild(row);
+      addGuestBtn.disabled = guestList.children.length >= MAX_ADDITIONAL_GUESTS;
+      input.focus();
+    };
+    addGuestBtn.addEventListener("click", addGuestRow);
   }
 
   // ── RSVP form submission (Formspree, AJAX) ──────────────
@@ -202,6 +237,20 @@
         return;
       }
 
+      var additionalGuests = [];
+      if (attending === "yes" && guestList) {
+        var guestInputs = guestList.querySelectorAll("[data-guest-name]");
+        for (var gi = 0; gi < guestInputs.length; gi++) {
+          var guestName = guestInputs[gi].value.trim();
+          if (!guestName) {
+            errorEl.textContent = "Please enter a name for each guest you've added, or remove that row.";
+            guestInputs[gi].focus();
+            return;
+          }
+          additionalGuests.push(guestName);
+        }
+      }
+
       var welcomeParty = chipValue('[data-chip-group="welcome_party"]');
       var dietaryTags = multiChipValues('[data-chip-group="dietary"]');
       var dietaryOther = form.dietary_other.value.trim();
@@ -212,7 +261,8 @@
       formData.append("email", email);
       formData.append("phone", form.phone.value.trim());
       formData.append("attending", attending === "yes" ? "Joyfully accepts" : "Regretfully declines");
-      formData.append("guest_count", attending === "yes" ? form.guest_count.value : "1");
+      formData.append("guest_count", attending === "yes" ? String(1 + additionalGuests.length) : "1");
+      formData.append("additional_guests", additionalGuests.join(", ") || "None");
       formData.append(
         "welcome_party",
         welcomeParty === "yes" ? "Yes, count us in" : welcomeParty === "no" ? "Can't make it" : "Not specified"

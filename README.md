@@ -6,7 +6,7 @@ of its own — plain HTML/CSS/JS that you can host anywhere for free.
 ## What's here
 
 - `index.html` — the whole site (hero photo carousel, photo gallery, event
-  details, travel, registry, FAQ, RSVP)
+  details, travel, gifts note, FAQ, RSVP)
 - `css/styles.css` — all styling
 - `js/main.js` — hero + gallery carousels, countdown timer, mobile nav, FAQ
   accordion, RSVP form submission
@@ -48,9 +48,10 @@ Everything lives in `index.html`:
 - **Photos** — see `images/README.md` for how to add your own; the gallery
   carousel is `<section id="gallery">`.
 - **FAQ** — the `<div class="faq-item">` blocks inside `<section id="faq">`.
-- **Travel, Registry** — their own `<section>` blocks, currently
-  placeholders ("to be announced") — fill in real venues/links once you have
-  them.
+- **Travel** — its own `<section>` block, currently placeholders ("to be
+  announced") — fill in the real venue/hotel once you have it.
+- **Gifts note** — `<section id="registry">`, the plain-text note about
+  skipping a registry — edit the paragraph directly.
 
 No build step — just edit and save. If you're using GitHub Pages, every push
 to `main` updates the live site automatically within a minute or two.

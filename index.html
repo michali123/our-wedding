@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Montserrat:wght@400;500;600;700&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Italiana&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,600&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Montserrat:wght@400;500;600;700&family=Frank+Ruhl+Libre:wght@400;500;700&display=swap"
     rel="stylesheet"
   />
   <link rel="stylesheet" href="css/styles.css" />
@@ -291,14 +291,10 @@
   <!-- ══════════════════════ Registry ══════════════════════ -->
   <section id="registry" class="section-cream">
     <div class="container container-prose" style="text-align:center;">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto;color:var(--blush-deep);"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect x="2" y="7" width="20" height="5"></rect><line x1="12" y1="22" x2="12" y2="7"></line><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path></svg>
-      <h2 style="margin-top:1rem;">Registry</h2>
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto;color:var(--ink-muted);"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+      <h2 style="margin-top:1rem;">Gifts</h2>
       <div class="divider"></div>
-      <p class="section-intro">Your presence at our wedding is the greatest gift of all. If you'd like to celebrate with something more, we've put together a small registry — and we're also so grateful for any contribution toward our honeymoon.</p>
-      <div class="registry-links">
-        <a class="btn btn-outline" href="#">Our Registry</a>
-        <a class="btn btn-outline" href="#">Honeymoon Fund</a>
-      </div>
+      <p class="section-intro">As we begin our married life together, we are especially grateful for the love and support from our family and friends. We already have a home full of everything we need, so we are skipping the traditional registry. Should you wish to give a gift, a monetary contribution toward our next chapter together would mean the world to us.</p>
     </div>
   </section>
 
@@ -388,8 +384,13 @@
         </fieldset>
 
         <div data-guest-count-wrap hidden>
-          <label class="field-label" for="guest_count">Number of guests in your party (including you)</label>
-          <input class="field" id="guest_count" name="guest_count" type="number" min="1" max="10" value="1" />
+          <label class="field-label">Is anyone joining you?</label>
+          <p class="field-hint">Add anyone else in your party — we just need their name.</p>
+          <div class="guest-list" data-guest-list></div>
+          <button type="button" class="add-guest-btn" data-add-guest>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Add a guest
+          </button>
         </div>
 
         <fieldset>

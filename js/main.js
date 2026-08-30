@@ -58,8 +58,10 @@
 
   // ── Shared swipeable photo-strip carousel ────────────────
   // Used for both the hero photo strip and the Photos gallery — a plain
-  // scroll-snap track with optional dot indicators and prev/next arrows.
-  // No autoplay, no crossfade: the user drives it, like the reference site.
+  // scroll-snap track with optional dot indicators, prev/next arrows, and
+  // optional autoplay (opts.autoplayMs) that loops back to the start,
+  // pauses while the user is interacting, and pauses while the tab is
+  // hidden so it doesn't churn in the background.
   function initTrackCarousel(opts) {
     var track = opts.track;
     if (!track) return;
@@ -111,11 +113,44 @@
         }, 100);
       });
     }
+
+    if (opts.autoplayMs && slides.length > 1) {
+      var autoplayTimer;
+      var resumeTimer;
+
+      function tick() {
+        if (document.hidden) return;
+        var next = currentIndex() + 1;
+        scrollTo(next >= slides.length ? 0 : next);
+      }
+      function startAutoplay() {
+        clearInterval(autoplayTimer);
+        autoplayTimer = setInterval(tick, opts.autoplayMs);
+      }
+      function pauseThenResume() {
+        clearInterval(autoplayTimer);
+        clearTimeout(resumeTimer);
+        resumeTimer = setTimeout(startAutoplay, opts.autoplayMs);
+      }
+
+      // Any sign of the user driving the carousel themselves pauses
+      // autoplay for one interval, then it picks back up. Deliberately NOT
+      // using mouseenter/mouseleave here: on touch devices a tap can fire a
+      // synthetic mouseenter with no matching mouseleave, which would pause
+      // autoplay forever with nothing left to resume it. pointerdown covers
+      // touch and mouse alike without that trap.
+      track.addEventListener("pointerdown", pauseThenResume);
+      if (prevBtn) prevBtn.addEventListener("click", pauseThenResume);
+      if (nextBtn) nextBtn.addEventListener("click", pauseThenResume);
+
+      startAutoplay();
+    }
   }
 
   initTrackCarousel({
     track: document.querySelector("[data-hero-track]"),
     dots: document.querySelector("[data-hero-dots]"),
+    autoplayMs: 4000,
   });
 
   initTrackCarousel({

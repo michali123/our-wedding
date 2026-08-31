@@ -90,34 +90,6 @@
   // #hero-photos-track / @keyframes hero-scroll in styles.css) — no JS
   // needed to drive it.
 
-  // ── Countdown ───────────────────────────────────────────
-  var countdownEl = document.querySelector("[data-countdown]");
-  if (countdownEl) {
-    var targetISO = countdownEl.getAttribute("data-target");
-    var target = new Date(targetISO).getTime();
-    var daysEl = countdownEl.querySelector("[data-days]");
-    var hoursEl = countdownEl.querySelector("[data-hours]");
-    var minsEl = countdownEl.querySelector("[data-mins]");
-    var secsEl = countdownEl.querySelector("[data-secs]");
-
-    function pad(n) { return String(n).padStart(2, "0"); }
-
-    function tick() {
-      var diff = target - Date.now();
-      if (diff <= 0) {
-        countdownEl.style.display = "none";
-        return;
-      }
-      daysEl.textContent = pad(Math.floor(diff / 86400000));
-      hoursEl.textContent = pad(Math.floor((diff / 3600000) % 24));
-      minsEl.textContent = pad(Math.floor((diff / 60000) % 60));
-      secsEl.textContent = pad(Math.floor((diff / 1000) % 60));
-    }
-
-    tick();
-    setInterval(tick, 1000);
-  }
-
   // ── FAQ accordion ───────────────────────────────────────
   document.querySelectorAll(".faq-item").forEach(function (item) {
     var question = item.querySelector(".faq-question");

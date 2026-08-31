@@ -28,7 +28,7 @@
     href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,600&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Montserrat:wght@400;500;600;700&family=Heebo:wght@400;500;700&display=swap"
     rel="stylesheet"
   />
-  <link rel="stylesheet" href="css/styles.css?v=5" />
+  <link rel="stylesheet" href="css/styles.css?v=6" />
   <!-- The opening reveal needs JS to dismiss itself — without it, don't
        let it block the page. -->
   <noscript><style>.intro { display: none !important; }</style></noscript>
@@ -546,7 +546,7 @@
 
         <fieldset>
           <legend class="field-label">Will you be celebrating with us? *</legend>
-          <div class="chip-group" data-chip-group="attending">
+          <div class="chip-group" data-chip-group="attending" data-chip-mode="single">
             <button type="button" class="chip" data-value="yes" aria-pressed="false">Joyfully accepts</button>
             <button type="button" class="chip" data-value="no" aria-pressed="false">Regretfully declines</button>
           </div>
@@ -564,15 +564,21 @@
 
         <fieldset>
           <legend class="field-label">Food restrictions or allergies</legend>
-          <div class="chip-group" data-chip-group="dietary">
-            <button type="button" class="chip" data-value="Vegetarian" aria-pressed="false">Vegetarian</button>
-            <button type="button" class="chip" data-value="Vegan" aria-pressed="false">Vegan</button>
-            <button type="button" class="chip" data-value="Gluten-Free" aria-pressed="false">Gluten-Free</button>
-            <button type="button" class="chip" data-value="Kosher" aria-pressed="false">Kosher</button>
-            <button type="button" class="chip" data-value="Dairy-Free" aria-pressed="false">Dairy-Free</button>
-            <button type="button" class="chip" data-value="Nut Allergy" aria-pressed="false">Nut Allergy</button>
+          <p class="field-hint">Let us know for you and anyone joining you.</p>
+
+          <div class="dietary-block" data-dietary-primary>
+            <div class="chip-group" data-chip-group="dietary-you">
+              <button type="button" class="chip" data-value="Vegetarian" aria-pressed="false">Vegetarian</button>
+              <button type="button" class="chip" data-value="Vegan" aria-pressed="false">Vegan</button>
+              <button type="button" class="chip" data-value="Gluten-Free" aria-pressed="false">Gluten-Free</button>
+              <button type="button" class="chip" data-value="Kosher" aria-pressed="false">Kosher</button>
+              <button type="button" class="chip" data-value="Dairy-Free" aria-pressed="false">Dairy-Free</button>
+              <button type="button" class="chip" data-value="Nut Allergy" aria-pressed="false">Nut Allergy</button>
+            </div>
+            <input class="field" style="margin-top:0.75rem;" data-dietary-other type="text" placeholder="Anything else we should know? (e.g. shellfish allergy)" />
           </div>
-          <input class="field" style="margin-top:0.75rem;" name="dietary_other" type="text" placeholder="Anything else we should know? (e.g. shellfish allergy)" />
+
+          <div data-dietary-guest-list></div>
         </fieldset>
 
         <div data-attending-wrap hidden>
@@ -653,7 +659,7 @@
   </button>
 
   <script>window.DOVES_CONFIG = { ambient: false };</script>
-  <script src="js/doves.js?v=5" defer></script>
-  <script src="js/main.js?v=5"></script>
+  <script src="js/doves.js?v=6" defer></script>
+  <script src="js/main.js?v=6"></script>
 </body>
 </html>

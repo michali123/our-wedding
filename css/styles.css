@@ -1047,6 +1047,19 @@ legend.field-label { padding: 0; margin-bottom: 0.6rem; }
 
 .field-hint { font-size: 0.8rem; color: var(--ink-muted); margin-top: -0.2rem; margin-bottom: 0.75rem; }
 
+.dietary-block + .dietary-block,
+[data-dietary-guest-list] .dietary-block:first-child {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+.dietary-guest-name {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
 .guest-list { display: flex; flex-direction: column; gap: 0.6rem; }
 .guest-row { display: flex; align-items: center; gap: 0.5rem; }
 

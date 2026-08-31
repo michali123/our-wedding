@@ -124,11 +124,13 @@
   }
 
   // ── Toggle chips (attending / dietary) ──
-  document.querySelectorAll("[data-chip-group]").forEach(function (group) {
-    var mode = group.getAttribute("data-chip-group"); // "single" or "multi"
+  // data-chip-mode="single" makes the group radio-like (one pressed at a
+  // time); groups without it (e.g. dietary) toggle independently.
+  function wireChipGroup(group) {
+    var single = group.getAttribute("data-chip-mode") === "single";
     group.querySelectorAll(".chip").forEach(function (chip) {
       chip.addEventListener("click", function () {
-        if (mode === "single") {
+        if (single) {
           group.querySelectorAll(".chip").forEach(function (c) {
             c.setAttribute("aria-pressed", "false");
           });
@@ -140,7 +142,8 @@
         group.dispatchEvent(new CustomEvent("chip-change"));
       });
     });
-  });
+  }
+  document.querySelectorAll("[data-chip-group]").forEach(wireChipGroup);
 
   // ── Additional guests (named, only shown/relevant when attending) ──
   var attendingGroup = document.querySelector('[data-chip-group="attending"]');
@@ -155,6 +158,56 @@
     };
     attendingGroup.addEventListener("chip-change", syncGuestCount);
     syncGuestCount();
+  }
+
+  // ── Per-guest dietary blocks (paired 1:1, in order, with guest rows) ──
+  var DIETARY_OPTIONS = ["Vegetarian", "Vegan", "Gluten-Free", "Kosher", "Dairy-Free", "Nut Allergy"];
+  var dietaryGuestList = document.querySelector("[data-dietary-guest-list]");
+  var dietaryGuestCounter = 0;
+
+  function buildDietaryBlock() {
+    var block = document.createElement("div");
+    block.className = "dietary-block";
+
+    var nameLabel = document.createElement("p");
+    nameLabel.className = "dietary-guest-name";
+    nameLabel.textContent = "Guest";
+    block.appendChild(nameLabel);
+
+    var chipGroup = document.createElement("div");
+    chipGroup.className = "chip-group";
+    chipGroup.setAttribute("data-chip-group", "dietary-guest-" + (dietaryGuestCounter++));
+    DIETARY_OPTIONS.forEach(function (value) {
+      var chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "chip";
+      chip.setAttribute("data-value", value);
+      chip.setAttribute("aria-pressed", "false");
+      chip.textContent = value;
+      chipGroup.appendChild(chip);
+    });
+    block.appendChild(chipGroup);
+    wireChipGroup(chipGroup);
+
+    var otherInput = document.createElement("input");
+    otherInput.className = "field";
+    otherInput.style.marginTop = "0.75rem";
+    otherInput.type = "text";
+    otherInput.setAttribute("data-dietary-other", "");
+    otherInput.placeholder = "Anything else we should know? (e.g. shellfish allergy)";
+    block.appendChild(otherInput);
+
+    return { block: block, nameLabel: nameLabel };
+  }
+
+  function syncDietaryGuestNames() {
+    if (!guestList || !dietaryGuestList) return;
+    var names = guestList.querySelectorAll("[data-guest-name]");
+    var labels = dietaryGuestList.querySelectorAll(".dietary-guest-name");
+    for (var i = 0; i < labels.length; i++) {
+      var name = names[i] ? names[i].value.trim() : "";
+      labels[i].textContent = name || "Guest " + (i + 1);
+    }
   }
 
   var MAX_ADDITIONAL_GUESTS = 9; // party of 10 total, including the RSVP'ing guest
@@ -172,6 +225,8 @@
       input.placeholder = "Guest name";
       input.setAttribute("data-guest-name", "");
 
+      var dietary = buildDietaryBlock();
+
       var removeBtn = document.createElement("button");
       removeBtn.type = "button";
       removeBtn.className = "remove-guest-btn";
@@ -180,15 +235,19 @@
         '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
       removeBtn.addEventListener("click", function () {
         row.remove();
+        dietary.block.remove();
         addGuestBtn.disabled = guestList.children.length >= MAX_ADDITIONAL_GUESTS;
+        syncDietaryGuestNames();
       });
 
       row.appendChild(input);
       row.appendChild(removeBtn);
       guestList.appendChild(row);
+      if (dietaryGuestList) dietaryGuestList.appendChild(dietary.block);
       addGuestBtn.disabled = guestList.children.length >= MAX_ADDITIONAL_GUESTS;
       input.focus();
       syncPartyGuestLists();
+      syncDietaryGuestNames();
     };
     addGuestBtn.addEventListener("click", addGuestRow);
   }
@@ -238,7 +297,10 @@
   if (fullNameInput) fullNameInput.addEventListener("input", syncPartyGuestLists);
   if (guestList) {
     guestList.addEventListener("input", function (e) {
-      if (e.target && e.target.hasAttribute("data-guest-name")) syncPartyGuestLists();
+      if (e.target && e.target.hasAttribute("data-guest-name")) {
+        syncPartyGuestLists();
+        syncDietaryGuestNames();
+      }
     });
     var partyObserver = new MutationObserver(syncPartyGuestLists);
     partyObserver.observe(guestList, { childList: true });
@@ -257,15 +319,6 @@
       if (!group) return null;
       var pressed = group.querySelector('.chip[aria-pressed="true"]');
       return pressed ? pressed.getAttribute("data-value") : null;
-    }
-
-    function multiChipValues(groupSelector) {
-      var group = document.querySelector(groupSelector);
-      if (!group) return [];
-      return Array.prototype.map.call(
-        group.querySelectorAll('.chip[aria-pressed="true"]'),
-        function (c) { return c.getAttribute("data-value"); }
-      );
     }
 
     form.addEventListener("submit", function (e) {
@@ -299,9 +352,28 @@
         }
       }
 
-      var dietaryTags = multiChipValues('[data-chip-group="dietary"]');
-      var dietaryOther = form.dietary_other.value.trim();
-      var dietary = dietaryTags.concat(dietaryOther ? [dietaryOther] : []).join(", ");
+      var collectDietaryEntry = function (name, container) {
+        if (!container) return "";
+        var tags = Array.prototype.map.call(
+          container.querySelectorAll('.chip[aria-pressed="true"]'),
+          function (c) { return c.getAttribute("data-value"); }
+        );
+        var otherField = container.querySelector("[data-dietary-other]");
+        var other = otherField ? otherField.value.trim() : "";
+        var parts = tags.concat(other ? [other] : []);
+        return parts.length ? name + ": " + parts.join(", ") : "";
+      };
+      var dietaryEntries = [
+        collectDietaryEntry(fullName || "You", document.querySelector("[data-dietary-primary]")),
+      ];
+      if (dietaryGuestList) {
+        var dietaryBlocks = dietaryGuestList.querySelectorAll(".dietary-block");
+        for (var di = 0; di < dietaryBlocks.length; di++) {
+          var guestName = dietaryBlocks[di].querySelector(".dietary-guest-name").textContent;
+          dietaryEntries.push(collectDietaryEntry(guestName, dietaryBlocks[di]));
+        }
+      }
+      var dietary = dietaryEntries.filter(Boolean).join("; ");
 
       var checkedNames = function (container) {
         if (!container) return [];

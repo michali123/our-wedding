@@ -33,7 +33,7 @@
     };
 
     intro.addEventListener("click", openIntro);
-    setTimeout(openIntro, 4200);
+    setTimeout(openIntro, 8200);
   }
 
   // ── Mobile nav ──────────────────────────────────────────

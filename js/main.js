@@ -314,6 +314,8 @@
       var lateBrunchGuests = checkedNames(lateBrunchList);
 
       var formData = new FormData();
+      formData.append("access_key", "42ac7e80-b40c-4245-a4e9-9adc3b9233c7");
+      formData.append("subject", "New RSVP from " + fullName);
       formData.append("full_name", fullName);
       formData.append("email", email);
       formData.append("phone", form.phone.value.trim());
@@ -349,9 +351,7 @@
             successEl.scrollIntoView({ behavior: "smooth", block: "center" });
           } else {
             return res.json().then(function (data) {
-              throw new Error(
-                data && data.errors ? data.errors.map(function (e) { return e.message; }).join(", ") : "Something went wrong. Please try again."
-              );
+              throw new Error((data && data.message) || "Something went wrong. Please try again.");
             });
           }
         })

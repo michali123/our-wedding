@@ -809,12 +809,13 @@ section { position: relative; padding: 5rem 0; }
 .gift-signature {
   margin-top: 2rem;
   font-family: var(--font-display);
-  font-size: 1.4rem;
+  font-size: 1rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink);
 }
 .gift-signature .amp { color: var(--ink-muted); text-transform: none; }
+.gift-heart { margin-top: 0.75rem; color: var(--ink-muted); }
 
 .gift-options {
   margin-top: 3rem;

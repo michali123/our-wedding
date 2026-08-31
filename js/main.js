@@ -106,6 +106,23 @@
     });
   });
 
+  // ── Travel & Stay: expand to see all hotel options ──────
+  var travelToggle = document.querySelector("[data-travel-toggle]");
+  var travelPanel = document.querySelector("[data-travel-panel]");
+  if (travelToggle && travelPanel) {
+    travelToggle.addEventListener("click", function () {
+      var willOpen = travelPanel.hidden;
+      travelPanel.hidden = !willOpen;
+      travelToggle.setAttribute("aria-expanded", String(willOpen));
+      travelToggle.textContent = willOpen
+        ? "Show Fewer Travel & Stay Options"
+        : "Expand to See All Travel & Stay Options";
+      if (!willOpen) {
+        travelToggle.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+    });
+  }
+
   // ── Toggle chips (attending / dietary) ──
   document.querySelectorAll("[data-chip-group]").forEach(function (group) {
     var mode = group.getAttribute("data-chip-group"); // "single" or "multi"

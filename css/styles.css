@@ -707,33 +707,87 @@ section { position: relative; padding: 5rem 0; }
 }
 .section-cream .card { background: var(--ivory); }
 
-.event-list {
+.timeline-heading {
+  font-family: "Playfair Display", Georgia, serif;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.event-timeline {
   margin-top: 3.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3rem;
+  max-width: 34rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.event-divider { width: 100%; max-width: 20rem; height: 1px; background: var(--line); }
+.timeline-item { display: flex; gap: 1.25rem; }
 
-.event-block {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 0.35rem;
+.timeline-date {
+  flex-shrink: 0;
+  width: 4.25rem;
+  padding-top: 0.15rem;
+  text-align: right;
 }
-.event-icon { color: var(--ink-muted); margin-bottom: 0.5rem; }
-.event-block h3 { font-size: 1.75rem; }
-.event-tagline { font-size: 0.9rem; font-style: italic; color: var(--ink-muted); }
-.event-time { margin-top: 0.75rem; font-size: 0.95rem; color: var(--ink); }
-.event-hebrew-date { font-family: var(--font-hebrew); direction: rtl; color: var(--ink-muted); display: inline-block; margin-top: 0.25rem; }
-.event-venue { margin-top: 1rem; }
-.event-venue-name { margin: 0; font-weight: 600; }
-.event-dress { margin-top: 0.5rem; font-size: 0.85rem; color: var(--ink-muted); }
-.event-actions { margin-top: 1.25rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; }
-.event-btn { padding: 0.6rem 1.75rem; font-size: 0.75rem; }
+.timeline-day {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  line-height: 1;
+  color: var(--ink);
+}
+.timeline-dow {
+  display: block;
+  margin-top: 0.4rem;
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  line-height: 1.4;
+}
+
+.timeline-content {
+  position: relative;
+  flex: 1;
+  border-left: 1px solid var(--line);
+  padding: 0.55rem 0 2.75rem 1.75rem;
+}
+.timeline-item:last-child .timeline-content { padding-bottom: 0.1rem; }
+.timeline-content::before {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: 0.7em;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--ink);
+}
+.timeline-content h3 { font-size: 1.75rem; }
+.timeline-content .event-tagline { font-size: 0.9rem; font-style: italic; color: var(--ink-muted); margin-top: 0.35rem; }
+.timeline-content .event-time { margin-top: 0.9rem; font-size: 0.95rem; color: var(--ink); }
+.timeline-content .event-venue { margin-top: 0.9rem; }
+.timeline-content .event-venue-name { margin: 0; font-weight: 600; }
+.timeline-address { margin-top: 0.2rem; font-size: 0.9rem; color: var(--ink-muted); line-height: 1.5; }
+
+.timeline-actions { margin-top: 1.1rem; display: flex; flex-wrap: wrap; gap: 1.75rem; }
+.timeline-link {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: color 150ms ease;
+}
+.timeline-link:hover { color: var(--ink-muted); }
 
 .map-link { color: var(--ink-muted); text-decoration: none; text-underline-offset: 2px; }
 .map-link:hover { color: var(--ink); text-decoration: underline; }

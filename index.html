@@ -357,92 +357,68 @@
           </svg>
         </div>
         <p class="eyebrow">Save the date(s)</p>
-        <h2>Event Details</h2>
-        <div class="divider"></div>
+        <h2 class="timeline-heading">The Weekend</h2>
       </div>
 
-      <div class="event-list">
+      <div class="event-timeline">
 
-        <div class="event-block">
-          <div class="event-icon">
-            <svg width="34" height="34" viewBox="0 0 44 44">
-              <circle cx="17" cy="25" r="8" fill="none" stroke="#c9a15a" stroke-width="3.2"></circle>
-              <circle cx="27" cy="25" r="8" fill="none" stroke="#c9a15a" stroke-width="3.2"></circle>
-              <circle cx="17" cy="25" r="8" fill="none" stroke="#201d1a" stroke-width="0.7"></circle>
-              <circle cx="27" cy="25" r="8" fill="none" stroke="#201d1a" stroke-width="0.7"></circle>
-              <path d="M35,8 L36.3,11.7 L40,13 L36.3,14.3 L35,18 L33.7,14.3 L30,13 L33.7,11.7 Z" fill="#201d1a"></path>
-            </svg>
+        <div class="timeline-item">
+          <div class="timeline-date">
+            <span class="timeline-day">17</span>
+            <span class="timeline-dow">Sun &middot; Jan<br />2027</span>
           </div>
-          <h3>The Wedding</h3>
-          <p class="event-tagline">Chuppah at 5:00 PM, followed by dinner and dancing.</p>
-          <p class="event-time">Sunday, January 17, 2027 &middot; 5:00 PM &ndash; 11:00 PM</p>
-          <div class="event-venue">
-            <p class="event-venue-name">Fica Farms</p>
-            <a href="https://www.google.com/maps/search/?api=1&amp;query=Fica+Farms%2C+22401+SW+207th+Ave%2C+Homestead%2C+FL+33170" target="_blank" rel="noopener" class="map-link">22401 SW 207th Ave, Homestead<br />Miami, FL 33170 ↗</a>
-          </div>
-          <div class="event-actions">
-            <a class="btn btn-primary event-btn" href="https://www.google.com/maps/search/?api=1&amp;query=Fica+Farms%2C+22401+SW+207th+Ave%2C+Homestead%2C+FL+33170" target="_blank" rel="noopener">Map</a>
-            <div class="add-cal">
-              <button type="button" class="btn btn-primary event-btn add-cal-toggle" aria-haspopup="true" aria-expanded="false">Add to Calendar</button>
-              <div class="add-cal-menu" hidden>
-                <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Josh+%26+Michal%27s+Wedding&dates=20270117T220000Z%2F20270118T040000Z&details=Chuppah+at+5%3A00+PM.+Dinner+and+dancing+to+follow.&location=Fica+Farms%2C+22401+SW+207th+Ave%2C+Homestead%2C+FL+33170&sf=true&output=xml" target="_blank" rel="noopener">Google Calendar</a>
-                <a href="https://outlook.live.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&rru=addevent&subject=Josh+%26+Michal%27s+Wedding&startdt=2027-01-17T22%3A00%3A00Z&enddt=2027-01-18T04%3A00%3A00Z&body=Chuppah+at+5%3A00+PM.+Dinner+and+dancing+to+follow.&location=Fica+Farms%2C+22401+SW+207th+Ave%2C+Homestead%2C+FL+33170" target="_blank" rel="noopener">Outlook</a>
-                <a href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FJosh%20and%20Michal%20Wedding%2F%2FEN%0D%0ACALSCALE%3AGREGORIAN%0D%0ABEGIN%3AVEVENT%0D%0AUID%3Ajosh-michal-wedding-2027%40ourwedding%0D%0ADTSTAMP%3A20260830T000000Z%0D%0ADTSTART%3A20270117T220000Z%0D%0ADTEND%3A20270118T040000Z%0D%0ASUMMARY%3AJosh%20%26%20Michal's%20Wedding%0D%0ADESCRIPTION%3ACeremony%20at%205%3A00%20PM.%20Reception%206%3A00%20PM%20-%2011%3A00%20PM.%20Fica%20Farms%5C%2C%2022401%20SW%20207th%20Ave%5C%2C%20Homestead%5C%2C%20FL%2033170.%0D%0ALOCATION%3AFica%20Farms%5C%2C%2022401%20SW%20207th%20Ave%5C%2C%20Homestead%5C%2C%20FL%2033170%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="Josh-and-Michal-Wedding.ics">Apple / Other (.ics)</a>
+          <div class="timeline-content">
+            <h3>The Wedding</h3>
+            <p class="event-tagline">Chuppah at five, then dinner and dancing.</p>
+            <p class="event-time">5:00 PM &ndash; 11:00 PM</p>
+            <div class="event-venue">
+              <p class="event-venue-name">Fica Farms</p>
+              <p class="timeline-address">22401 SW 207th Ave<br />Homestead, FL 33170</p>
+            </div>
+            <div class="timeline-actions">
+              <a class="timeline-link" href="https://www.google.com/maps/search/?api=1&amp;query=Fica+Farms%2C+22401+SW+207th+Ave%2C+Homestead%2C+FL+33170" target="_blank" rel="noopener">View Map</a>
+              <div class="add-cal">
+                <button type="button" class="timeline-link add-cal-toggle" aria-haspopup="true" aria-expanded="false">Add to Calendar</button>
+                <div class="add-cal-menu" hidden>
+                  <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Josh+%26+Michal%27s+Wedding&dates=20270117T220000Z%2F20270118T040000Z&details=Chuppah+at+5%3A00+PM.+Dinner+and+dancing+to+follow.&location=Fica+Farms%2C+22401+SW+207th+Ave%2C+Homestead%2C+FL+33170&sf=true&output=xml" target="_blank" rel="noopener">Google Calendar</a>
+                  <a href="https://outlook.live.com/calendar/0/deeplink/compose?path=%2Fcalendar%2Faction%2Fcompose&rru=addevent&subject=Josh+%26+Michal%27s+Wedding&startdt=2027-01-17T22%3A00%3A00Z&enddt=2027-01-18T04%3A00%3A00Z&body=Chuppah+at+5%3A00+PM.+Dinner+and+dancing+to+follow.&location=Fica+Farms%2C+22401+SW+207th+Ave%2C+Homestead%2C+FL+33170" target="_blank" rel="noopener">Outlook</a>
+                  <a href="data:text/calendar;charset=utf-8,BEGIN%3AVCALENDAR%0D%0AVERSION%3A2.0%0D%0APRODID%3A-%2F%2FJosh%20and%20Michal%20Wedding%2F%2FEN%0D%0ACALSCALE%3AGREGORIAN%0D%0ABEGIN%3AVEVENT%0D%0AUID%3Ajosh-michal-wedding-2027%40ourwedding%0D%0ADTSTAMP%3A20260830T000000Z%0D%0ADTSTART%3A20270117T220000Z%0D%0ADTEND%3A20270118T040000Z%0D%0ASUMMARY%3AJosh%20%26%20Michal's%20Wedding%0D%0ADESCRIPTION%3ACeremony%20at%205%3A00%20PM.%20Reception%206%3A00%20PM%20-%2011%3A00%20PM.%20Fica%20Farms%5C%2C%2022401%20SW%20207th%20Ave%5C%2C%20Homestead%5C%2C%20FL%2033170.%0D%0ALOCATION%3AFica%20Farms%5C%2C%2022401%20SW%20207th%20Ave%5C%2C%20Homestead%5C%2C%20FL%2033170%0D%0AEND%3AVEVENT%0D%0AEND%3AVCALENDAR%0D%0A" download="Josh-and-Michal-Wedding.ics">Apple / Other (.ics)</a>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="event-divider"></div>
-
-        <div class="event-block">
-          <div class="event-icon">
-            <svg width="34" height="34" viewBox="0 0 44 44">
-              <line x1="22" y1="4" x2="22" y2="10" stroke="#201d1a" stroke-width="1.3" stroke-linecap="round"></line>
-              <circle cx="22" cy="24" r="13" fill="#f0c9d6" stroke="#201d1a" stroke-width="1.3"></circle>
-              <g stroke="#201d1a" stroke-width="0.8" opacity="0.55">
-                <path d="M9,24 L35,24"></path>
-                <path d="M22,11 L22,37"></path>
-                <path d="M12.8,14.8 L31.2,33.2"></path>
-                <path d="M31.2,14.8 L12.8,33.2"></path>
-                <ellipse cx="22" cy="24" rx="13" ry="5.2" fill="none"></ellipse>
-                <ellipse cx="22" cy="24" rx="5.2" ry="13" fill="none"></ellipse>
-              </g>
-              <path d="M35,7 L36,10 L39,11 L36,12 L35,15 L34,12 L31,11 L34,10 Z" fill="#c9748a"></path>
-              <path d="M8,15 L8.6,16.7 L10.3,17.3 L8.6,17.9 L8,19.6 L7.4,17.9 L5.7,17.3 L7.4,16.7 Z" fill="#c9748a"></path>
-            </svg>
+        <div class="timeline-item">
+          <div class="timeline-date">
+            <span class="timeline-day">17</span>
+            <span class="timeline-dow">Sun &middot; Jan<br />2027</span>
           </div>
-          <h3>After Party</h3>
-          <p class="event-tagline">Keeping the night going.</p>
-          <p class="event-time">Sunday, January 17, 2027 &middot; Time TBD</p>
-          <div class="event-venue">
-            <p class="event-venue-name">Venue TBD</p>
+          <div class="timeline-content">
+            <h3>After Party</h3>
+            <p class="event-tagline">Keeping the night going.</p>
+            <p class="event-time">Time to be announced</p>
+            <div class="event-venue">
+              <p class="event-venue-name">Venue to be announced</p>
+              <p class="timeline-address">We&rsquo;ll post the details here as soon as they&rsquo;re set.</p>
+            </div>
           </div>
-          <p class="event-dress">Details coming soon &mdash; check back closer to the date.</p>
         </div>
 
-        <div class="event-divider"></div>
-
-        <div class="event-block">
-          <div class="event-icon">
-            <svg width="34" height="34" viewBox="0 0 44 44">
-              <g stroke="#201d1a" stroke-width="1.3" stroke-linecap="round">
-                <circle cx="22" cy="17" r="7.5" fill="#f6cf7a"></circle>
-                <path d="M22,4 L22,7.2 M22,26.8 L22,30 M9,17 L12.2,17 M31.8,17 L35,17 M13.2,8.2 L15.5,10.5 M28.5,23.5 L30.8,25.8 M30.8,8.2 L28.5,10.5 M15.5,23.5 L13.2,25.8"></path>
-              </g>
-              <g fill="#efe6d8" stroke="#201d1a" stroke-width="1.2" stroke-linejoin="round">
-                <path d="M11,34 L33,34 L31,42 L13,42 Z"></path>
-                <path d="M31,35.5 C36,35 36,41 31.5,40.5" fill="none"></path>
-              </g>
-            </svg>
+        <div class="timeline-item">
+          <div class="timeline-date">
+            <span class="timeline-day">18</span>
+            <span class="timeline-dow">Mon &middot; Jan<br />2027</span>
           </div>
-          <h3>Late Brunch</h3>
-          <p class="event-tagline">One more meal together before we say goodbye.</p>
-          <p class="event-time">Monday, January 18, 2027 &middot; Time TBD</p>
-          <div class="event-venue">
-            <p class="event-venue-name">Venue TBD</p>
+          <div class="timeline-content">
+            <h3>Late Brunch</h3>
+            <p class="event-tagline">One more meal together before we say goodbye.</p>
+            <p class="event-time">Time to be announced</p>
+            <div class="event-venue">
+              <p class="event-venue-name">Venue to be announced</p>
+              <p class="timeline-address">We&rsquo;ll post the details here as soon as they&rsquo;re set.</p>
+            </div>
           </div>
-          <p class="event-dress">Details coming soon &mdash; check back closer to the date.</p>
         </div>
 
       </div>

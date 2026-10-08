@@ -64,13 +64,11 @@ body {
 .intro.lifting { transition: transform 1100ms cubic-bezier(0.65, 0, 0.35, 1); transform: translateY(-100%); }
 .intro.closed { display: none; }
 
-/* Four-flap "X-fold" envelope, built from a single photo (images/envelope.jpg)
-   of a real wax-sealed envelope. Each flap is the same full photo, sized to
-   cover the viewport and clipped to its own triangle, so the four pieces
-   tile back into the unbroken photo while closed — then each rotates away
-   from its own edge on open. The seal "window" uses a fixed background
-   attachment so its small circle samples the exact same viewport-locked
-   image as the flaps behind it, lining up with the photographed wax seal. */
+/* Envelope built from a single photo (images/envelope.jpg) of a real
+   wax-sealed envelope. Pressing the seal is the one interaction: the top
+   flap swings upward open (the other three edges simply fade out with
+   the body, rather than each folding open on their own) and the seal
+   breaks, revealing the page directly underneath. */
 .envelope {
   position: absolute;
   inset: 0;
@@ -78,39 +76,41 @@ body {
   perspective: 1800px;
   pointer-events: none;
 }
+.envelope-body,
+.envelope-flap-bottom,
+.envelope-flap-left,
+.envelope-flap-right {
+  transition: opacity 450ms ease 350ms;
+}
 .envelope-body {
   position: absolute;
   inset: 0;
   background: var(--ivory);
-  transition: opacity 500ms ease 650ms;
 }
 
 .envelope-flap {
   position: absolute;
   inset: 0;
   background: url("../images/envelope.jpg") center/cover no-repeat;
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
-  transition: transform 850ms cubic-bezier(0.6, 0, 0.3, 1);
 }
 .envelope-flap-top {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
   clip-path: polygon(0 0, 100% 0, 50% 50%);
   transform-origin: top center;
   box-shadow: 0 6px 16px rgba(32, 29, 26, 0.25);
+  transition: transform 750ms cubic-bezier(0.6, 0, 0.3, 1);
 }
 .envelope-flap-bottom {
   clip-path: polygon(0 100%, 100% 100%, 50% 50%);
-  transform-origin: bottom center;
   box-shadow: 0 -6px 16px rgba(32, 29, 26, 0.25);
 }
 .envelope-flap-left {
   clip-path: polygon(0 0, 0 100%, 50% 50%);
-  transform-origin: left center;
   box-shadow: 6px 0 16px rgba(32, 29, 26, 0.25);
 }
 .envelope-flap-right {
   clip-path: polygon(100% 0, 100% 100%, 50% 50%);
-  transform-origin: right center;
   box-shadow: -6px 0 16px rgba(32, 29, 26, 0.25);
 }
 
@@ -120,44 +120,61 @@ body {
   left: calc(50% - 32px);
   width: 64px;
   height: 64px;
+  padding: 0;
+  border: none;
   border-radius: 50%;
   background: url("../images/envelope.jpg") center/cover fixed;
   box-shadow: 0 4px 10px rgba(32, 29, 26, 0.35);
+  cursor: pointer;
+  pointer-events: auto;
   transition: opacity 400ms ease, transform 400ms ease;
+  animation: seal-pulse 2.6s ease-in-out infinite;
   z-index: 1;
+}
+@keyframes seal-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
 }
 
 .intro.opening .envelope-flap-top { transform: rotateX(-160deg); }
-.intro.opening .envelope-flap-bottom { transform: rotateX(160deg); }
-.intro.opening .envelope-flap-left { transform: rotateY(160deg); }
-.intro.opening .envelope-flap-right { transform: rotateY(-160deg); }
-.intro.opening .envelope-seal { opacity: 0; transform: scale(0.5) rotate(12deg); }
-.intro.opening .envelope-body { opacity: 0; }
+.intro.opening .envelope-flap-bottom,
+.intro.opening .envelope-flap-left,
+.intro.opening .envelope-flap-right,
+.intro.opening .envelope-body {
+  opacity: 0;
+}
+.intro.opening .envelope-seal {
+  opacity: 0;
+  animation: none;
+  transform: scale(0.5) rotate(12deg);
+}
 
 @media (min-width: 640px) {
   .envelope-seal { width: 76px; height: 76px; top: calc(50% - 38px); left: calc(50% - 38px); }
 }
 
-/* The "letter" rises up and settles into place as the envelope opens —
-   sliding up from just below its resting position while fading and
-   scaling in, the way a real card looks as you draw it up and out of an
-   envelope, rather than simply appearing in place. (A clip-path "unroll"
-   reveal was tried here first, but clip-path on this element combined
-   with the envelope's 3D-transformed siblings caused Chromium to punch
-   through to the raw page underneath in the clipped region — a real
-   compositing bug, not a sequencing issue — so this sticks to transform
-   + opacity, which don't have that problem.) */
+/* The page appears directly underneath once the seal breaks and the top
+   flap opens — a quick, simple fade rather than its own separate
+   motion. (A fancier clip-path "unroll" and a translateY/scale "rise"
+   were both tried here first; the clip-path version combined with the
+   envelope's 3D-transformed siblings caused Chromium to punch through to
+   the raw page underneath in the clipped region — a real compositing
+   bug — so this sticks to a plain opacity fade, which doesn't have that
+   problem and keeps the reveal direct.) */
 .letter {
   position: absolute;
   inset: 0;
   z-index: 6;
   opacity: 0;
-  transform: translateY(8%) scale(0.96);
-  transition: transform 1000ms cubic-bezier(0.22, 1, 0.36, 1) 550ms, opacity 550ms ease 550ms;
+  /* Invisible but still a full-viewport box, sitting above the seal —
+     without this it silently blocks clicks on the seal button beneath
+     it even at opacity:0. Nothing inside .letter needs to be clickable
+     itself; a tap anywhere still reaches #intro's own click handler. */
+  pointer-events: none;
+  transition: opacity 450ms ease 400ms;
 }
 .intro.opening .letter {
   opacity: 1;
-  transform: translateY(0) scale(1);
 }
 
 .intro-photo {
@@ -1143,10 +1160,6 @@ input[type="number"].field { max-width: 8rem; }
 
 fieldset { border: none; padding: 0; margin: 0; }
 legend.field-label { padding: 0; margin-bottom: 0.6rem; }
-
-.address-fields { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 0.75rem; }
-.address-fields .two-up { display: grid; gap: 0.75rem; grid-template-columns: 1fr; }
-@media (min-width: 640px) { .address-fields .two-up { grid-template-columns: 1fr 1fr; } }
 
 .field-hint { font-size: 0.8rem; color: var(--ink-muted); margin-top: -0.2rem; margin-bottom: 0.75rem; }
 #guest-match-hint { min-height: 1.1rem; transition: color 150ms ease; }

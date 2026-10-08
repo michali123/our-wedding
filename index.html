@@ -38,7 +38,7 @@
     href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,600&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Montserrat:wght@400;500;600;700&family=Heebo:wght@400;500;700&display=swap"
     rel="stylesheet"
   />
-  <link rel="stylesheet" href="css/styles.css?v=19" />
+  <link rel="stylesheet" href="css/styles.css?v=22" />
   <!-- The opening reveal needs JS to dismiss itself — without it, don't
        let it block the page. -->
   <noscript><style>.intro { display: none !important; }</style></noscript>
@@ -57,24 +57,21 @@
 <body>
 
   <!-- ══════════════════════ Opening reveal ══════════════════════ -->
-  <!-- A sealed envelope that opens on arrival — four flaps (cropped from
-       the same photo so they tile seamlessly while closed) fold back from
-       every edge and the wax seal breaks — then the "letter" (the photo
-       card) rises up and out of the opening, revealing itself top-down as
-       it slides into place, the way a real letter emerges as you pull it
-       out of an envelope. It holds, then the whole thing lifts away to
-       reveal the site. Skippable by tapping anywhere, opens on its own
-       shortly after. Requires JS — see the noscript rule in the <head>
-       above that hides it entirely without JS, so it never blocks the
-       page. -->
+  <!-- A sealed envelope that opens on arrival — press the wax seal (it
+       has a gentle pulse to invite the tap) and the top flap swings
+       upward while the seal breaks, then the "Save the Date" page
+       appears directly underneath. Holds, then lifts away to reveal the
+       site. Opens on its own after a short wait if nobody taps. Requires
+       JS — see the noscript rule in the <head> above that hides it
+       entirely without JS, so it never blocks the page. -->
   <div class="intro" id="intro">
     <div class="envelope" aria-hidden="true">
       <div class="envelope-body"></div>
-      <div class="envelope-flap envelope-flap-top"></div>
       <div class="envelope-flap envelope-flap-bottom"></div>
       <div class="envelope-flap envelope-flap-left"></div>
       <div class="envelope-flap envelope-flap-right"></div>
-      <div class="envelope-seal"></div>
+      <div class="envelope-flap envelope-flap-top"></div>
+      <button type="button" class="envelope-seal" id="envelope-seal" aria-label="Open invitation"></button>
     </div>
     <div class="letter">
     <div class="intro-photo">
@@ -89,10 +86,6 @@
         <span class="intro-eyebrow-big">Date</span>
       </p>
       <p class="intro-names">Josh &amp; Michal</p>
-      <button type="button" class="intro-enter" id="intro-enter" aria-label="Enter site">
-        <span>Enter</span>
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
-      </button>
     </div>
     </div>
   </div>
@@ -617,23 +610,6 @@
           </fieldset>
         </div>
 
-        <fieldset>
-          <legend class="field-label">Mailing address</legend>
-          <p style="font-size:0.8rem;color:var(--ink-muted);margin-bottom:0.5rem;">So we can send you a proper thank-you card.</p>
-          <div class="address-fields">
-            <input class="field" name="address_line1" type="text" placeholder="Street address" />
-            <input class="field" name="address_line2" type="text" placeholder="Apt, suite, etc. (optional)" />
-            <div class="two-up">
-              <input class="field" name="city" type="text" placeholder="City" />
-              <input class="field" name="state" type="text" placeholder="State / Province" />
-            </div>
-            <div class="two-up">
-              <input class="field" name="postal_code" type="text" placeholder="Postal code" />
-              <input class="field" name="country" type="text" placeholder="Country" />
-            </div>
-          </div>
-        </fieldset>
-
         <div>
           <label class="field-label field-label-fun" for="song_request">
             Song request (optional)
@@ -685,6 +661,6 @@
   </button>
 
   <script src="js/guest-list.js?v=1"></script>
-  <script src="js/main.js?v=19"></script>
+  <script src="js/main.js?v=22"></script>
 </body>
 </html>

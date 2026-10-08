@@ -40,24 +40,26 @@
       window.scrollTo(0, 0);
       intro.classList.add("opening");
       document.documentElement.style.overflow = "";
-      // The envelope's four flaps + seal animate open first, then the
-      // "letter" rises up and out, revealing itself top-down (~1550ms
-      // total), then it holds for a full 4 seconds so it isn't rushed
-      // past, then the whole thing lifts away (1100ms) to reveal the
-      // site underneath — unless a tap (e.g. the Enter button) skips the
-      // hold early via liftAway() below.
-      liftTimer = setTimeout(liftAway, 5550);
+      // The seal breaks and the top flap swings open (~800ms), the page
+      // appears directly underneath shortly after (~850ms total), then
+      // it holds for a full 4 seconds so it isn't rushed past, then the
+      // whole thing lifts away (1100ms) to reveal the site underneath —
+      // unless a tap skips the hold early via liftAway() below.
+      liftTimer = setTimeout(liftAway, 4850);
     };
 
-    // A tap always means "move this along": before opening, it starts
-    // the reveal; once the reveal is showing, it skips straight to
-    // lifting away instead of sitting there doing nothing.
-    intro.addEventListener("click", function () {
-      if (!introOpened) {
+    // Pressing the seal is the intended way to open it; it opens on its
+    // own after a short wait either way. Once open, a tap anywhere skips
+    // straight to lifting away instead of waiting out the hold.
+    var seal = document.getElementById("envelope-seal");
+    if (seal) {
+      seal.addEventListener("click", function (e) {
+        e.stopPropagation();
         openIntro();
-      } else {
-        liftAway();
-      }
+      });
+    }
+    intro.addEventListener("click", function () {
+      if (introOpened) liftAway();
     });
     setTimeout(openIntro, 8200);
   }
@@ -497,14 +499,6 @@
       formData.append("dietary_restrictions", dietary || "None specified");
       formData.append("after_party_guests", attending === "yes" ? (afterPartyGuests.join(", ") || "None") : "N/A");
       formData.append("late_brunch_guests", attending === "yes" ? (lateBrunchGuests.join(", ") || "None") : "N/A");
-      formData.append("address", [
-        form.address_line1.value.trim(),
-        form.address_line2.value.trim(),
-        form.city.value.trim(),
-        form.state.value.trim(),
-        form.postal_code.value.trim(),
-        form.country.value.trim(),
-      ].filter(Boolean).join(", "));
       formData.append("song_request", form.song_request.value.trim());
       formData.append("message", form.message.value.trim());
 

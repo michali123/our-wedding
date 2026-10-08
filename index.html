@@ -18,6 +18,16 @@
   <meta name="description" content="Join us as we celebrate our wedding on Sunday, January 17, 2027. RSVP, event details, travel info, and more." />
   <meta name="robots" content="noindex, nofollow" />
 
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Josh & Michal | Our Wedding" />
+  <meta property="og:description" content="Join us as we celebrate our wedding on Sunday, January 17, 2027. RSVP, event details, travel info, and more." />
+  <meta property="og:image" content="https://michali123.github.io/our-wedding/images/share-preview.jpg" />
+  <meta property="og:url" content="https://michali123.github.io/our-wedding/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Josh & Michal | Our Wedding" />
+  <meta name="twitter:description" content="Join us as we celebrate our wedding on Sunday, January 17, 2027. RSVP, event details, travel info, and more." />
+  <meta name="twitter:image" content="https://michali123.github.io/our-wedding/images/share-preview.jpg" />
+
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32" />
   <link rel="apple-touch-icon" href="apple-touch-icon.png" />
@@ -28,7 +38,7 @@
     href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,600&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Montserrat:wght@400;500;600;700&family=Heebo:wght@400;500;700&display=swap"
     rel="stylesheet"
   />
-  <link rel="stylesheet" href="css/styles.css?v=6" />
+  <link rel="stylesheet" href="css/styles.css?v=7" />
   <!-- The opening reveal needs JS to dismiss itself — without it, don't
        let it block the page. -->
   <noscript><style>.intro { display: none !important; }</style></noscript>
@@ -348,7 +358,7 @@
         <p class="eyebrow">Getting here</p>
         <h2>Travel &amp; Stay</h2>
         <p class="section-desc">Recommended stays in Homestead and Florida City.</p>
-        <button type="button" class="hero-underline-link travel-toggle-btn" data-travel-toggle aria-expanded="false" aria-controls="travel-groups-panel">Expand to See All Travel &amp; Stay Options</button>
+        <button type="button" class="hero-underline-link travel-toggle-btn" data-travel-toggle aria-expanded="false" aria-controls="travel-groups-panel">Click Here to Expand All Travel &amp; Stay Options</button>
       </div>
 
       <div id="travel-groups-panel" data-travel-panel hidden>
@@ -417,6 +427,32 @@
           </a>
           <div class="hotel-group-close"></div>
         </div>
+
+        <div class="hotel-group">
+          <p class="hotel-group-label">Near Miami Airport (MIA)</p>
+          <p class="travel-note-text hotel-group-note">Handy if you&rsquo;re flying in or out close to the day &mdash; about 40 minutes from the venue.</p>
+          <a class="hotel-row" href="https://www.booking.com/searchresults.html?ss=EB+Hotel+Miami%2C+Miami+Springs+FL&checkin=2027-01-15&checkout=2027-01-18" target="_blank" rel="noopener">
+            <span class="hotel-row-name">EB Hotel Miami</span>
+            <span class="hotel-row-cue">Hotel &middot; ~2 mi from MIA</span>
+            <span class="hotel-row-meta">4299 NW 36th St, Miami Springs &middot; (305) 324-6835</span>
+          </a>
+          <a class="hotel-row" href="https://www.booking.com/searchresults.html?ss=Hampton+Inn+%26+Suites+Miami+Airport+South+Blue+Lagoon%2C+Miami+FL&checkin=2027-01-15&checkout=2027-01-18" target="_blank" rel="noopener">
+            <span class="hotel-row-name">Hampton Inn &amp; Suites Miami-Airport South-Blue Lagoon</span>
+            <span class="hotel-row-cue">Hotel &middot; ~2 mi from MIA</span>
+            <span class="hotel-row-meta">777 NW 57th Ave, Miami &middot; (305) 262-5400</span>
+          </a>
+          <a class="hotel-row" href="https://www.booking.com/searchresults.html?ss=Courtyard+by+Marriott+Miami+Airport+West+Doral%2C+Doral+FL&checkin=2027-01-15&checkout=2027-01-18" target="_blank" rel="noopener">
+            <span class="hotel-row-name">Courtyard by Marriott Miami Airport West/Doral</span>
+            <span class="hotel-row-cue">Hotel &middot; ~4 mi from MIA</span>
+            <span class="hotel-row-meta">3929 NW 79th Ave, Doral &middot; (305) 477-8118</span>
+          </a>
+          <a class="hotel-row" href="https://www.booking.com/searchresults.html?ss=Fairfield+Inn+%26+Suites+Miami+Airport+West+Doral%2C+Doral+FL&checkin=2027-01-15&checkout=2027-01-18" target="_blank" rel="noopener">
+            <span class="hotel-row-name">Fairfield Inn &amp; Suites Miami Airport West/Doral</span>
+            <span class="hotel-row-cue">Hotel &middot; ~5 mi from MIA</span>
+            <span class="hotel-row-meta">8051 NW 36th St, Doral &middot; (786) 753-6010</span>
+          </a>
+          <div class="hotel-group-close"></div>
+        </div>
       </div>
 
       <div class="hotel-list-footer">
@@ -476,13 +512,6 @@
       <div class="faq-list">
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false">
-            <span>Can I bring a plus-one?</span>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-          </button>
-          <p class="faq-answer">Please only bring a guest if your invitation specifically included one — just let us know their name in the RSVP form.</p>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
             <span>Is there parking?</span>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </button>
@@ -500,7 +529,7 @@
             <span>What's the weather usually like?</span>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </button>
-          <p class="faq-answer">You picked a good week for it &mdash; mid-January is South Florida's dry season, so expect warm, sunny, postcard-perfect days around 75&ndash;77&deg;F (24&ndash;25&deg;C) and pleasantly cool evenings around 59&ndash;62&deg;F (15&ndash;17&deg;C), ideal for dancing outdoors under the Miami sky. Rain is unlikely, so we're expecting clear skies all around &mdash; just bring a light jacket or wrap for after sunset.</p>
+          <p class="faq-answer">Warm and sunny &mdash; mid-January is Miami's dry season. Expect low-to-mid 70s&deg;F (low 20s&deg;C) and clear skies, with cooler evenings, so bring a light layer for after sunset.</p>
         </div>
       </div>
     </div>
@@ -659,7 +688,8 @@
   </button>
 
   <script>window.DOVES_CONFIG = { ambient: false };</script>
-  <script src="js/doves.js?v=6" defer></script>
-  <script src="js/main.js?v=6"></script>
+  <script src="js/doves.js?v=7" defer></script>
+  <script src="js/guest-list.js?v=1"></script>
+  <script src="js/main.js?v=7"></script>
 </body>
 </html>

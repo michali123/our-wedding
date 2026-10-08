@@ -900,6 +900,12 @@ section { position: relative; padding: 5rem 0; }
   color: var(--ink-muted);
   line-height: 1.55;
 }
+.hotel-group-note {
+  margin: -0.5rem 0 1.1rem;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
 .hotel-group-close { border-top: 1px solid var(--line); }
 
 @media (max-width: 700px) {

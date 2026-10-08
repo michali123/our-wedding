@@ -115,8 +115,8 @@
       travelPanel.hidden = !willOpen;
       travelToggle.setAttribute("aria-expanded", String(willOpen));
       travelToggle.textContent = willOpen
-        ? "Show Fewer Travel & Stay Options"
-        : "Expand to See All Travel & Stay Options";
+        ? "Click Here to Show Fewer Travel & Stay Options"
+        : "Click Here to Expand All Travel & Stay Options";
       if (!willOpen) {
         travelToggle.scrollIntoView({ behavior: "smooth", block: "center" });
       }
@@ -335,6 +335,12 @@
       var email = form.email.value.trim();
       if (!fullName || !email) {
         errorEl.textContent = "Name and email are required.";
+        return;
+      }
+
+      if (window.WeddingGuestList && !window.WeddingGuestList.isInvitedGuest(fullName)) {
+        errorEl.textContent = "We couldn't find that name on our guest list. Please enter your name exactly as it appears on your invitation, or reach out to Josh & Michal directly if you think this is a mistake.";
+        form.full_name.focus();
         return;
       }
 

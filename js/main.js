@@ -40,12 +40,13 @@
       window.scrollTo(0, 0);
       intro.classList.add("opening");
       document.documentElement.style.overflow = "";
-      // The envelope's four flaps + seal animate open first (~1150ms),
-      // then the revealed "Save the Date" photo holds for a full 4
-      // seconds so it isn't rushed past, then the whole card lifts away
-      // (1100ms) to reveal the site underneath — unless a tap (e.g. the
-      // Enter button) skips the hold early via liftAway() below.
-      liftTimer = setTimeout(liftAway, 5150);
+      // The envelope's four flaps + seal animate open first, then the
+      // "letter" rises up and out, revealing itself top-down (~1550ms
+      // total), then it holds for a full 4 seconds so it isn't rushed
+      // past, then the whole thing lifts away (1100ms) to reveal the
+      // site underneath — unless a tap (e.g. the Enter button) skips the
+      // hold early via liftAway() below.
+      liftTimer = setTimeout(liftAway, 5550);
     };
 
     // A tap always means "move this along": before opening, it starts
@@ -186,7 +187,7 @@
   }
 
   // ── Per-guest dietary blocks (paired 1:1, in order, with guest rows) ──
-  var DIETARY_OPTIONS = ["Vegetarian", "Vegan", "Gluten-Free", "Kosher", "Dairy-Free", "Nut Allergy"];
+  var DIETARY_OPTIONS = ["Vegetarian", "Kosher"];
   var dietaryGuestList = document.querySelector("[data-dietary-guest-list]");
   var dietaryGuestCounter = 0;
 

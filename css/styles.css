@@ -55,6 +55,11 @@ body {
   inset: 0;
   z-index: 1000;
   cursor: pointer;
+  /* Solid backstop: the envelope and letter both pass through semi-
+     transparent moments while animating (fading flaps, fading-in
+     letter) — without this, those overlapping transparent moments let
+     the real page underneath show through. */
+  background: var(--ivory);
 }
 .intro.lifting { transition: transform 1100ms cubic-bezier(0.65, 0, 0.35, 1); transform: translateY(-100%); }
 .intro.closed { display: none; }
@@ -131,6 +136,28 @@ body {
 
 @media (min-width: 640px) {
   .envelope-seal { width: 76px; height: 76px; top: calc(50% - 38px); left: calc(50% - 38px); }
+}
+
+/* The "letter" rises up and settles into place as the envelope opens —
+   sliding up from just below its resting position while fading and
+   scaling in, the way a real card looks as you draw it up and out of an
+   envelope, rather than simply appearing in place. (A clip-path "unroll"
+   reveal was tried here first, but clip-path on this element combined
+   with the envelope's 3D-transformed siblings caused Chromium to punch
+   through to the raw page underneath in the clipped region — a real
+   compositing bug, not a sequencing issue — so this sticks to transform
+   + opacity, which don't have that problem.) */
+.letter {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  opacity: 0;
+  transform: translateY(8%) scale(0.96);
+  transition: transform 1000ms cubic-bezier(0.22, 1, 0.36, 1) 550ms, opacity 550ms ease 550ms;
+}
+.intro.opening .letter {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 
 .intro-photo {

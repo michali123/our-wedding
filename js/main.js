@@ -27,14 +27,16 @@
       window.scrollTo(0, 0);
       intro.classList.add("opening");
       document.documentElement.style.overflow = "";
-      // The envelope flap/seal animate first (~1050ms), then the whole
-      // card lifts away (1100ms) to reveal the site underneath.
+      // The envelope's four flaps + seal animate open first (~1150ms),
+      // then the revealed "Save the Date" photo holds for a full 4
+      // seconds so it isn't rushed past, then the whole card lifts away
+      // (1100ms) to reveal the site underneath.
       setTimeout(function () {
         intro.classList.add("lifting");
-      }, 1050);
+      }, 5150);
       setTimeout(function () {
         intro.classList.add("closed");
-      }, 2150);
+      }, 6250);
     };
 
     intro.addEventListener("click", openIntro);
@@ -322,26 +324,53 @@
   //    their name (on blur), confirm whether it's on the guest list —
   //    the submit handler below still re-checks and blocks either way,
   //    this is just earlier feedback so a mismatch doesn't surprise them
-  //    at the very end of the form ──
+  //    at the very end of the form. A plus-one won't be individually
+  //    named on the list, so on a mismatch we also offer a fallback
+  //    field for the name the invitation was actually addressed to. ──
   var guestMatchHint = document.getElementById("guest-match-hint");
+  var partyNameFallback = document.getElementById("party-name-fallback");
+  var partyNameInput = document.getElementById("party_name");
+  var partyMatchHint = document.getElementById("party-match-hint");
+
   var checkGuestMatch = function () {
     if (!guestMatchHint || !window.WeddingGuestList) return;
     var name = getPrimaryName();
     if (!firstNameInput.value.trim() || !lastNameInput.value.trim()) {
       guestMatchHint.textContent = "";
       guestMatchHint.classList.remove("is-error");
+      if (partyNameFallback) partyNameFallback.hidden = true;
       return;
     }
     if (window.WeddingGuestList.isInvitedGuest(name)) {
       guestMatchHint.textContent = "You're on the guest list — welcome!";
       guestMatchHint.classList.remove("is-error");
+      if (partyNameFallback) partyNameFallback.hidden = true;
     } else {
-      guestMatchHint.textContent = "We couldn't find that name on our guest list. Please double-check the spelling, or reach out to Josh & Michal directly if you think this is a mistake.";
+      guestMatchHint.textContent = "We couldn't find that name on our guest list. If you're joining as someone's plus-one, enter their name below — otherwise, double-check the spelling or reach out to Josh & Michal directly.";
       guestMatchHint.classList.add("is-error");
+      if (partyNameFallback) partyNameFallback.hidden = false;
     }
   };
   if (firstNameInput) firstNameInput.addEventListener("blur", checkGuestMatch);
   if (lastNameInput) lastNameInput.addEventListener("blur", checkGuestMatch);
+
+  var checkPartyMatch = function () {
+    if (!partyMatchHint || !window.WeddingGuestList) return;
+    var partyName = partyNameInput.value.trim();
+    if (!partyName) {
+      partyMatchHint.textContent = "";
+      partyMatchHint.classList.remove("is-error");
+      return;
+    }
+    if (window.WeddingGuestList.isInvitedGuest(partyName)) {
+      partyMatchHint.textContent = "Found it — you're all set to RSVP as their guest.";
+      partyMatchHint.classList.remove("is-error");
+    } else {
+      partyMatchHint.textContent = "We couldn't find that name either. Please double-check the spelling, or reach out to Josh & Michal directly.";
+      partyMatchHint.classList.add("is-error");
+    }
+  };
+  if (partyNameInput) partyNameInput.addEventListener("blur", checkPartyMatch);
 
   // ── RSVP form submission (Formspree, AJAX) ──────────────
   var form = document.getElementById("rsvp-form");
@@ -376,10 +405,15 @@
         return;
       }
 
+      var partyName = partyNameInput ? partyNameInput.value.trim() : "";
       if (window.WeddingGuestList && !window.WeddingGuestList.isInvitedGuest(fullName)) {
-        errorEl.textContent = "We couldn't find that name on our guest list. Please double-check the spelling, or reach out to Josh & Michal directly if you think this is a mistake.";
-        form.first_name.focus();
-        return;
+        if (!partyName || !window.WeddingGuestList.isInvitedGuest(partyName)) {
+          errorEl.textContent = partyName
+            ? "We couldn't find either name on our guest list. Please double-check the spelling, or reach out to Josh & Michal directly if you think this is a mistake."
+            : "We couldn't find that name on our guest list. If you're joining as someone's plus-one, enter their name in the field above, or reach out to Josh & Michal directly if you think this is a mistake.";
+          form.first_name.focus();
+          return;
+        }
       }
 
       var additionalGuests = [];
@@ -435,6 +469,7 @@
       formData.append("first_name", firstName);
       formData.append("last_name", lastName);
       formData.append("full_name", fullName);
+      formData.append("joining_as_plus_one_of", partyName || "N/A");
       formData.append("email", email);
       formData.append("phone", form.phone.value.trim());
       formData.append("attending", attending === "yes" ? "Joyfully accepts" : "Regretfully declines");

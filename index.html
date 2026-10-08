@@ -38,7 +38,7 @@
     href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,600&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Montserrat:wght@400;500;600;700&family=Heebo:wght@400;500;700&display=swap"
     rel="stylesheet"
   />
-  <link rel="stylesheet" href="css/styles.css?v=9" />
+  <link rel="stylesheet" href="css/styles.css?v=10" />
   <!-- The opening reveal needs JS to dismiss itself — without it, don't
        let it block the page. -->
   <noscript><style>.intro { display: none !important; }</style></noscript>
@@ -57,12 +57,23 @@
 <body>
 
   <!-- ══════════════════════ Opening reveal ══════════════════════ -->
-  <!-- One photo, shown once, that lifts away like a letter being pulled
-       out of view to reveal the site underneath. Skippable by tapping
-       anywhere, opens on its own shortly after. Requires JS — see the
-       noscript rule in the <head> above that hides it entirely without
-       JS, so it never blocks the page. -->
+  <!-- A sealed envelope that opens on arrival — the wax seal breaks, the
+       flap folds back, and the photo card underneath lifts away like a
+       letter being pulled out of view to reveal the site. Skippable by
+       tapping anywhere, opens on its own shortly after. Requires JS — see
+       the noscript rule in the <head> above that hides it entirely
+       without JS, so it never blocks the page. -->
   <div class="intro" id="intro">
+    <div class="envelope" aria-hidden="true">
+      <div class="envelope-body">
+        <p class="envelope-label">You&rsquo;re Invited</p>
+      </div>
+      <div class="envelope-flap">
+        <div class="envelope-seal">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+        </div>
+      </div>
+    </div>
     <div class="intro-photo">
       <img src="images/save-the-date.jpg" alt="Josh and Michal" onerror="this.parentElement.classList.add('img-missing')" />
       <div class="img-placeholder"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg><span>save-the-date.jpg</span></div>
@@ -357,7 +368,7 @@
       <div class="section-head">
         <p class="eyebrow">Getting here</p>
         <h2>Travel &amp; Stay</h2>
-        <p class="section-desc">Recommended stays in Homestead and Florida City.</p>
+        <p class="section-desc">Recommended stays near Miami International Airport (MIA).</p>
         <button type="button" class="hero-underline-link travel-toggle-btn" data-travel-toggle aria-expanded="false" aria-controls="travel-groups-panel">Click Here to Expand All Travel &amp; Stay Options</button>
       </div>
 
@@ -365,84 +376,74 @@
       <div class="hotel-groups">
         <div class="hotel-group">
           <p class="hotel-group-label">Budget-Friendly</p>
-          <a class="hotel-row" href="https://www.booking.com/searchresults.html?ss=Garden+Inn+Homestead%2C+Homestead+FL&checkin=2027-01-15&checkout=2027-01-18" target="_blank" rel="noopener">
-            <span class="hotel-row-name">Garden Inn Homestead</span>
-            <span class="hotel-row-cue">Hotel &middot; ~8 mi</span>
-            <span class="hotel-row-meta">51 S Homestead Blvd, Homestead &middot; (305) 245-1260</span>
+          <a class="hotel-row" href="https://www.booking.com/searchresults.html?ss=La+Quinta+Inn+%26+Suites+by+Wyndham+Miami+Airport+West%2C+Miami+FL&checkin=2027-01-15&checkout=2027-01-18" target="_blank" rel="noopener">
+            <span class="hotel-row-name">La Quinta Inn &amp; Suites by Wyndham Miami Airport West</span>
+            <span class="hotel-row-cue">Hotel &middot; ~31 mi</span>
+            <span class="hotel-row-meta">8730 NW 27th St, Miami &middot; (305) 436-0830</span>
           </a>
-          <a class="hotel-row" href="https://www.booking.com/hotel/us/best-western-gateway-to-the-keys.html?checkin=2027-01-15&checkout=2027-01-18" target="_blank" rel="noopener">
-            <span class="hotel-row-name">Best Western Gateway to the Keys</span>
-            <span class="hotel-row-cue">Hotel &middot; ~13 mi</span>
-            <span class="hotel-row-meta">411 S Krome Ave, Florida City &middot; (305) 246-5100</span>
+          <a class="hotel-row" href="https://www.booking.com/searchresults.html?ss=Extended+Stay+America+Suites+Miami+Airport+Doral&checkin=2027-01-15&checkout=2027-01-18" target="_blank" rel="noopener">
+            <span class="hotel-row-name">Extended Stay America Suites Miami Airport Doral</span>
+            <span class="hotel-row-cue">Suites &middot; ~31 mi</span>
+            <span class="hotel-row-meta">8720 NW 33rd St, Doral &middot; (305) 436-1811</span>
           </a>
-          <a class="hotel-row" href="https://www.booking.com/hotel/us/the-redland-homestead1.html?checkin=2027-01-15&checkout=2027-01-18" target="_blank" rel="noopener">
-            <span class="hotel-row-name">Hotel Redland</span>
-            <span class="hotel-row-cue">Boutique &middot; ~12 mi</span>
-            <span class="hotel-row-meta">5 S Flagler Ave, Homestead &middot; (305) 246-1904</span>
-          </a>
-          <a class="hotel-row" href="https://www.wyndhamhotels.com/ramada/florida-city-florida/ramada-florida-city/overview" target="_blank" rel="noopener">
-            <span class="hotel-row-name">Ramada by Wyndham Florida City</span>
-            <span class="hotel-row-cue">Hotel &middot; ~14 mi</span>
-            <span class="hotel-row-meta">124 E Palm Dr, Florida City &middot; (305) 247-8833</span>
+          <a class="hotel-row" href="https://www.booking.com/searchresults.html?ss=Red+Roof+PLUS%2B+Miami+Airport&checkin=2027-01-15&checkout=2027-01-18" target="_blank" rel="noopener">
+            <span class="hotel-row-name">Red Roof PLUS+ Miami Airport</span>
+            <span class="hotel-row-cue">Hotel &middot; ~29 mi</span>
+            <span class="hotel-row-meta">3401 NW LeJeune Rd, Miami &middot; (305) 871-4221</span>
           </a>
           <div class="hotel-group-close"></div>
         </div>
 
         <div class="hotel-group">
           <p class="hotel-group-label">Mid-Range</p>
-          <a class="hotel-row" href="https://www.booking.com/hotel/us/la-quinta-miami-cutler-ridge.html?checkin=2027-01-15&checkout=2027-01-18" target="_blank" rel="noopener">
-            <span class="hotel-row-name">La Quinta Inn &amp; Suites Miami Cutler Bay</span>
-            <span class="hotel-row-cue">Hotel &middot; ~14 mi</span>
-            <span class="hotel-row-meta">10821 Caribbean Blvd, Cutler Bay &middot; (305) 278-0001</span>
+          <a class="hotel-row" href="https://www.booking.com/searchresults.html?ss=Hampton+Inn+Miami+Airport+West%2C+Miami+FL&checkin=2027-01-15&checkout=2027-01-18" target="_blank" rel="noopener">
+            <span class="hotel-row-name">Hampton Inn Miami-Airport West</span>
+            <span class="hotel-row-cue">Hotel &middot; ~29 mi</span>
+            <span class="hotel-row-meta">3620 NW 79th Ave, Miami &middot; (305) 513-0777</span>
           </a>
-          <a class="hotel-row" href="https://www.booking.com/hotel/us/hampton-inn-and-suites-miami-south-homestead.html?checkin=2027-01-15&checkout=2027-01-18" target="_blank" rel="noopener">
-            <span class="hotel-row-name">Hampton Inn &amp; Suites Homestead Miami South</span>
-            <span class="hotel-row-cue">Hotel &middot; ~11 mi</span>
-            <span class="hotel-row-meta">2855 NE 9th St, Homestead &middot; (305) 257-7000</span>
+          <a class="hotel-row" href="https://www.booking.com/searchresults.html?ss=Courtyard+by+Marriott+Miami+Airport+West+Doral%2C+Doral+FL&checkin=2027-01-15&checkout=2027-01-18" target="_blank" rel="noopener">
+            <span class="hotel-row-name">Courtyard by Marriott Miami Airport West/Doral</span>
+            <span class="hotel-row-cue">Hotel &middot; ~29 mi</span>
+            <span class="hotel-row-meta">3929 NW 79th Ave, Doral &middot; (305) 477-8118</span>
           </a>
-          <a class="hotel-row" href="https://www.booking.com/hotel/us/holiday-inn-express-suites-florida-city-gateway-to-keys.html?checkin=2027-01-15&checkout=2027-01-18" target="_blank" rel="noopener">
-            <span class="hotel-row-name">Holiday Inn Express &amp; Suites Florida City</span>
-            <span class="hotel-row-cue">Hotel &middot; ~15 mi</span>
-            <span class="hotel-row-meta">35200 S Dixie Hwy, Florida City &middot; (305) 247-3414</span>
-          </a>
-          <a class="hotel-row" href="https://www.booking.com/searchresults.html?ss=Hampton+Inn+%26+Suites+Miami+Airport+South+Blue+Lagoon%2C+Miami+FL&checkin=2027-01-15&checkout=2027-01-18" target="_blank" rel="noopener">
-            <span class="hotel-row-name">Hampton Inn &amp; Suites Miami-Airport South-Blue Lagoon</span>
-            <span class="hotel-row-cue">Hotel &middot; ~32 mi</span>
-            <span class="hotel-row-meta">777 NW 57th Ave, Miami &middot; (305) 262-5400 &middot; between MIA and the venue</span>
+          <a class="hotel-row" href="https://www.booking.com/searchresults.html?ss=Fairfield+Inn+%26+Suites+Miami+Airport+West+Doral%2C+Doral+FL&checkin=2027-01-15&checkout=2027-01-18" target="_blank" rel="noopener">
+            <span class="hotel-row-name">Fairfield Inn &amp; Suites Miami Airport West/Doral</span>
+            <span class="hotel-row-cue">Hotel &middot; ~31 mi</span>
+            <span class="hotel-row-meta">8051 NW 36th St, Doral &middot; (786) 753-6010</span>
           </a>
           <div class="hotel-group-close"></div>
         </div>
 
         <div class="hotel-group">
           <p class="hotel-group-label">Higher-End &amp; Extended Stay</p>
-          <a class="hotel-row" href="https://www.booking.com/hotel/us/fairfield-inn-suites-homestead-florida-city.html?checkin=2027-01-15&checkout=2027-01-18" target="_blank" rel="noopener">
-            <span class="hotel-row-name">Fairfield Inn &amp; Suites Homestead Florida City</span>
-            <span class="hotel-row-cue">Hotel &middot; ~15 mi</span>
-            <span class="hotel-row-meta">60 SW 352nd St, Florida City &middot; (786) 758-4770</span>
+          <a class="hotel-row" href="https://www.booking.com/searchresults.html?ss=Pullman+Miami+Airport&checkin=2027-01-15&checkout=2027-01-18" target="_blank" rel="noopener">
+            <span class="hotel-row-name">Pullman Miami Airport</span>
+            <span class="hotel-row-cue">Hotel &middot; ~27 mi</span>
+            <span class="hotel-row-meta">5800 Waterford District Dr, Miami &middot; (305) 264-4888</span>
           </a>
-          <a class="hotel-row" href="https://www.booking.com/searchresults.html?ss=Home2%20Suites%20by%20Hilton%20Florida%20City%2C%20Florida%20City%20FL&checkin=2027-01-15&checkout=2027-01-18" target="_blank" rel="noopener">
-            <span class="hotel-row-name">Home2 Suites by Hilton Florida City</span>
-            <span class="hotel-row-cue">Suites &middot; ~15 mi</span>
-            <span class="hotel-row-meta">77 NE 3rd St, Florida City &middot; (305) 248-3155</span>
+          <a class="hotel-row" href="https://www.booking.com/searchresults.html?ss=Sheraton+Miami+Airport+Hotel+%26+Executive+Meeting+Center&checkin=2027-01-15&checkout=2027-01-18" target="_blank" rel="noopener">
+            <span class="hotel-row-name">Sheraton Miami Airport Hotel &amp; Executive Meeting Center</span>
+            <span class="hotel-row-cue">Hotel &middot; ~28 mi</span>
+            <span class="hotel-row-meta">3900 NW 21st St, Miami &middot; (305) 871-3800</span>
           </a>
-          <a class="hotel-row" href="https://www.booking.com/hotel/us/towneplace-suites-by-marriott-miami-homestead.html?checkin=2027-01-15&checkout=2027-01-18" target="_blank" rel="noopener">
-            <span class="hotel-row-name">TownePlace Suites Miami Homestead</span>
-            <span class="hotel-row-cue">Suites &middot; ~11 mi</span>
-            <span class="hotel-row-meta">935 NE 30th Terrace, Homestead &middot; (305) 248-2001</span>
+          <a class="hotel-row" href="https://www.booking.com/searchresults.html?ss=EB+Hotel+Miami%2C+Miami+Springs+FL&checkin=2027-01-15&checkout=2027-01-18" target="_blank" rel="noopener">
+            <span class="hotel-row-name">EB Hotel Miami</span>
+            <span class="hotel-row-cue">Boutique &middot; ~28 mi</span>
+            <span class="hotel-row-meta">4299 NW 36th St, Miami Springs &middot; (305) 324-6835</span>
           </a>
           <div class="hotel-group-close"></div>
         </div>
       </div>
 
       <div class="hotel-list-footer">
-        <a class="hero-underline-link" href="https://www.booking.com/searchresults.en-us.html?ss=22401+Southwest+207th+Avenue&amp;ssne=Homestead+Miami+Speedway&amp;ssne_untouched=Homestead+Miami+Speedway&amp;efdco=1&amp;label=v3.cmtga6rax4lgf081800ka1vap&amp;aid=1607597&amp;lang=en-us&amp;sb=1&amp;src_elem=sb&amp;src=searchresults&amp;dest_id=ChIJxVsJtrzo2YgRazznf7xOUD0&amp;dest_type=latlong&amp;latitude=25.5568129&amp;longitude=-80.5258716&amp;ac_meta=IAAoAjICeHVaB2dlb2NvZGU%3D&amp;ac_position=0&amp;ac_click_type=g&amp;ac_langcode=xu&amp;ac_suggestion_list_length=1&amp;search_selected=true&amp;search_pageview_id=b705923ae40f002c&amp;checkin=2027-01-15&amp;checkout=2027-01-18&amp;group_adults=2&amp;no_rooms=1&amp;group_children=0" target="_blank" rel="noopener">View More Options Near the Venue</a>
+        <a class="hero-underline-link" href="https://www.booking.com/searchresults.html?ss=Miami+Airport+West%2C+Doral+FL&checkin=2027-01-15&checkout=2027-01-18" target="_blank" rel="noopener">View More Options Near the Airport</a>
       </div>
       </div>
 
       <div class="travel-notes">
         <div>
           <p class="hotel-group-label">Flying In</p>
-          <p class="travel-note-text">The nearest airport is Miami International (MIA), about 40 minutes from the venue.</p>
+          <p class="travel-note-text">All of the stays above cluster near Miami International (MIA) &mdash; about 40 minutes from the venue, so it&rsquo;s an easy, well-connected home base for the weekend.</p>
         </div>
         <div>
           <p class="hotel-group-label">Getting Around</p>
@@ -538,18 +539,25 @@
       <form id="rsvp-form" class="rsvp-form" action="https://api.web3forms.com/submit" method="POST">
         <div class="field-row two-up">
           <div>
-            <label class="field-label" for="full_name">Full name *</label>
-            <input class="field" id="full_name" name="full_name" type="text" required />
+            <label class="field-label" for="first_name">First name *</label>
+            <input class="field" id="first_name" name="first_name" type="text" required autocomplete="given-name" />
           </div>
+          <div>
+            <label class="field-label" for="last_name">Last name *</label>
+            <input class="field" id="last_name" name="last_name" type="text" required autocomplete="family-name" />
+          </div>
+        </div>
+        <p class="field-hint" id="guest-match-hint" role="status" aria-live="polite"></p>
+
+        <div class="field-row two-up">
           <div>
             <label class="field-label" for="email">Email *</label>
             <input class="field" id="email" name="email" type="email" required />
           </div>
-        </div>
-
-        <div>
-          <label class="field-label" for="phone">Phone (optional)</label>
-          <input class="field" id="phone" name="phone" type="tel" />
+          <div>
+            <label class="field-label" for="phone">Phone (optional)</label>
+            <input class="field" id="phone" name="phone" type="tel" />
+          </div>
         </div>
 
         <fieldset>
@@ -621,7 +629,11 @@
         </fieldset>
 
         <div>
-          <label class="field-label" for="song_request">Song request (optional)</label>
+          <label class="field-label field-label-fun" for="song_request">
+            Song request (optional)
+            <svg class="field-label-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+          </label>
+          <p class="field-hint field-hint-fun">Guaranteed to get us on the dance floor &mdash; we&rsquo;re taking requests.</p>
           <input class="field" id="song_request" name="song_request" type="text" />
         </div>
 
@@ -667,8 +679,8 @@
   </button>
 
   <script>window.DOVES_CONFIG = { ambient: false };</script>
-  <script src="js/doves.js?v=9" defer></script>
+  <script src="js/doves.js?v=10" defer></script>
   <script src="js/guest-list.js?v=1"></script>
-  <script src="js/main.js?v=9"></script>
+  <script src="js/main.js?v=10"></script>
 </body>
 </html>

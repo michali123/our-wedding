@@ -47,18 +47,84 @@ body {
 /* One photo, split down the middle, that swings open like an opened
    letter — tap anywhere (or wait a moment) to reveal the site. */
 
-/* One photo, shown once — the whole card (photo + scrim + text) lifts
-   away together as a single piece, like pulling a photograph out of
-   view, rather than splitting the picture into two halves. */
+/* A sealed envelope opens first (flap folds back, wax seal breaks),
+   then the photo card underneath lifts away as a single piece, like
+   pulling a photograph out of view, to reveal the site. */
 .intro {
   position: fixed;
   inset: 0;
   z-index: 1000;
   cursor: pointer;
-  transition: transform 1100ms cubic-bezier(0.65, 0, 0.35, 1);
 }
-.intro.opening { transform: translateY(-100%); }
+.intro.lifting { transition: transform 1100ms cubic-bezier(0.65, 0, 0.35, 1); transform: translateY(-100%); }
 .intro.closed { display: none; }
+
+.envelope {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  perspective: 1800px;
+  pointer-events: none;
+}
+.envelope-body {
+  position: absolute;
+  inset: 0;
+  background: var(--ivory);
+  transition: opacity 500ms ease 550ms;
+}
+.envelope-label {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  margin: 0;
+  font-family: var(--font-script);
+  font-style: italic;
+  font-size: 1.4rem;
+  letter-spacing: 0.02em;
+  color: var(--ink-muted);
+  text-align: center;
+  white-space: nowrap;
+}
+.envelope-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 46%;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  background: linear-gradient(165deg, var(--cream) 0%, var(--ivory) 100%);
+  transform-origin: top center;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  box-shadow: 0 6px 18px rgba(32, 29, 26, 0.12);
+  transition: transform 900ms cubic-bezier(0.6, 0, 0.3, 1);
+}
+.envelope-seal {
+  position: absolute;
+  top: 46%;
+  left: 50%;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at 35% 30%, #c79a53, #9c7132 70%, #83602a 100%);
+  box-shadow: 0 4px 10px rgba(32, 29, 26, 0.25), inset 0 1px 2px rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ivory);
+  transition: opacity 400ms ease, transform 400ms ease;
+}
+
+.intro.opening .envelope-flap { transform: rotateX(-165deg); }
+.intro.opening .envelope-seal { opacity: 0; transform: translate(-50%, -50%) scale(0.5) rotate(12deg); }
+.intro.opening .envelope-body { opacity: 0; }
+
+@media (min-width: 640px) {
+  .envelope-label { font-size: 1.7rem; }
+  .envelope-seal { width: 72px; height: 72px; }
+}
 
 .intro-photo {
   position: absolute;
@@ -996,6 +1062,9 @@ label.field-label {
   margin-bottom: 0.35rem;
 }
 label.field-label .hint { font-weight: 400; color: var(--ink-muted); }
+.field-label-fun { display: flex; align-items: center; gap: 0.4rem; }
+.field-label-icon { color: var(--ink-muted); flex-shrink: 0; }
+.field-hint-fun { font-style: italic; }
 
 .field {
   width: 100%;
@@ -1046,6 +1115,8 @@ legend.field-label { padding: 0; margin-bottom: 0.6rem; }
 @media (min-width: 640px) { .address-fields .two-up { grid-template-columns: 1fr 1fr; } }
 
 .field-hint { font-size: 0.8rem; color: var(--ink-muted); margin-top: -0.2rem; margin-bottom: 0.75rem; }
+#guest-match-hint { min-height: 1.1rem; transition: color 150ms ease; }
+#guest-match-hint.is-error { color: var(--error); }
 
 .dietary-block + .dietary-block,
 [data-dietary-guest-list] .dietary-block:first-child {

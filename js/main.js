@@ -27,9 +27,14 @@
       window.scrollTo(0, 0);
       intro.classList.add("opening");
       document.documentElement.style.overflow = "";
+      // The envelope flap/seal animate first (~1050ms), then the whole
+      // card lifts away (1100ms) to reveal the site underneath.
+      setTimeout(function () {
+        intro.classList.add("lifting");
+      }, 1050);
       setTimeout(function () {
         intro.classList.add("closed");
-      }, 1300);
+      }, 2150);
     };
 
     intro.addEventListener("click", openIntro);
@@ -254,15 +259,20 @@
 
   // ── After Party / Late Brunch: per-guest checklist, kept in sync
   //    with the named guest list above ──
-  var fullNameInput = document.getElementById("full_name");
+  var firstNameInput = document.getElementById("first_name");
+  var lastNameInput = document.getElementById("last_name");
+  var getPrimaryName = function () {
+    var first = firstNameInput ? firstNameInput.value.trim() : "";
+    var last = lastNameInput ? lastNameInput.value.trim() : "";
+    return (first + " " + last).trim();
+  };
   var afterPartyList = document.querySelector("[data-after-party-list]");
   var lateBrunchList = document.querySelector("[data-late-brunch-list]");
   var syncPartyGuestLists = function () {
     if (!afterPartyList && !lateBrunchList) return;
 
     var names = [];
-    var primaryName = fullNameInput ? fullNameInput.value.trim() : "";
-    names.push(primaryName || "You");
+    names.push(getPrimaryName() || "You");
     if (guestList) {
       guestList.querySelectorAll("[data-guest-name]").forEach(function (input) {
         var name = input.value.trim();
@@ -294,7 +304,8 @@
       });
     });
   };
-  if (fullNameInput) fullNameInput.addEventListener("input", syncPartyGuestLists);
+  if (firstNameInput) firstNameInput.addEventListener("input", syncPartyGuestLists);
+  if (lastNameInput) lastNameInput.addEventListener("input", syncPartyGuestLists);
   if (guestList) {
     guestList.addEventListener("input", function (e) {
       if (e.target && e.target.hasAttribute("data-guest-name")) {
@@ -306,6 +317,31 @@
     partyObserver.observe(guestList, { childList: true });
   }
   syncPartyGuestLists();
+
+  // ── Live guest-list check: as soon as the guest finishes typing
+  //    their name (on blur), confirm whether it's on the guest list —
+  //    the submit handler below still re-checks and blocks either way,
+  //    this is just earlier feedback so a mismatch doesn't surprise them
+  //    at the very end of the form ──
+  var guestMatchHint = document.getElementById("guest-match-hint");
+  var checkGuestMatch = function () {
+    if (!guestMatchHint || !window.WeddingGuestList) return;
+    var name = getPrimaryName();
+    if (!firstNameInput.value.trim() || !lastNameInput.value.trim()) {
+      guestMatchHint.textContent = "";
+      guestMatchHint.classList.remove("is-error");
+      return;
+    }
+    if (window.WeddingGuestList.isInvitedGuest(name)) {
+      guestMatchHint.textContent = "You're on the guest list — welcome!";
+      guestMatchHint.classList.remove("is-error");
+    } else {
+      guestMatchHint.textContent = "We couldn't find that name on our guest list. Please double-check the spelling, or reach out to Josh & Michal directly if you think this is a mistake.";
+      guestMatchHint.classList.add("is-error");
+    }
+  };
+  if (firstNameInput) firstNameInput.addEventListener("blur", checkGuestMatch);
+  if (lastNameInput) lastNameInput.addEventListener("blur", checkGuestMatch);
 
   // ── RSVP form submission (Formspree, AJAX) ──────────────
   var form = document.getElementById("rsvp-form");
@@ -331,16 +367,18 @@
         return;
       }
 
-      var fullName = form.full_name.value.trim();
+      var firstName = form.first_name.value.trim();
+      var lastName = form.last_name.value.trim();
+      var fullName = (firstName + " " + lastName).trim();
       var email = form.email.value.trim();
-      if (!fullName || !email) {
-        errorEl.textContent = "Name and email are required.";
+      if (!firstName || !lastName || !email) {
+        errorEl.textContent = "First name, last name, and email are required.";
         return;
       }
 
       if (window.WeddingGuestList && !window.WeddingGuestList.isInvitedGuest(fullName)) {
-        errorEl.textContent = "We couldn't find that name on our guest list. Please enter your name exactly as it appears on your invitation, or reach out to Josh & Michal directly if you think this is a mistake.";
-        form.full_name.focus();
+        errorEl.textContent = "We couldn't find that name on our guest list. Please double-check the spelling, or reach out to Josh & Michal directly if you think this is a mistake.";
+        form.first_name.focus();
         return;
       }
 
@@ -394,6 +432,8 @@
       var formData = new FormData();
       formData.append("access_key", "42ac7e80-b40c-4245-a4e9-9adc3b9233c7");
       formData.append("subject", "New RSVP from " + fullName);
+      formData.append("first_name", firstName);
+      formData.append("last_name", lastName);
       formData.append("full_name", fullName);
       formData.append("email", email);
       formData.append("phone", form.phone.value.trim());

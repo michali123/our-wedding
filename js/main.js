@@ -40,12 +40,13 @@
       window.scrollTo(0, 0);
       intro.classList.add("opening");
       document.documentElement.style.overflow = "";
-      // The seal breaks and the top flap swings open (~800ms), the page
-      // appears directly underneath shortly after (~850ms total), then
-      // it holds for a full 4 seconds so it isn't rushed past, then the
-      // whole thing lifts away (1100ms) to reveal the site underneath —
-      // unless a tap skips the hold early via liftAway() below.
-      liftTimer = setTimeout(liftAway, 4850);
+      // The seal breaks and the top flap swings open slowly (~1900ms),
+      // the page fades in underneath shortly after (fully in by
+      // ~2600ms), then it holds for a full 4 seconds so it isn't rushed
+      // past, then the whole thing lifts away (1100ms) to reveal the
+      // site underneath — unless a tap (or the Enter button) skips the
+      // hold early via liftAway() below.
+      liftTimer = setTimeout(liftAway, 6600);
     };
 
     // Pressing the seal is the intended way to open it; it opens on its

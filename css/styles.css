@@ -79,8 +79,9 @@ body {
 .envelope-body,
 .envelope-flap-bottom,
 .envelope-flap-left,
-.envelope-flap-right {
-  transition: opacity 450ms ease 350ms;
+.envelope-flap-right,
+.envelope-invite {
+  transition: opacity 800ms ease 900ms;
 }
 .envelope-body {
   position: absolute;
@@ -99,7 +100,7 @@ body {
   clip-path: polygon(0 0, 100% 0, 50% 50%);
   transform-origin: top center;
   box-shadow: 0 6px 16px rgba(32, 29, 26, 0.25);
-  transition: transform 750ms cubic-bezier(0.6, 0, 0.3, 1);
+  transition: transform 1900ms cubic-bezier(0.6, 0, 0.3, 1);
 }
 .envelope-flap-bottom {
   clip-path: polygon(0 100%, 100% 100%, 50% 50%);
@@ -114,6 +115,32 @@ body {
   box-shadow: -6px 0 16px rgba(32, 29, 26, 0.25);
 }
 
+.envelope-invite {
+  position: absolute;
+  top: 66%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  width: max-content;
+  max-width: 80vw;
+  text-align: center;
+  font-family: var(--font-script);
+  font-style: italic;
+  font-size: 1.3rem;
+  letter-spacing: 0.02em;
+  color: var(--ivory);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* The seal itself must never receive a transform — background-attachment:
+   fixed (used so its small circle samples the same viewport-locked image
+   as the flaps, lining up with the photographed wax seal) stops working
+   the moment the element it's on on has any transform, even a pulsing
+   scale(1) at rest, and silently falls back to sizing the full photo
+   against the seal's own tiny box instead — which showed up as the
+   whole envelope shrunk into a little circular thumbnail. The inviting
+   pulse instead animates a halo on ::after, which has no such image to
+   keep aligned. */
 .envelope-seal {
   position: absolute;
   top: calc(50% - 32px);
@@ -128,29 +155,39 @@ body {
   cursor: pointer;
   pointer-events: auto;
   transition: opacity 400ms ease, transform 400ms ease;
-  animation: seal-pulse 2.6s ease-in-out infinite;
   z-index: 1;
 }
-@keyframes seal-pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.06); }
+.envelope-seal::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(244, 243, 240, 0.55);
+  animation: seal-halo 2.6s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes seal-halo {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(244, 243, 240, 0.55); }
+  50% { box-shadow: 0 0 0 8px rgba(244, 243, 240, 0); }
 }
 
 .intro.opening .envelope-flap-top { transform: rotateX(-160deg); }
 .intro.opening .envelope-flap-bottom,
 .intro.opening .envelope-flap-left,
 .intro.opening .envelope-flap-right,
-.intro.opening .envelope-body {
+.intro.opening .envelope-body,
+.intro.opening .envelope-invite {
   opacity: 0;
 }
 .intro.opening .envelope-seal {
   opacity: 0;
-  animation: none;
   transform: scale(0.5) rotate(12deg);
 }
+.intro.opening .envelope-seal::after { animation: none; }
 
 @media (min-width: 640px) {
   .envelope-seal { width: 76px; height: 76px; top: calc(50% - 38px); left: calc(50% - 38px); }
+  .envelope-invite { font-size: 1.6rem; top: 64%; }
 }
 
 /* The page appears directly underneath once the seal breaks and the top
@@ -171,7 +208,7 @@ body {
      it even at opacity:0. Nothing inside .letter needs to be clickable
      itself; a tap anywhere still reaches #intro's own click handler. */
   pointer-events: none;
-  transition: opacity 450ms ease 400ms;
+  transition: opacity 900ms ease 1700ms;
 }
 .intro.opening .letter {
   opacity: 1;

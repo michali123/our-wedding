@@ -38,7 +38,7 @@
     href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,600&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Montserrat:wght@400;500;600;700&family=Heebo:wght@400;500;700&display=swap"
     rel="stylesheet"
   />
-  <link rel="stylesheet" href="css/styles.css?v=15" />
+  <link rel="stylesheet" href="css/styles.css?v=16" />
   <!-- The opening reveal needs JS to dismiss itself — without it, don't
        let it block the page. -->
   <noscript><style>.intro { display: none !important; }</style></noscript>
@@ -57,30 +57,22 @@
 <body>
 
   <!-- ══════════════════════ Opening reveal ══════════════════════ -->
-  <!-- A sealed envelope that opens on arrival — four flaps fold back from
-       every edge and the wax seal breaks, then the photo card underneath
-       lifts away like a letter being pulled out of view to reveal the
-       site. Skippable by tapping anywhere, opens on its own shortly
-       after. Requires JS — see the noscript rule in the <head> above that
-       hides it entirely without JS, so it never blocks the page. -->
+  <!-- A sealed envelope that opens on arrival — four flaps (cropped from
+       the same photo so they tile seamlessly while closed) fold back
+       from every edge and the wax seal breaks, then the photo card
+       underneath lifts away like a letter being pulled out of view to
+       reveal the site. Skippable by tapping anywhere, opens on its own
+       shortly after. Requires JS — see the noscript rule in the <head>
+       above that hides it entirely without JS, so it never blocks the
+       page. -->
   <div class="intro" id="intro">
     <div class="envelope" aria-hidden="true">
-      <div class="envelope-body">
-        <svg class="envelope-sprig envelope-sprig-1" width="54" height="80" viewBox="0 0 54 80" fill="none" stroke="currentColor" stroke-width="1"><path d="M27 4v68M27 16 14 8M27 16l13-8M27 30 12 20M27 30l15-10M27 44 14 35M27 44l13-9M27 58 16 50M27 58l11-8"/></svg>
-        <svg class="envelope-sprig envelope-sprig-2" width="54" height="80" viewBox="0 0 54 80" fill="none" stroke="currentColor" stroke-width="1"><path d="M27 4v68M27 16 14 8M27 16l13-8M27 30 12 20M27 30l15-10M27 44 14 35M27 44l13-9M27 58 16 50M27 58l11-8"/></svg>
-        <svg class="envelope-sprig envelope-sprig-3" width="54" height="80" viewBox="0 0 54 80" fill="none" stroke="currentColor" stroke-width="1"><path d="M27 4v68M27 16 14 8M27 16l13-8M27 30 12 20M27 30l15-10M27 44 14 35M27 44l13-9M27 58 16 50M27 58l11-8"/></svg>
-        <svg class="envelope-sprig envelope-sprig-4" width="54" height="80" viewBox="0 0 54 80" fill="none" stroke="currentColor" stroke-width="1"><path d="M27 4v68M27 16 14 8M27 16l13-8M27 30 12 20M27 30l15-10M27 44 14 35M27 44l13-9M27 58 16 50M27 58l11-8"/></svg>
-      </div>
+      <div class="envelope-body"></div>
       <div class="envelope-flap envelope-flap-top"></div>
       <div class="envelope-flap envelope-flap-bottom"></div>
       <div class="envelope-flap envelope-flap-left"></div>
       <div class="envelope-flap envelope-flap-right"></div>
-      <svg class="envelope-creases" viewBox="0 0 100 100" preserveAspectRatio="none" fill="none">
-        <path d="M0 0 L50 50 L100 0 M0 100 L50 50 L100 100" vector-effect="non-scaling-stroke" />
-      </svg>
-      <div class="envelope-seal">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V9"/><path d="M12 9c0-3 2-5 5-5-0 3-2 5-5 5z"/><path d="M12 9c0-3-2-5-5-5 0 3 2 5 5 5z"/><path d="M12 14c0-2.5 1.8-4 4.5-4C16 12.5 14 14 12 14z"/><path d="M12 14c0-2.5-1.8-4-4.5-4C8 12.5 10 14 12 14z"/><circle cx="12" cy="6" r="1.6"/></svg>
-      </div>
+      <div class="envelope-seal"></div>
     </div>
     <div class="intro-photo">
       <img src="images/save-the-date.jpg" alt="Josh and Michal" onerror="this.parentElement.classList.add('img-missing')" />
@@ -693,8 +685,8 @@
   </button>
 
   <script>window.DOVES_CONFIG = { ambient: false };</script>
-  <script src="js/doves.js?v=15" defer></script>
+  <script src="js/doves.js?v=16" defer></script>
   <script src="js/guest-list.js?v=1"></script>
-  <script src="js/main.js?v=15"></script>
+  <script src="js/main.js?v=16"></script>
 </body>
 </html>

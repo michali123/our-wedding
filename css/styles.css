@@ -59,9 +59,13 @@ body {
 .intro.lifting { transition: transform 1100ms cubic-bezier(0.65, 0, 0.35, 1); transform: translateY(-100%); }
 .intro.closed { display: none; }
 
-/* Four-flap "X-fold" envelope — a flap hinged at each edge folds back
-   toward that edge, meeting at a floral wax seal dead center, like a
-   traditional invitation envelope opening from every side at once. */
+/* Four-flap "X-fold" envelope, built from a single photo (images/envelope.jpg)
+   of a real wax-sealed envelope. Each flap is the same full photo, sized to
+   cover the viewport and clipped to its own triangle, so the four pieces
+   tile back into the unbroken photo while closed — then each rotates away
+   from its own edge on open. The seal "window" uses a fixed background
+   attachment so its small circle samples the exact same viewport-locked
+   image as the flaps behind it, lining up with the photographed wax seal. */
 .envelope {
   position: absolute;
   inset: 0;
@@ -72,24 +76,14 @@ body {
 .envelope-body {
   position: absolute;
   inset: 0;
-  overflow: hidden;
   background: var(--ivory);
   transition: opacity 500ms ease 650ms;
 }
-.envelope-sprig {
-  position: absolute;
-  color: var(--ink-muted);
-  opacity: 0.22;
-}
-.envelope-sprig-1 { top: 6%; left: 8%; transform: rotate(18deg); }
-.envelope-sprig-2 { top: 6%; right: 8%; transform: rotate(-18deg) scaleX(-1); }
-.envelope-sprig-3 { bottom: 6%; left: 8%; transform: rotate(-162deg) scaleX(-1); }
-.envelope-sprig-4 { bottom: 6%; right: 8%; transform: rotate(162deg); }
 
 .envelope-flap {
   position: absolute;
   inset: 0;
-  background: linear-gradient(165deg, var(--cream) 0%, var(--ivory) 100%);
+  background: url("../images/envelope.jpg") center/cover no-repeat;
   transform-style: preserve-3d;
   backface-visibility: hidden;
   transition: transform 850ms cubic-bezier(0.6, 0, 0.3, 1);
@@ -97,64 +91,46 @@ body {
 .envelope-flap-top {
   clip-path: polygon(0 0, 100% 0, 50% 50%);
   transform-origin: top center;
-  box-shadow: 0 6px 16px rgba(32, 29, 26, 0.1);
+  box-shadow: 0 6px 16px rgba(32, 29, 26, 0.25);
 }
 .envelope-flap-bottom {
   clip-path: polygon(0 100%, 100% 100%, 50% 50%);
   transform-origin: bottom center;
-  box-shadow: 0 -6px 16px rgba(32, 29, 26, 0.1);
+  box-shadow: 0 -6px 16px rgba(32, 29, 26, 0.25);
 }
 .envelope-flap-left {
   clip-path: polygon(0 0, 0 100%, 50% 50%);
   transform-origin: left center;
-  box-shadow: 6px 0 16px rgba(32, 29, 26, 0.1);
+  box-shadow: 6px 0 16px rgba(32, 29, 26, 0.25);
 }
 .envelope-flap-right {
   clip-path: polygon(100% 0, 100% 100%, 50% 50%);
   transform-origin: right center;
-  box-shadow: -6px 0 16px rgba(32, 29, 26, 0.1);
+  box-shadow: -6px 0 16px rgba(32, 29, 26, 0.25);
 }
 
 .envelope-seal {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 60px;
-  height: 60px;
+  top: calc(50% - 32px);
+  left: calc(50% - 32px);
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle at 35% 30%, #c79a53, #9c7132 70%, #83602a 100%);
-  box-shadow: 0 4px 10px rgba(32, 29, 26, 0.25), inset 0 1px 2px rgba(255, 255, 255, 0.3);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--ivory);
+  background: url("../images/envelope.jpg") center/cover fixed;
+  box-shadow: 0 4px 10px rgba(32, 29, 26, 0.35);
   transition: opacity 400ms ease, transform 400ms ease;
   z-index: 1;
-}
-
-.envelope-creases {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  stroke: var(--ink-muted);
-  stroke-width: 1;
-  opacity: 0.3;
-  transition: opacity 500ms ease 550ms;
 }
 
 .intro.opening .envelope-flap-top { transform: rotateX(-160deg); }
 .intro.opening .envelope-flap-bottom { transform: rotateX(160deg); }
 .intro.opening .envelope-flap-left { transform: rotateY(160deg); }
 .intro.opening .envelope-flap-right { transform: rotateY(-160deg); }
-.intro.opening .envelope-creases { opacity: 0; }
-.intro.opening .envelope-seal { opacity: 0; transform: translate(-50%, -50%) scale(0.5) rotate(12deg); }
+.intro.opening .envelope-seal { opacity: 0; transform: scale(0.5) rotate(12deg); }
 .intro.opening .envelope-body { opacity: 0; }
 
 @media (min-width: 640px) {
-  .envelope-seal { width: 76px; height: 76px; }
-  .envelope-sprig { width: 72px; height: 106px; }
+  .envelope-seal { width: 76px; height: 76px; top: calc(50% - 38px); left: calc(50% - 38px); }
 }
 
 .intro-photo {

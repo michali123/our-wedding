@@ -165,8 +165,13 @@
   }
 
   if (intro) {
+    /* Fires on "lifting" (the card actually sliding away), not "opening"
+       (the envelope's own flap/seal animation, which can start several
+       seconds earlier during the held reveal) — otherwise the flock
+       scatters while still hidden behind the still-visible card and has
+       already flown off-screen by the time the card lifts. */
     new MutationObserver(function () {
-      if (intro.classList.contains('opening') || intro.classList.contains('closed')) onEnter();
+      if (intro.classList.contains('lifting') || intro.classList.contains('closed')) onEnter();
     }).observe(intro, { attributes: true, attributeFilter: ['class'] });
   }
 

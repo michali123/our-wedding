@@ -21,6 +21,19 @@
     document.documentElement.style.overflow = "hidden";
 
     var introOpened = false;
+    var introLifted = false;
+    var liftTimer = null;
+
+    var liftAway = function () {
+      if (introLifted) return;
+      introLifted = true;
+      clearTimeout(liftTimer);
+      intro.classList.add("lifting");
+      setTimeout(function () {
+        intro.classList.add("closed");
+      }, 1100);
+    };
+
     var openIntro = function () {
       if (introOpened) return;
       introOpened = true;
@@ -30,16 +43,21 @@
       // The envelope's four flaps + seal animate open first (~1150ms),
       // then the revealed "Save the Date" photo holds for a full 4
       // seconds so it isn't rushed past, then the whole card lifts away
-      // (1100ms) to reveal the site underneath.
-      setTimeout(function () {
-        intro.classList.add("lifting");
-      }, 5150);
-      setTimeout(function () {
-        intro.classList.add("closed");
-      }, 6250);
+      // (1100ms) to reveal the site underneath — unless a tap (e.g. the
+      // Enter button) skips the hold early via liftAway() below.
+      liftTimer = setTimeout(liftAway, 5150);
     };
 
-    intro.addEventListener("click", openIntro);
+    // A tap always means "move this along": before opening, it starts
+    // the reveal; once the reveal is showing, it skips straight to
+    // lifting away instead of sitting there doing nothing.
+    intro.addEventListener("click", function () {
+      if (!introOpened) {
+        openIntro();
+      } else {
+        liftAway();
+      }
+    });
     setTimeout(openIntro, 8200);
   }
 

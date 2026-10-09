@@ -221,7 +221,7 @@
     otherInput.style.marginTop = "0.75rem";
     otherInput.type = "text";
     otherInput.setAttribute("data-dietary-other", "");
-    otherInput.placeholder = "Anything else we should know? (e.g. shellfish allergy)";
+    otherInput.placeholder = "Anything else we should know?";
     block.appendChild(otherInput);
 
     return { block: block, nameLabel: nameLabel };

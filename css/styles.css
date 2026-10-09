@@ -132,15 +132,17 @@ body {
   text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
 }
 
-/* The seal itself must never receive a transform — background-attachment:
-   fixed (used so its small circle samples the same viewport-locked image
-   as the flaps, lining up with the photographed wax seal) stops working
-   the moment the element it's on on has any transform, even a pulsing
-   scale(1) at rest, and silently falls back to sizing the full photo
-   against the seal's own tiny box instead — which showed up as the
-   whole envelope shrunk into a little circular thumbnail. The inviting
-   pulse instead animates a halo on ::after, which has no such image to
-   keep aligned. */
+/* The seal itself must never receive a transform while closed —
+   background-attachment: fixed (used so its small circle samples the
+   same viewport-locked image as the flaps, lining up with the
+   photographed wax seal) stops working the moment the element has any
+   transform, even a resting scale(1), and silently falls back to sizing
+   the full photo against the seal's own tiny box instead — which showed
+   up as the whole envelope shrunk into a little circular thumbnail. No
+   decorative pulse/halo on it either, for the same reason and because it
+   read as a stray UI artifact sitting on top of the photographed seal —
+   the seal image itself is the only thing that moves, breaking open on
+   press. */
 .envelope-seal {
   position: absolute;
   top: calc(50% - 32px);
@@ -157,19 +159,6 @@ body {
   transition: opacity 400ms ease, transform 400ms ease;
   z-index: 1;
 }
-.envelope-seal::after {
-  content: "";
-  position: absolute;
-  inset: -6px;
-  border-radius: 50%;
-  box-shadow: 0 0 0 0 rgba(244, 243, 240, 0.55);
-  animation: seal-halo 2.6s ease-in-out infinite;
-  pointer-events: none;
-}
-@keyframes seal-halo {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(244, 243, 240, 0.55); }
-  50% { box-shadow: 0 0 0 8px rgba(244, 243, 240, 0); }
-}
 
 .intro.opening .envelope-flap-top { transform: rotateX(-160deg); }
 .intro.opening .envelope-flap-bottom,
@@ -183,7 +172,6 @@ body {
   opacity: 0;
   transform: scale(0.5) rotate(12deg);
 }
-.intro.opening .envelope-seal::after { animation: none; }
 
 @media (min-width: 640px) {
   .envelope-seal { width: 76px; height: 76px; top: calc(50% - 38px); left: calc(50% - 38px); }

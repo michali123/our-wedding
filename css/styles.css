@@ -132,17 +132,21 @@ body {
   text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
 }
 
-/* The seal itself must never receive a transform while closed —
-   background-attachment: fixed (used so its small circle samples the
-   same viewport-locked image as the flaps, lining up with the
-   photographed wax seal) stops working the moment the element has any
-   transform, even a resting scale(1), and silently falls back to sizing
-   the full photo against the seal's own tiny box instead — which showed
-   up as the whole envelope shrunk into a little circular thumbnail. No
-   decorative pulse/halo on it either, for the same reason and because it
-   read as a stray UI artifact sitting on top of the photographed seal —
-   the seal image itself is the only thing that moves, breaking open on
-   press. */
+/* The wax seal the guest sees is just whatever the flap/body photos
+   already show at the center point where they meet — there is no
+   separate seal graphic layered on top. This button is purely an
+   invisible press target sized and positioned over that spot; it has no
+   background, border, or shadow of its own, so there is nothing extra
+   to render or to misalign. (Earlier versions gave it its own cropped
+   copy of the photo via background-attachment: fixed, so its small
+   circle would sample the same image as the big flaps — but any
+   transform on that element, even a resting one from a pulse animation,
+   silently breaks fixed-attachment and falls back to squeezing the
+   whole photo into the tiny box instead, which is what kept showing up
+   as a stray circular artifact. Not having a background at all sidesteps
+   that entirely.) When the top flap opens, the seal "breaks" simply
+   because its photographed half-on each flap goes its own way with the
+   flap it's printed on. */
 .envelope-seal {
   position: absolute;
   top: calc(50% - 32px);
@@ -150,13 +154,11 @@ body {
   width: 64px;
   height: 64px;
   padding: 0;
+  margin: 0;
   border: none;
-  border-radius: 50%;
-  background: url("../images/envelope.jpg") center/cover fixed;
-  box-shadow: 0 4px 10px rgba(32, 29, 26, 0.35);
+  background: transparent;
   cursor: pointer;
   pointer-events: auto;
-  transition: opacity 400ms ease, transform 400ms ease;
   z-index: 1;
 }
 
@@ -167,10 +169,6 @@ body {
 .intro.opening .envelope-body,
 .intro.opening .envelope-invite {
   opacity: 0;
-}
-.intro.opening .envelope-seal {
-  opacity: 0;
-  transform: scale(0.5) rotate(12deg);
 }
 
 @media (min-width: 640px) {
@@ -242,31 +240,6 @@ body {
   }
 }
 
-.intro-eyebrow {
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-  gap: 0.5rem;
-  color: var(--ink);
-}
-.intro-eyebrow-big {
-  font-family: var(--font-display);
-  font-size: 1.9rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.22em;
-}
-.intro-eyebrow-script {
-  font-family: var(--font-script);
-  font-style: italic;
-  font-weight: 500;
-  font-size: 1.15rem;
-  letter-spacing: 0.01em;
-  color: var(--ink);
-  position: relative;
-  top: -0.6rem;
-  margin: 0 -0.15rem;
-}
 .intro-names {
   margin: 0.75rem 0 0;
   font-family: var(--font-display);
@@ -297,8 +270,6 @@ body {
 
 @media (min-width: 640px) {
   .intro-names { font-size: 3.5rem; }
-  .intro-eyebrow-big { font-size: 2.75rem; }
-  .intro-eyebrow-script { font-size: 1.6rem; top: -0.85rem; }
 }
 
 h1, h2, h3 {
@@ -1206,10 +1177,6 @@ legend.field-label { padding: 0; margin-bottom: 0.6rem; }
 .guest-list { display: flex; flex-direction: column; gap: 0.6rem; }
 .guest-row { display: flex; align-items: center; gap: 0.5rem; }
 
-.party-guest-list { display: flex; flex-direction: column; gap: 0.5rem; }
-.party-guest-row { display: flex; align-items: center; gap: 0.55rem; font-size: 0.9rem; }
-.party-guest-row input[type="checkbox"] { width: 1.05rem; height: 1.05rem; accent-color: var(--ink); flex-shrink: 0; }
-.party-guest-empty { font-size: 0.85rem; color: var(--ink-muted); font-style: italic; }
 .guest-row .field { flex: 1 1 auto; }
 .guest-row .remove-guest-btn {
   flex: 0 0 auto;

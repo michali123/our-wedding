@@ -177,13 +177,11 @@
   // ── Additional guests (named, only shown/relevant when attending) ──
   var attendingGroup = document.querySelector('[data-chip-group="attending"]');
   var guestCountWrap = document.querySelector("[data-guest-count-wrap]");
-  var attendingWrap = document.querySelector("[data-attending-wrap]");
-  if (attendingGroup && (guestCountWrap || attendingWrap)) {
+  if (attendingGroup && guestCountWrap) {
     var syncGuestCount = function () {
       var yes = attendingGroup.querySelector('[data-value="yes"]');
       var isAttending = !!(yes && yes.getAttribute("aria-pressed") === "true");
-      if (guestCountWrap) guestCountWrap.hidden = !isAttending;
-      if (attendingWrap) attendingWrap.hidden = !isAttending;
+      guestCountWrap.hidden = !isAttending;
     };
     attendingGroup.addEventListener("chip-change", syncGuestCount);
     syncGuestCount();
@@ -275,14 +273,11 @@
       if (dietaryGuestList) dietaryGuestList.appendChild(dietary.block);
       addGuestBtn.disabled = guestList.children.length >= MAX_ADDITIONAL_GUESTS;
       input.focus();
-      syncPartyGuestLists();
       syncDietaryGuestNames();
     };
     addGuestBtn.addEventListener("click", addGuestRow);
   }
 
-  // ── After Party / Late Brunch: per-guest checklist, kept in sync
-  //    with the named guest list above ──
   var firstNameInput = document.getElementById("first_name");
   var lastNameInput = document.getElementById("last_name");
   var getPrimaryName = function () {
@@ -290,57 +285,13 @@
     var last = lastNameInput ? lastNameInput.value.trim() : "";
     return (first + " " + last).trim();
   };
-  var afterPartyList = document.querySelector("[data-after-party-list]");
-  var lateBrunchList = document.querySelector("[data-late-brunch-list]");
-  var syncPartyGuestLists = function () {
-    if (!afterPartyList && !lateBrunchList) return;
-
-    var names = [];
-    names.push(getPrimaryName() || "You");
-    if (guestList) {
-      guestList.querySelectorAll("[data-guest-name]").forEach(function (input) {
-        var name = input.value.trim();
-        if (name) names.push(name);
-      });
-    }
-
-    [afterPartyList, lateBrunchList].forEach(function (container) {
-      if (!container) return;
-      var previouslyChecked = {};
-      container.querySelectorAll("input[type=checkbox]").forEach(function (cb) {
-        previouslyChecked[cb.getAttribute("data-guest-name")] = cb.checked;
-      });
-      container.innerHTML = "";
-      names.forEach(function (name) {
-        var label = document.createElement("label");
-        label.className = "party-guest-row";
-        var cb = document.createElement("input");
-        cb.type = "checkbox";
-        cb.setAttribute("data-guest-name", name);
-        cb.checked = Object.prototype.hasOwnProperty.call(previouslyChecked, name)
-          ? previouslyChecked[name]
-          : false;
-        var span = document.createElement("span");
-        span.textContent = name;
-        label.appendChild(cb);
-        label.appendChild(span);
-        container.appendChild(label);
-      });
-    });
-  };
-  if (firstNameInput) firstNameInput.addEventListener("input", syncPartyGuestLists);
-  if (lastNameInput) lastNameInput.addEventListener("input", syncPartyGuestLists);
   if (guestList) {
     guestList.addEventListener("input", function (e) {
       if (e.target && e.target.hasAttribute("data-guest-name")) {
-        syncPartyGuestLists();
         syncDietaryGuestNames();
       }
     });
-    var partyObserver = new MutationObserver(syncPartyGuestLists);
-    partyObserver.observe(guestList, { childList: true });
   }
-  syncPartyGuestLists();
 
   // ── Live guest-list check: as soon as the guest finishes typing
   //    their name (on blur), confirm whether it's on the guest list —
@@ -475,16 +426,6 @@
       }
       var dietary = dietaryEntries.filter(Boolean).join("; ");
 
-      var checkedNames = function (container) {
-        if (!container) return [];
-        return Array.prototype.map.call(
-          container.querySelectorAll("input[type=checkbox]:checked"),
-          function (cb) { return cb.getAttribute("data-guest-name"); }
-        );
-      };
-      var afterPartyGuests = checkedNames(afterPartyList);
-      var lateBrunchGuests = checkedNames(lateBrunchList);
-
       var formData = new FormData();
       formData.append("access_key", "42ac7e80-b40c-4245-a4e9-9adc3b9233c7");
       formData.append("subject", "New RSVP from " + fullName);
@@ -498,8 +439,6 @@
       formData.append("guest_count", attending === "yes" ? String(1 + additionalGuests.length) : "1");
       formData.append("additional_guests", additionalGuests.join(", ") || "None");
       formData.append("dietary_restrictions", dietary || "None specified");
-      formData.append("after_party_guests", attending === "yes" ? (afterPartyGuests.join(", ") || "None") : "N/A");
-      formData.append("late_brunch_guests", attending === "yes" ? (lateBrunchGuests.join(", ") || "None") : "N/A");
       formData.append("song_request", form.song_request.value.trim());
       formData.append("message", form.message.value.trim());
 

@@ -38,7 +38,7 @@
     href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,600&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Montserrat:wght@400;500;600;700&family=Heebo:wght@400;500;700&display=swap"
     rel="stylesheet"
   />
-  <link rel="stylesheet" href="css/styles.css?v=26" />
+  <link rel="stylesheet" href="css/styles.css?v=27" />
   <!-- The opening reveal needs JS to dismiss itself — without it, don't
        let it block the page. -->
   <noscript><style>.intro { display: none !important; }</style></noscript>
@@ -57,23 +57,12 @@
 <body>
 
   <!-- ══════════════════════ Opening reveal ══════════════════════ -->
-  <!-- A sealed envelope that opens on arrival — press the wax seal (it
-       has a gentle pulse to invite the tap) and the top flap swings
-       upward while the seal breaks, then the "Save the Date" page
-       appears directly underneath. Holds, then lifts away to reveal the
-       site. Opens on its own after a short wait if nobody taps. Requires
-       JS — see the noscript rule in the <head> above that hides it
-       entirely without JS, so it never blocks the page. -->
+  <!-- A photo card with the couple's names — holds briefly, then lifts
+       away to reveal the site. Tap anywhere (or the Enter button) to
+       skip ahead immediately. Requires JS — see the noscript rule in the
+       <head> above that hides it entirely without JS, so it never
+       blocks the page. -->
   <div class="intro" id="intro">
-    <div class="envelope" aria-hidden="true">
-      <div class="envelope-body"></div>
-      <div class="envelope-flap envelope-flap-bottom"></div>
-      <div class="envelope-flap envelope-flap-left"></div>
-      <div class="envelope-flap envelope-flap-right"></div>
-      <div class="envelope-flap envelope-flap-top"></div>
-      <p class="envelope-invite">You Are Cordially Invited to Our Wedding</p>
-      <button type="button" class="envelope-seal" id="envelope-seal" aria-label="Open invitation"></button>
-    </div>
     <div class="letter">
     <div class="intro-photo">
       <img src="images/save-the-date.jpg" alt="Josh and Michal" onerror="this.parentElement.classList.add('img-missing')" />
@@ -81,6 +70,7 @@
     </div>
     <div class="intro-scrim"></div>
     <div class="intro-text">
+      <p class="intro-invite">You are cordially invited to the wedding of</p>
       <p class="intro-names">Josh &amp; Michal</p>
       <button type="button" class="intro-enter" id="intro-enter" aria-label="Enter site">
         <span>Enter</span>
@@ -611,6 +601,6 @@
   </button>
 
   <script src="js/guest-list.js?v=2"></script>
-  <script src="js/main.js?v=26"></script>
+  <script src="js/main.js?v=27"></script>
 </body>
 </html>

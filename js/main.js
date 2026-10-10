@@ -15,12 +15,14 @@
   });
 
   // ── Opening reveal ───────────────────────────────────────
-  // Plays on every page load/refresh — no "seen it already" skip.
+  // Plays on every page load/refresh — no "seen it already" skip. The
+  // photo card is visible immediately; it holds for a few seconds, then
+  // lifts away as a single piece to reveal the site — unless a tap (or
+  // the Enter button) skips the hold early via liftAway() below.
   var intro = document.getElementById("intro");
   if (intro) {
     document.documentElement.style.overflow = "hidden";
 
-    var introOpened = false;
     var introLifted = false;
     var liftTimer = null;
 
@@ -29,40 +31,14 @@
       introLifted = true;
       clearTimeout(liftTimer);
       intro.classList.add("lifting");
+      document.documentElement.style.overflow = "";
       setTimeout(function () {
         intro.classList.add("closed");
       }, 1100);
     };
 
-    var openIntro = function () {
-      if (introOpened) return;
-      introOpened = true;
-      window.scrollTo(0, 0);
-      intro.classList.add("opening");
-      document.documentElement.style.overflow = "";
-      // The seal breaks and the top flap swings open slowly (~1900ms),
-      // the page fades in underneath shortly after (fully in by
-      // ~2600ms), then it holds for a full 4 seconds so it isn't rushed
-      // past, then the whole thing lifts away (1100ms) to reveal the
-      // site underneath — unless a tap (or the Enter button) skips the
-      // hold early via liftAway() below.
-      liftTimer = setTimeout(liftAway, 6600);
-    };
-
-    // Pressing the seal is the intended way to open it; it opens on its
-    // own after a short wait either way. Once open, a tap anywhere skips
-    // straight to lifting away instead of waiting out the hold.
-    var seal = document.getElementById("envelope-seal");
-    if (seal) {
-      seal.addEventListener("click", function (e) {
-        e.stopPropagation();
-        openIntro();
-      });
-    }
-    intro.addEventListener("click", function () {
-      if (introOpened) liftAway();
-    });
-    setTimeout(openIntro, 8200);
+    intro.addEventListener("click", liftAway);
+    liftTimer = setTimeout(liftAway, 4000);
   }
 
   // ── Mobile nav ──────────────────────────────────────────

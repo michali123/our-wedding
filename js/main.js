@@ -164,7 +164,7 @@
   }
 
   // ── Per-guest dietary blocks (paired 1:1, in order, with guest rows) ──
-  var DIETARY_OPTIONS = ["Vegetarian", "Kosher"];
+  var DIETARY_OPTIONS = ["Vegetarian", "Vegan", "Kosher"];
   var dietaryGuestList = document.querySelector("[data-dietary-guest-list]");
   var dietaryGuestCounter = 0;
 

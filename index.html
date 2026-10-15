@@ -515,45 +515,47 @@
           </div>
         </fieldset>
 
-        <div data-guest-count-wrap hidden>
-          <label class="field-label">Is anyone joining you?</label>
-          <p class="field-hint">Add anyone else in your party — we just need their name.</p>
-          <div class="guest-list" data-guest-list></div>
-          <button type="button" class="add-guest-btn" data-add-guest>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-            Add a guest
-          </button>
-        </div>
-
-        <fieldset>
-          <legend class="field-label">Food restrictions</legend>
-          <p class="field-hint">Let us know for you and anyone joining you.</p>
-
-          <div class="dietary-block" data-dietary-primary>
-            <div class="chip-group" data-chip-group="dietary-you">
-              <button type="button" class="chip" data-value="Vegetarian" aria-pressed="false">Vegetarian</button>
-              <button type="button" class="chip" data-value="Vegan" aria-pressed="false">Vegan</button>
-              <button type="button" class="chip" data-value="Kosher" aria-pressed="false">Kosher</button>
-            </div>
-            <input class="field" style="margin-top:0.75rem;" data-dietary-other type="text" placeholder="Anything else we should know?" />
-            <div class="entree-picker" data-entree-picker hidden>
-              <p class="field-label" style="margin-top:0.9rem;">Entr&eacute;e selection</p>
-              <div class="entree-options" data-entree-options></div>
-            </div>
+        <div data-attending-only-fields hidden>
+          <div data-guest-count-wrap hidden>
+            <label class="field-label">Is anyone joining you?</label>
+            <p class="field-hint">Add anyone else in your party — we just need their name.</p>
+            <div class="guest-list" data-guest-list></div>
+            <button type="button" class="add-guest-btn" data-add-guest>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              Add a guest
+            </button>
           </div>
 
-          <div data-dietary-guest-list></div>
-        </fieldset>
+          <fieldset>
+            <legend class="field-label">Food restrictions</legend>
+            <p class="field-hint">Let us know for you and anyone joining you.</p>
 
-        <div>
-          <label class="field-label" for="song_request">Song request (optional)</label>
-          <p class="field-hint field-hint-fun">Guaranteed to get us on the dance floor &mdash; we&rsquo;re taking requests.</p>
-          <input class="field" id="song_request" name="song_request" type="text" />
-        </div>
+            <div class="dietary-block" data-dietary-primary>
+              <div class="chip-group" data-chip-group="dietary-you">
+                <button type="button" class="chip" data-value="Vegetarian" aria-pressed="false">Vegetarian</button>
+                <button type="button" class="chip" data-value="Vegan" aria-pressed="false">Vegan</button>
+                <button type="button" class="chip" data-value="Kosher" aria-pressed="false">Kosher</button>
+              </div>
+              <input class="field" style="margin-top:0.75rem;" data-dietary-other type="text" placeholder="Anything else we should know?" />
+              <div class="entree-picker" data-entree-picker hidden>
+                <p class="field-label" style="margin-top:0.9rem;">Entr&eacute;e selection</p>
+                <div class="entree-options" data-entree-options></div>
+              </div>
+            </div>
 
-        <div>
-          <label class="field-label" for="message">Message to the couple (optional)</label>
-          <textarea class="field" id="message" name="message" rows="3" placeholder="Leave us a note..."></textarea>
+            <div data-dietary-guest-list></div>
+          </fieldset>
+
+          <div>
+            <label class="field-label" for="song_request">Song request (optional)</label>
+            <p class="field-hint field-hint-fun">Guaranteed to get us on the dance floor &mdash; we&rsquo;re taking requests.</p>
+            <input class="field" id="song_request" name="song_request" type="text" />
+          </div>
+
+          <div>
+            <label class="field-label" for="message">Message to the couple (optional)</label>
+            <textarea class="field" id="message" name="message" rows="3" placeholder="Leave us a note..."></textarea>
+          </div>
         </div>
 
         <p class="form-error" id="rsvp-error" role="alert"></p>
@@ -595,6 +597,6 @@
   <script>window.DOVES_CONFIG = { ambient: false };</script>
   <script src="js/doves.js?v=1" defer></script>
   <script src="js/guest-list.js?v=3"></script>
-  <script src="js/main.js?v=30"></script>
+  <script src="js/main.js?v=31"></script>
 </body>
 </html>

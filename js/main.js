@@ -150,14 +150,18 @@
   }
   document.querySelectorAll("[data-chip-group]").forEach(wireChipGroup);
 
-  // ── Additional guests (named, only shown/relevant when attending) ──
+  // ── Fields that only make sense once someone has answered "yes" ──
+  // (guest count, dietary/entrée, song request, message) — hidden until
+  // then, and hidden again if they switch to declining.
   var attendingGroup = document.querySelector('[data-chip-group="attending"]');
   var guestCountWrap = document.querySelector("[data-guest-count-wrap]");
+  var attendingOnlyFields = document.querySelector("[data-attending-only-fields]");
   if (attendingGroup && guestCountWrap) {
     var syncGuestCount = function () {
       var yes = attendingGroup.querySelector('[data-value="yes"]');
       var isAttending = !!(yes && yes.getAttribute("aria-pressed") === "true");
       guestCountWrap.hidden = !isAttending;
+      if (attendingOnlyFields) attendingOnlyFields.hidden = !isAttending;
     };
     attendingGroup.addEventListener("chip-change", syncGuestCount);
     syncGuestCount();

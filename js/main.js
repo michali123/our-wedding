@@ -179,11 +179,23 @@
   ];
   var entreeGroupCounter = 0;
 
+  function isAttendingYes() {
+    if (!attendingGroup) return false;
+    var yes = attendingGroup.querySelector('[data-value="yes"]');
+    return !!(yes && yes.getAttribute("aria-pressed") === "true");
+  }
+
   function renderEntreeOptions(block) {
     var dietaryChips = block.querySelector(".chip-group");
     var picker = block.querySelector("[data-entree-picker]");
     var optionsEl = block.querySelector("[data-entree-options]");
     if (!dietaryChips || !picker || !optionsEl) return;
+
+    if (!isAttendingYes()) {
+      picker.hidden = true;
+      optionsEl.innerHTML = "";
+      return;
+    }
 
     var isVeg = !!dietaryChips.querySelector(
       '[data-value="Vegetarian"][aria-pressed="true"], [data-value="Vegan"][aria-pressed="true"]'
@@ -316,6 +328,18 @@
       var name = names[i] ? names[i].value.trim() : "";
       labels[i].textContent = name || "Guest " + (i + 1);
     }
+  }
+
+  // Entrée pickers only make sense once someone has said they're coming —
+  // re-check all of them (primary + every guest) whenever that answer
+  // changes, so flipping from "no" back to "yes" brings them back too.
+  if (attendingGroup) {
+    attendingGroup.addEventListener("chip-change", function () {
+      if (primaryDietaryBlock) renderEntreeOptions(primaryDietaryBlock);
+      if (dietaryGuestList) {
+        dietaryGuestList.querySelectorAll(".dietary-block").forEach(renderEntreeOptions);
+      }
+    });
   }
 
   var MAX_ADDITIONAL_GUESTS = 9; // party of 10 total, including the RSVP'ing guest

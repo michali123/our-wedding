@@ -163,6 +163,91 @@
     syncGuestCount();
   }
 
+  // ── Entrée selection (per person, based on their dietary choice) ──
+  // Vegetarian/Vegan guests don't pick from this list — the caterer
+  // handles those automatically from the dietary chip alone. Everyone
+  // else chooses between the two options for their track, or Kids Menu.
+  var ENTREE_REGULAR = [
+    { value: "Chicken Francese", desc: "Chicken Breasts sautéed in Butter, White Wine, Lemons and Capers" },
+    { value: "Grilled Salmon", desc: "Brushed with a Citrus Glaze" },
+    { value: "Kids Menu", desc: "" },
+  ];
+  var ENTREE_KOSHER = [
+    { value: "Grilled Teriyaki Salmon", desc: "With Rice Medley, Stir Fried Vegetables" },
+    { value: "Chicken Francaise", desc: "Baby Red Potatoes & Julienne Vegetables" },
+    { value: "Kids Menu", desc: "" },
+  ];
+  var entreeGroupCounter = 0;
+
+  function renderEntreeOptions(block) {
+    var dietaryChips = block.querySelector(".chip-group");
+    var picker = block.querySelector("[data-entree-picker]");
+    var optionsEl = block.querySelector("[data-entree-options]");
+    if (!dietaryChips || !picker || !optionsEl) return;
+
+    var isVeg = !!dietaryChips.querySelector(
+      '[data-value="Vegetarian"][aria-pressed="true"], [data-value="Vegan"][aria-pressed="true"]'
+    );
+    if (isVeg) {
+      picker.hidden = true;
+      optionsEl.innerHTML = "";
+      return;
+    }
+
+    var isKosher = !!dietaryChips.querySelector('[data-value="Kosher"][aria-pressed="true"]');
+    var options = isKosher ? ENTREE_KOSHER : ENTREE_REGULAR;
+
+    if (!block.getAttribute("data-entree-group-name")) {
+      block.setAttribute("data-entree-group-name", "entree-" + entreeGroupCounter++);
+    }
+    var groupName = block.getAttribute("data-entree-group-name");
+
+    var previousChecked = optionsEl.querySelector("input:checked");
+    var previousValue = previousChecked ? previousChecked.value : null;
+
+    optionsEl.innerHTML = "";
+    options.forEach(function (opt) {
+      var label = document.createElement("label");
+      label.className = "entree-option";
+
+      var input = document.createElement("input");
+      input.type = "radio";
+      input.name = groupName;
+      input.value = opt.value;
+      input.setAttribute("data-entree-radio", "");
+      if (opt.value === previousValue) input.checked = true;
+
+      var text = document.createElement("span");
+      text.className = "entree-option-text";
+      var title = document.createElement("strong");
+      title.textContent = opt.value;
+      text.appendChild(title);
+      if (opt.desc) {
+        var descEl = document.createElement("span");
+        descEl.className = "entree-option-desc";
+        descEl.textContent = opt.desc;
+        text.appendChild(descEl);
+      }
+
+      label.appendChild(input);
+      label.appendChild(text);
+      optionsEl.appendChild(label);
+    });
+
+    picker.hidden = false;
+  }
+
+  var primaryDietaryBlock = document.querySelector("[data-dietary-primary]");
+  if (primaryDietaryBlock) {
+    var primaryDietaryChips = primaryDietaryBlock.querySelector(".chip-group");
+    if (primaryDietaryChips) {
+      primaryDietaryChips.addEventListener("chip-change", function () {
+        renderEntreeOptions(primaryDietaryBlock);
+      });
+    }
+    renderEntreeOptions(primaryDietaryBlock);
+  }
+
   // ── Per-guest dietary blocks (paired 1:1, in order, with guest rows) ──
   var DIETARY_OPTIONS = ["Vegetarian", "Vegan", "Kosher"];
   var dietaryGuestList = document.querySelector("[data-dietary-guest-list]");
@@ -199,6 +284,26 @@
     otherInput.setAttribute("data-dietary-other", "");
     otherInput.placeholder = "Anything else we should know?";
     block.appendChild(otherInput);
+
+    var entreePicker = document.createElement("div");
+    entreePicker.className = "entree-picker";
+    entreePicker.setAttribute("data-entree-picker", "");
+    entreePicker.hidden = true;
+    var entreeLabel = document.createElement("p");
+    entreeLabel.className = "field-label";
+    entreeLabel.style.marginTop = "0.9rem";
+    entreeLabel.textContent = "Entrée selection";
+    entreePicker.appendChild(entreeLabel);
+    var entreeOptions = document.createElement("div");
+    entreeOptions.className = "entree-options";
+    entreeOptions.setAttribute("data-entree-options", "");
+    entreePicker.appendChild(entreeOptions);
+    block.appendChild(entreePicker);
+
+    chipGroup.addEventListener("chip-change", function () {
+      renderEntreeOptions(block);
+    });
+    renderEntreeOptions(block);
 
     return { block: block, nameLabel: nameLabel };
   }
@@ -402,6 +507,23 @@
       }
       var dietary = dietaryEntries.filter(Boolean).join("; ");
 
+      var collectEntreeEntry = function (name, container) {
+        if (!container) return "";
+        var checked = container.querySelector("[data-entree-radio]:checked");
+        return checked ? name + ": " + checked.value : "";
+      };
+      var entreeEntries = [
+        collectEntreeEntry(fullName || "You", document.querySelector("[data-dietary-primary]")),
+      ];
+      if (dietaryGuestList) {
+        var entreeBlocks = dietaryGuestList.querySelectorAll(".dietary-block");
+        for (var ei = 0; ei < entreeBlocks.length; ei++) {
+          var entreeGuestName = entreeBlocks[ei].querySelector(".dietary-guest-name").textContent;
+          entreeEntries.push(collectEntreeEntry(entreeGuestName, entreeBlocks[ei]));
+        }
+      }
+      var entreeSelections = entreeEntries.filter(Boolean).join("; ");
+
       var formData = new FormData();
       formData.append("access_key", "42ac7e80-b40c-4245-a4e9-9adc3b9233c7");
       formData.append("subject", "New RSVP from " + fullName);
@@ -415,6 +537,7 @@
       formData.append("guest_count", attending === "yes" ? String(1 + additionalGuests.length) : "1");
       formData.append("additional_guests", additionalGuests.join(", ") || "None");
       formData.append("dietary_restrictions", dietary || "None specified");
+      formData.append("entree_selections", entreeSelections || "Not selected");
       formData.append("song_request", form.song_request.value.trim());
       formData.append("message", form.message.value.trim());
 

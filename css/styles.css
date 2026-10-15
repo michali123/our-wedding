@@ -1042,6 +1042,27 @@ legend.field-label { padding: 0; margin-bottom: 0.6rem; }
   color: var(--ink);
 }
 
+.entree-options { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem; }
+.entree-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  border: 1px solid var(--line);
+  background: var(--ivory);
+  border-radius: 0.6rem;
+  padding: 0.65rem 0.9rem;
+  cursor: pointer;
+  transition: border-color 150ms ease, background 150ms ease;
+}
+.entree-option:has(input:checked) {
+  border-color: var(--ink);
+  background: var(--cream);
+}
+.entree-option input[type="radio"] { margin-top: 0.2rem; flex: 0 0 auto; }
+.entree-option-text { display: flex; flex-direction: column; gap: 0.15rem; }
+.entree-option-text strong { font-size: 0.9rem; color: var(--ink); }
+.entree-option-desc { font-size: 0.8rem; color: var(--ink-muted); }
+
 .guest-list { display: flex; flex-direction: column; gap: 0.6rem; }
 .guest-row { display: flex; align-items: center; gap: 0.5rem; }
 

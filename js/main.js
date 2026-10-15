@@ -561,7 +561,7 @@
       formData.append("joining_as_plus_one_of", partyName || "N/A");
       formData.append("email", email);
       formData.append("phone", form.phone.value.trim());
-      formData.append("attending", attending === "yes" ? "Joyfully accepts" : "Regretfully declines");
+      formData.append("attending", attending === "yes" ? "Yes, joyfully accepts" : "No, regretfully declines");
       formData.append("guest_count", attending === "yes" ? String(1 + additionalGuests.length) : "1");
       formData.append("additional_guests", additionalGuests.join(", ") || "None");
       formData.append("dietary_restrictions", dietary || "None specified");

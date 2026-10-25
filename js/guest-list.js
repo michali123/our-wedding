@@ -36,10 +36,10 @@
     "yrin yardeni", "zack greytsman", "zoe maczuga"
   ];
 
-  // Guests on the spreadsheet with no last name recorded — for these,
-  // match on first name alone (whatever last name a guest types for them
-  // is accepted), since we have nothing to check it against anyway.
-  var FIRST_NAME_ONLY = ["harry", "mohamad", "ortal", "polanco", "reut", "sapir"];
+  // First names that match regardless of whatever last name is typed —
+  // either because no last name is on file for them, or (margaliet) the
+  // last name on file is unusual/hard to spell and shouldn't block her.
+  var FIRST_NAME_ONLY = ["harry", "mohamad", "ortal", "polanco", "reut", "sapir", "margaliet"];
 
   function normalize(s) {
     return (s || "")

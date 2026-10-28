@@ -6,8 +6,8 @@
 (function () {
   var GUESTS = [
     "adela mamroud", "adi shitrit", "alexa edelman", "allee chiapetta", "alon dolev",
-    "amit mamroud", "anita purcell", "anna kleinstchen", "avi mamroud", "barry edelman",
-    "becky mamroud", "benjy winkler", "beth weissman", "boman turovac", "brandon purcell",
+    "amit mamroud", "anita pursell", "anna kleinstchen", "avi mamroud", "barry edelman",
+    "becky mamroud", "benjy winkler", "beth weissman", "boman turovac", "brandon pursell",
     "brett bacho", "brian murphy", "catherine schur", "charlotte gerhardt",
     "chaya mushka", "chen batach", "chen dolev", "chloe turovac", "cindy purcel",
     "colleen riccio", "cynthia fernandez", "dallia barness", "dan gerhardt",
@@ -20,7 +20,7 @@
     "joe chiapetta", "jonah mamroud", "jordan mamroud", "josh edelman", "josh mamroud",
     "karlee owsiak", "kelly amits mom", "kelly greytsman", "kevin maczuga",
     "kristen hernandez", "laurianne teboul", "laury hamilton", "liron fatal",
-    "lotte bacho", "luca vaittinen", "luke bacho", "madelana purcell", "madison buck",
+    "lotte bacho", "luca vaittinen", "luke bacho", "madelana pursell", "madison buck",
     "mara mamroud", "margaliet themansloss", "matt bourn", "matthew sprung",
     "maureen kiley", "michal mamroud", "miguel pierra", "mike purcel", "mike riccio",
     "mohamad", "mor cohen", "moran moryosef", "nadav davidson", "nathan weissman",

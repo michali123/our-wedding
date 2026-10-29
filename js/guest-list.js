@@ -10,7 +10,7 @@
     "becky mamroud", "benjy winkler", "beth weissman", "boman turovac", "brandon pursell",
     "brett bacho", "brian murphy", "catherine schur", "charlotte gerhardt",
     "chaya mushka", "chen batach", "chen dolev", "chloe turovac", "cindy purcel",
-    "colleen riccio", "cynthia fernandez", "dallia barness", "dan gerhardt",
+    "colleen riccio", "cynthia fernandez", "dalia barness", "dan gerhardt",
     "daniela hamer", "david weissman", "debbie ziugzda", "donna fleischer", "dorin fatal",
     "eitan bohbot", "elazzar brandes", "eli malkin", "elior suissa", "eliran yihye",
     "elise buck", "eliz dolev", "ester moryosef", "eti moryosef", "evie weissman",

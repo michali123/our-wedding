@@ -471,6 +471,19 @@ a { color: inherit; text-decoration: none; }
   text-transform: none;
   color: var(--ink-muted);
 }
+.hero-name-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15em;
+}
+.hero-last-name {
+  font-family: var(--font-body);
+  font-size: 0.32em;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  color: var(--ink-muted);
+}
 
 .hero-tagline {
   margin-top: 1.25rem;

@@ -1042,19 +1042,6 @@ legend.field-label { padding: 0; margin-bottom: 0.6rem; }
 #guest-match-hint { min-height: 1.1rem; transition: color 150ms ease; }
 #guest-match-hint.is-error { color: var(--error); }
 
-.dietary-block + .dietary-block,
-[data-dietary-guest-list] .dietary-block:first-child {
-  margin-top: 1.25rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--line);
-}
-.dietary-guest-name {
-  margin: 0 0 0.5rem;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--ink);
-}
-
 .entree-options { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem; }
 .entree-option {
   display: flex;
@@ -1079,8 +1066,20 @@ legend.field-label { padding: 0; margin-bottom: 0.6rem; }
 .guest-list { display: flex; flex-direction: column; gap: 0.6rem; }
 .guest-row { display: flex; align-items: center; gap: 0.5rem; }
 
+.party-member {
+  border: 1px solid var(--line);
+  border-radius: 0.6rem;
+  padding: 1rem;
+  background: var(--ivory);
+}
+.party-member-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; }
+.party-member-name { margin: 0; font-size: 0.95rem; font-weight: 600; color: var(--ink); flex: 1 1 auto; }
+.party-member-header .field { flex: 1 1 auto; }
+.party-member-attending-label { margin-bottom: 0.5rem; }
+
 .guest-row .field { flex: 1 1 auto; }
-.guest-row .remove-guest-btn {
+.guest-row .remove-guest-btn,
+.party-member-header .remove-guest-btn {
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
@@ -1093,7 +1092,8 @@ legend.field-label { padding: 0; margin-bottom: 0.6rem; }
   color: var(--ink-muted);
   cursor: pointer;
 }
-.guest-row .remove-guest-btn:hover { background: var(--ink); color: var(--ivory); border-color: var(--ink); }
+.guest-row .remove-guest-btn:hover,
+.party-member-header .remove-guest-btn:hover { background: var(--ink); color: var(--ivory); border-color: var(--ink); }
 
 .add-guest-btn {
   display: inline-flex;

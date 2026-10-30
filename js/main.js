@@ -150,22 +150,21 @@
   }
   document.querySelectorAll("[data-chip-group]").forEach(wireChipGroup);
 
-  // ── Fields that only make sense once someone has answered "yes" ──
-  // (guest count, dietary/entrée, song request, message) — hidden until
-  // then, and hidden again if they switch to declining.
-  var attendingGroup = document.querySelector('[data-chip-group="attending"]');
-  var guestCountWrap = document.querySelector("[data-guest-count-wrap]");
+  // ── Party panel: one row per person, each with their own attending
+  //    answer and (if attending) their own dietary/entrée choice. Rows
+  //    come from two sources: "household" rows, auto-populated from the
+  //    guest list whenever the name fields match a recognized household
+  //    (rebuilt wholesale on every match, since the household is derived
+  //    fresh from whatever name is currently typed), and "manual" rows,
+  //    added one at a time via "+ Add a guest" for anyone not on the
+  //    list — these persist independently of the household rows. ──
   var attendingOnlyFields = document.querySelector("[data-attending-only-fields]");
-  if (attendingGroup && guestCountWrap) {
-    var syncGuestCount = function () {
-      var yes = attendingGroup.querySelector('[data-value="yes"]');
-      var isAttending = !!(yes && yes.getAttribute("aria-pressed") === "true");
-      guestCountWrap.hidden = !isAttending;
-      if (attendingOnlyFields) attendingOnlyFields.hidden = !isAttending;
-    };
-    attendingGroup.addEventListener("chip-change", syncGuestCount);
-    syncGuestCount();
-  }
+  var householdRowsEl = document.querySelector("[data-household-rows]");
+  var manualRowsEl = document.querySelector("[data-manual-rows]");
+  var addGuestBtn = document.querySelector("[data-add-guest]");
+  var MAX_ADDITIONAL_GUESTS = 9;
+
+  var DIETARY_OPTIONS = ["Vegetarian", "Vegan", "Kosher"];
 
   // ── Entrée selection (per person, based on their dietary choice) ──
   // Vegetarian/Vegan guests don't pick from this list — the caterer
@@ -182,24 +181,47 @@
     { value: "Kids Menu", desc: "" },
   ];
   var entreeGroupCounter = 0;
+  var partyRowCounter = 0;
 
-  function isAttendingYes() {
-    if (!attendingGroup) return false;
-    var yes = attendingGroup.querySelector('[data-value="yes"]');
+  function isRowAttendingYes(row) {
+    var chips = row.querySelector('[data-role="attending-chips"]');
+    var yes = chips ? chips.querySelector('[data-value="yes"]') : null;
     return !!(yes && yes.getAttribute("aria-pressed") === "true");
   }
 
-  function renderEntreeOptions(block) {
-    var dietaryChips = block.querySelector(".chip-group");
-    var picker = block.querySelector("[data-entree-picker]");
-    var optionsEl = block.querySelector("[data-entree-options]");
-    if (!dietaryChips || !picker || !optionsEl) return;
+  function anyRowAttendingYes() {
+    var isYes = false;
+    document.querySelectorAll(".party-member").forEach(function (row) {
+      if (isRowAttendingYes(row)) isYes = true;
+    });
+    return isYes;
+  }
 
-    if (!isAttendingYes()) {
+  function syncAttendingOnlyFields() {
+    if (attendingOnlyFields) attendingOnlyFields.hidden = !anyRowAttendingYes();
+  }
+
+  function syncAddGuestBtn() {
+    if (!manualRowsEl || !addGuestBtn) return;
+    addGuestBtn.disabled = manualRowsEl.children.length >= MAX_ADDITIONAL_GUESTS;
+  }
+
+  // Renders (or hides) the entrée picker for one party-member row, based
+  // on that row's own attending answer and dietary chips.
+  function renderEntreeOptions(row) {
+    var dietaryWrap = row.querySelector("[data-dietary-wrap]");
+    var dietaryChips = row.querySelector('[data-role="dietary-chips"]');
+    var picker = row.querySelector("[data-entree-picker]");
+    var optionsEl = row.querySelector("[data-entree-options]");
+    if (!dietaryWrap || !dietaryChips || !picker || !optionsEl) return;
+
+    if (!isRowAttendingYes(row)) {
+      dietaryWrap.hidden = true;
       picker.hidden = true;
       optionsEl.innerHTML = "";
       return;
     }
+    dietaryWrap.hidden = false;
 
     var isVeg = !!dietaryChips.querySelector(
       '[data-value="Vegetarian"][aria-pressed="true"], [data-value="Vegan"][aria-pressed="true"]'
@@ -213,10 +235,10 @@
     var isKosher = !!dietaryChips.querySelector('[data-value="Kosher"][aria-pressed="true"]');
     var options = isKosher ? ENTREE_KOSHER : ENTREE_REGULAR;
 
-    if (!block.getAttribute("data-entree-group-name")) {
-      block.setAttribute("data-entree-group-name", "entree-" + entreeGroupCounter++);
+    if (!row.getAttribute("data-entree-group-name")) {
+      row.setAttribute("data-entree-group-name", "entree-" + entreeGroupCounter++);
     }
-    var groupName = block.getAttribute("data-entree-group-name");
+    var groupName = row.getAttribute("data-entree-group-name");
 
     var previousChecked = optionsEl.querySelector("input:checked");
     var previousValue = previousChecked ? previousChecked.value : null;
@@ -253,34 +275,97 @@
     picker.hidden = false;
   }
 
-  var primaryDietaryBlock = document.querySelector("[data-dietary-primary]");
-  if (primaryDietaryBlock) {
-    var primaryDietaryChips = primaryDietaryBlock.querySelector(".chip-group");
-    if (primaryDietaryChips) {
-      primaryDietaryChips.addEventListener("chip-change", function () {
-        renderEntreeOptions(primaryDietaryBlock);
-      });
+  // Builds one party-member row. `editable` gives it a free-text name
+  // input (manually-added guests); otherwise the name is a fixed label
+  // (auto-populated household members). `removable` adds a remove
+  // button (manually-added guests only — household members can't be
+  // removed, since they come straight from the guest list).
+  function buildPartyRow(name, opts) {
+    opts = opts || {};
+    var rowId = "party-row-" + partyRowCounter++;
+
+    var row = document.createElement("div");
+    row.className = "party-member";
+
+    var header = document.createElement("div");
+    header.className = "party-member-header";
+
+    if (opts.editable) {
+      var nameInput = document.createElement("input");
+      nameInput.type = "text";
+      nameInput.className = "field";
+      nameInput.placeholder = "Guest name";
+      nameInput.setAttribute("data-member-name", "");
+      if (name) nameInput.value = name;
+      header.appendChild(nameInput);
+    } else {
+      var nameLabel = document.createElement("p");
+      nameLabel.className = "party-member-name";
+      nameLabel.setAttribute("data-member-name-display", "");
+      nameLabel.textContent = name;
+      header.appendChild(nameLabel);
     }
-    renderEntreeOptions(primaryDietaryBlock);
-  }
 
-  // ── Per-guest dietary blocks (paired 1:1, in order, with guest rows) ──
-  var DIETARY_OPTIONS = ["Vegetarian", "Vegan", "Kosher"];
-  var dietaryGuestList = document.querySelector("[data-dietary-guest-list]");
-  var dietaryGuestCounter = 0;
+    if (opts.removable) {
+      var removeBtn = document.createElement("button");
+      removeBtn.type = "button";
+      removeBtn.className = "remove-guest-btn";
+      removeBtn.setAttribute("aria-label", "Remove this guest");
+      removeBtn.innerHTML =
+        '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+      removeBtn.addEventListener("click", function () {
+        row.remove();
+        syncAddGuestBtn();
+        syncAttendingOnlyFields();
+      });
+      header.appendChild(removeBtn);
+    }
 
-  function buildDietaryBlock() {
-    var block = document.createElement("div");
-    block.className = "dietary-block";
+    row.appendChild(header);
 
-    var nameLabel = document.createElement("p");
-    nameLabel.className = "dietary-guest-name";
-    nameLabel.textContent = "Guest";
-    block.appendChild(nameLabel);
+    var attendingLabel = document.createElement("p");
+    attendingLabel.className = "field-label party-member-attending-label";
+    attendingLabel.textContent = "Will they be celebrating with us?";
+    row.appendChild(attendingLabel);
 
-    var chipGroup = document.createElement("div");
-    chipGroup.className = "chip-group";
-    chipGroup.setAttribute("data-chip-group", "dietary-guest-" + (dietaryGuestCounter++));
+    var attendingChips = document.createElement("div");
+    attendingChips.className = "chip-group";
+    attendingChips.setAttribute("data-chip-group", rowId + "-attending");
+    attendingChips.setAttribute("data-chip-mode", "single");
+    attendingChips.setAttribute("data-role", "attending-chips");
+    [
+      { value: "yes", label: "Yes, joyfully accepts" },
+      { value: "no", label: "No, regretfully declines" },
+    ].forEach(function (opt) {
+      var chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "chip";
+      chip.setAttribute("data-value", opt.value);
+      chip.setAttribute("aria-pressed", "false");
+      chip.textContent = opt.label;
+      attendingChips.appendChild(chip);
+    });
+    row.appendChild(attendingChips);
+    wireChipGroup(attendingChips);
+    attendingChips.addEventListener("chip-change", function () {
+      renderEntreeOptions(row);
+      syncAttendingOnlyFields();
+    });
+
+    var dietaryWrap = document.createElement("div");
+    dietaryWrap.setAttribute("data-dietary-wrap", "");
+    dietaryWrap.hidden = true;
+
+    var dietaryLabel = document.createElement("p");
+    dietaryLabel.className = "field-label";
+    dietaryLabel.style.marginTop = "0.9rem";
+    dietaryLabel.textContent = "Food restrictions";
+    dietaryWrap.appendChild(dietaryLabel);
+
+    var dietaryChips = document.createElement("div");
+    dietaryChips.className = "chip-group";
+    dietaryChips.setAttribute("data-chip-group", rowId + "-dietary");
+    dietaryChips.setAttribute("data-role", "dietary-chips");
     DIETARY_OPTIONS.forEach(function (value) {
       var chip = document.createElement("button");
       chip.type = "button";
@@ -288,10 +373,13 @@
       chip.setAttribute("data-value", value);
       chip.setAttribute("aria-pressed", "false");
       chip.textContent = value;
-      chipGroup.appendChild(chip);
+      dietaryChips.appendChild(chip);
     });
-    block.appendChild(chipGroup);
-    wireChipGroup(chipGroup);
+    dietaryWrap.appendChild(dietaryChips);
+    wireChipGroup(dietaryChips);
+    dietaryChips.addEventListener("chip-change", function () {
+      renderEntreeOptions(row);
+    });
 
     var otherInput = document.createElement("input");
     otherInput.className = "field";
@@ -299,7 +387,7 @@
     otherInput.type = "text";
     otherInput.setAttribute("data-dietary-other", "");
     otherInput.placeholder = "Anything else we should know?";
-    block.appendChild(otherInput);
+    dietaryWrap.appendChild(otherInput);
 
     var entreePicker = document.createElement("div");
     entreePicker.className = "entree-picker";
@@ -314,77 +402,31 @@
     entreeOptions.className = "entree-options";
     entreeOptions.setAttribute("data-entree-options", "");
     entreePicker.appendChild(entreeOptions);
-    block.appendChild(entreePicker);
+    dietaryWrap.appendChild(entreePicker);
 
-    chipGroup.addEventListener("chip-change", function () {
-      renderEntreeOptions(block);
+    row.appendChild(dietaryWrap);
+
+    return row;
+  }
+
+  function renderHouseholdRows(members) {
+    if (!householdRowsEl) return;
+    householdRowsEl.innerHTML = "";
+    members.forEach(function (name) {
+      householdRowsEl.appendChild(buildPartyRow(name, { editable: false, removable: false }));
     });
-    renderEntreeOptions(block);
-
-    return { block: block, nameLabel: nameLabel };
+    syncAttendingOnlyFields();
   }
 
-  function syncDietaryGuestNames() {
-    if (!guestList || !dietaryGuestList) return;
-    var names = guestList.querySelectorAll("[data-guest-name]");
-    var labels = dietaryGuestList.querySelectorAll(".dietary-guest-name");
-    for (var i = 0; i < labels.length; i++) {
-      var name = names[i] ? names[i].value.trim() : "";
-      labels[i].textContent = name || "Guest " + (i + 1);
-    }
-  }
-
-  // Entrée pickers only make sense once someone has said they're coming —
-  // re-check all of them (primary + every guest) whenever that answer
-  // changes, so flipping from "no" back to "yes" brings them back too.
-  if (attendingGroup) {
-    attendingGroup.addEventListener("chip-change", function () {
-      if (primaryDietaryBlock) renderEntreeOptions(primaryDietaryBlock);
-      if (dietaryGuestList) {
-        dietaryGuestList.querySelectorAll(".dietary-block").forEach(renderEntreeOptions);
-      }
+  if (manualRowsEl && addGuestBtn) {
+    addGuestBtn.addEventListener("click", function () {
+      if (manualRowsEl.children.length >= MAX_ADDITIONAL_GUESTS) return;
+      var row = buildPartyRow("", { editable: true, removable: true });
+      manualRowsEl.appendChild(row);
+      syncAddGuestBtn();
+      var nameInput = row.querySelector("[data-member-name]");
+      if (nameInput) nameInput.focus();
     });
-  }
-
-  var MAX_ADDITIONAL_GUESTS = 9; // party of 10 total, including the RSVP'ing guest
-  var guestList = document.querySelector("[data-guest-list]");
-  var addGuestBtn = document.querySelector("[data-add-guest]");
-  if (guestList && addGuestBtn) {
-    var addGuestRow = function () {
-      if (guestList.children.length >= MAX_ADDITIONAL_GUESTS) return;
-      var row = document.createElement("div");
-      row.className = "guest-row";
-
-      var input = document.createElement("input");
-      input.type = "text";
-      input.className = "field";
-      input.placeholder = "Guest name";
-      input.setAttribute("data-guest-name", "");
-
-      var dietary = buildDietaryBlock();
-
-      var removeBtn = document.createElement("button");
-      removeBtn.type = "button";
-      removeBtn.className = "remove-guest-btn";
-      removeBtn.setAttribute("aria-label", "Remove this guest");
-      removeBtn.innerHTML =
-        '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
-      removeBtn.addEventListener("click", function () {
-        row.remove();
-        dietary.block.remove();
-        addGuestBtn.disabled = guestList.children.length >= MAX_ADDITIONAL_GUESTS;
-        syncDietaryGuestNames();
-      });
-
-      row.appendChild(input);
-      row.appendChild(removeBtn);
-      guestList.appendChild(row);
-      if (dietaryGuestList) dietaryGuestList.appendChild(dietary.block);
-      addGuestBtn.disabled = guestList.children.length >= MAX_ADDITIONAL_GUESTS;
-      input.focus();
-      syncDietaryGuestNames();
-    };
-    addGuestBtn.addEventListener("click", addGuestRow);
   }
 
   var firstNameInput = document.getElementById("first_name");
@@ -394,13 +436,6 @@
     var last = lastNameInput ? lastNameInput.value.trim() : "";
     return (first + " " + last).trim();
   };
-  if (guestList) {
-    guestList.addEventListener("input", function (e) {
-      if (e.target && e.target.hasAttribute("data-guest-name")) {
-        syncDietaryGuestNames();
-      }
-    });
-  }
 
   // ── Live guest-list check: as soon as the guest finishes typing
   //    their name (on blur), confirm whether it's on the guest list —
@@ -408,29 +443,44 @@
   //    this is just earlier feedback so a mismatch doesn't surprise them
   //    at the very end of the form. A plus-one won't be individually
   //    named on the list, so on a mismatch we also offer a fallback
-  //    field for the name the invitation was actually addressed to. ──
+  //    field for the name the invitation was actually addressed to.
+  //    A match reveals that person's whole household below, each with
+  //    their own attending/food answer. ──
   var guestMatchHint = document.getElementById("guest-match-hint");
   var partyNameFallback = document.getElementById("party-name-fallback");
   var partyNameInput = document.getElementById("party_name");
   var partyMatchHint = document.getElementById("party-match-hint");
 
   var checkGuestMatch = function () {
-    if (!guestMatchHint || !window.WeddingGuestList) return;
     var name = getPrimaryName();
     if (!firstNameInput.value.trim() || !lastNameInput.value.trim()) {
-      guestMatchHint.textContent = "";
-      guestMatchHint.classList.remove("is-error");
+      if (guestMatchHint) {
+        guestMatchHint.textContent = "";
+        guestMatchHint.classList.remove("is-error");
+      }
       if (partyNameFallback) partyNameFallback.hidden = true;
+      renderHouseholdRows([]);
+      return;
+    }
+    if (!window.WeddingGuestList) {
+      renderHouseholdRows([name]);
       return;
     }
     if (window.WeddingGuestList.isInvitedGuest(name)) {
-      guestMatchHint.textContent = "You're on the guest list — welcome!";
-      guestMatchHint.classList.remove("is-error");
+      if (guestMatchHint) {
+        guestMatchHint.textContent = "You're on the guest list — welcome!";
+        guestMatchHint.classList.remove("is-error");
+      }
       if (partyNameFallback) partyNameFallback.hidden = true;
+      var household = window.WeddingGuestList.getHousehold(name) || [name];
+      renderHouseholdRows(household);
     } else {
-      guestMatchHint.textContent = "We couldn't find that name on our guest list. If you're joining as someone's plus-one, enter their name below — otherwise, double-check the spelling or reach out to Josh & Michal directly.";
-      guestMatchHint.classList.add("is-error");
+      if (guestMatchHint) {
+        guestMatchHint.textContent = "We couldn't find that name on our guest list. If you're joining as someone's plus-one, enter their name below — otherwise, double-check the spelling or reach out to Josh & Michal directly.";
+        guestMatchHint.classList.add("is-error");
+      }
       if (partyNameFallback) partyNameFallback.hidden = false;
+      renderHouseholdRows([name]);
     }
   };
   if (firstNameInput) firstNameInput.addEventListener("blur", checkGuestMatch);
@@ -461,22 +511,30 @@
     var successEl = document.getElementById("rsvp-success");
     var submitBtn = form.querySelector('button[type="submit"]');
 
-    function chipValue(groupSelector) {
-      var group = document.querySelector(groupSelector);
-      if (!group) return null;
-      var pressed = group.querySelector('.chip[aria-pressed="true"]');
-      return pressed ? pressed.getAttribute("data-value") : null;
+    // Reads every party-member row (household + manually-added) in
+    // document order, returning its name, its attending answer
+    // ("yes"/"no"/null if unanswered), and the row element itself (so
+    // dietary/entrée can be read from it for "yes" rows and the
+    // submit handler can focus it on a validation error).
+    function collectPartyRows() {
+      var rows = [];
+      document.querySelectorAll("[data-household-rows] .party-member, [data-manual-rows] .party-member").forEach(function (row) {
+        var nameEl = row.querySelector("[data-member-name]") || row.querySelector("[data-member-name-display]");
+        var name = nameEl ? (nameEl.value !== undefined ? nameEl.value.trim() : nameEl.textContent.trim()) : "";
+        var attendingChips = row.querySelector('[data-role="attending-chips"]');
+        var pressedChip = attendingChips ? attendingChips.querySelector('.chip[aria-pressed="true"]') : null;
+        rows.push({
+          name: name,
+          attending: pressedChip ? pressedChip.getAttribute("data-value") : null,
+          row: row,
+        });
+      });
+      return rows;
     }
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       errorEl.textContent = "";
-
-      var attending = chipValue('[data-chip-group="attending"]');
-      if (!attending) {
-        errorEl.textContent = "Please let us know if you'll be celebrating with us.";
-        return;
-      }
 
       var firstName = form.first_name.value.trim();
       var lastName = form.last_name.value.trim();
@@ -498,59 +556,56 @@
         }
       }
 
-      var additionalGuests = [];
-      if (attending === "yes" && guestList) {
-        var guestInputs = guestList.querySelectorAll("[data-guest-name]");
-        for (var gi = 0; gi < guestInputs.length; gi++) {
-          var guestName = guestInputs[gi].value.trim();
-          if (!guestName) {
-            errorEl.textContent = "Please enter a name for each guest you've added, or remove that row.";
-            guestInputs[gi].focus();
-            return;
-          }
-          additionalGuests.push(guestName);
+      var partyRows = collectPartyRows();
+      if (!partyRows.length) {
+        errorEl.textContent = "Please let us know if you'll be celebrating with us.";
+        return;
+      }
+      for (var pi = 0; pi < partyRows.length; pi++) {
+        if (!partyRows[pi].name) {
+          errorEl.textContent = "Please enter a name for each guest you've added, or remove that row.";
+          var nameInput = partyRows[pi].row.querySelector("[data-member-name]");
+          if (nameInput) nameInput.focus();
+          return;
+        }
+        if (!partyRows[pi].attending) {
+          errorEl.textContent = "Please let us know if " + partyRows[pi].name + " will be celebrating with us.";
+          partyRows[pi].row.scrollIntoView({ behavior: "smooth", block: "center" });
+          return;
         }
       }
 
-      var collectDietaryEntry = function (name, container) {
-        if (!container) return "";
+      var additionalGuests = partyRows
+        .filter(function (r) { return r.row.closest("[data-manual-rows]"); })
+        .map(function (r) { return r.name; });
+
+      var collectDietaryEntry = function (row, name) {
         var tags = Array.prototype.map.call(
-          container.querySelectorAll('.chip[aria-pressed="true"]'),
+          row.querySelectorAll('[data-role="dietary-chips"] .chip[aria-pressed="true"]'),
           function (c) { return c.getAttribute("data-value"); }
         );
-        var otherField = container.querySelector("[data-dietary-other]");
+        var otherField = row.querySelector("[data-dietary-other]");
         var other = otherField ? otherField.value.trim() : "";
         var parts = tags.concat(other ? [other] : []);
         return parts.length ? name + ": " + parts.join(", ") : "";
       };
-      var dietaryEntries = [
-        collectDietaryEntry(fullName || "You", document.querySelector("[data-dietary-primary]")),
-      ];
-      if (dietaryGuestList) {
-        var dietaryBlocks = dietaryGuestList.querySelectorAll(".dietary-block");
-        for (var di = 0; di < dietaryBlocks.length; di++) {
-          var guestName = dietaryBlocks[di].querySelector(".dietary-guest-name").textContent;
-          dietaryEntries.push(collectDietaryEntry(guestName, dietaryBlocks[di]));
-        }
-      }
-      var dietary = dietaryEntries.filter(Boolean).join("; ");
-
-      var collectEntreeEntry = function (name, container) {
-        if (!container) return "";
-        var checked = container.querySelector("[data-entree-radio]:checked");
+      var collectEntreeEntry = function (row, name) {
+        var checked = row.querySelector("[data-entree-radio]:checked");
         return checked ? name + ": " + checked.value : "";
       };
-      var entreeEntries = [
-        collectEntreeEntry(fullName || "You", document.querySelector("[data-dietary-primary]")),
-      ];
-      if (dietaryGuestList) {
-        var entreeBlocks = dietaryGuestList.querySelectorAll(".dietary-block");
-        for (var ei = 0; ei < entreeBlocks.length; ei++) {
-          var entreeGuestName = entreeBlocks[ei].querySelector(".dietary-guest-name").textContent;
-          entreeEntries.push(collectEntreeEntry(entreeGuestName, entreeBlocks[ei]));
-        }
-      }
-      var entreeSelections = entreeEntries.filter(Boolean).join("; ");
+
+      var attendingYesRows = partyRows.filter(function (r) { return r.attending === "yes"; });
+      var attendingSummary = partyRows
+        .map(function (r) { return r.name + ": " + (r.attending === "yes" ? "Yes" : "No"); })
+        .join("; ");
+      var dietary = attendingYesRows
+        .map(function (r) { return collectDietaryEntry(r.row, r.name); })
+        .filter(Boolean)
+        .join("; ");
+      var entreeSelections = attendingYesRows
+        .map(function (r) { return collectEntreeEntry(r.row, r.name); })
+        .filter(Boolean)
+        .join("; ");
 
       var formData = new FormData();
       formData.append("access_key", "42ac7e80-b40c-4245-a4e9-9adc3b9233c7");
@@ -561,8 +616,9 @@
       formData.append("joining_as_plus_one_of", partyName || "N/A");
       formData.append("email", email);
       formData.append("phone", form.phone.value.trim());
-      formData.append("attending", attending === "yes" ? "Yes, joyfully accepts" : "No, regretfully declines");
-      formData.append("guest_count", attending === "yes" ? String(1 + additionalGuests.length) : "1");
+      formData.append("attending", attendingYesRows.length ? "Yes, joyfully accepts" : "No, regretfully declines");
+      formData.append("guest_count", String(attendingYesRows.length));
+      formData.append("attending_summary", attendingSummary || "None");
       formData.append("additional_guests", additionalGuests.join(", ") || "None");
       formData.append("dietary_restrictions", dietary || "None specified");
       formData.append("entree_selections", entreeSelections || "Not selected");

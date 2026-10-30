@@ -38,7 +38,7 @@
     href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,600&family=Cormorant+Garamond:ital,wght@0,500;1,500&family=Montserrat:wght@400;500;600;700&family=Heebo:wght@400;500;700&display=swap"
     rel="stylesheet"
   />
-  <link rel="stylesheet" href="css/styles.css?v=31" />
+  <link rel="stylesheet" href="css/styles.css?v=32" />
   <!-- The opening reveal needs JS to dismiss itself — without it, don't
        let it block the page. -->
   <noscript><style>.intro { display: none !important; }</style></noscript>
@@ -520,45 +520,18 @@
           </div>
         </div>
 
-        <fieldset>
-          <legend class="field-label">Will you be celebrating with us? *</legend>
-          <div class="chip-group" data-chip-group="attending" data-chip-mode="single">
-            <button type="button" class="chip" data-value="yes" aria-pressed="false">Yes, joyfully accepts</button>
-            <button type="button" class="chip" data-value="no" aria-pressed="false">No, regretfully declines</button>
-          </div>
-        </fieldset>
+        <div data-party-panel>
+          <label class="field-label">Your party *</label>
+          <p class="field-hint">Once we recognize your name, your whole household will show up below — just answer for each person. You can still add anyone else joining you.</p>
+          <div class="guest-list" data-household-rows></div>
+          <div class="guest-list" data-manual-rows></div>
+          <button type="button" class="add-guest-btn" data-add-guest>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Add a guest
+          </button>
+        </div>
 
         <div data-attending-only-fields hidden>
-          <div data-guest-count-wrap hidden>
-            <label class="field-label">Is anyone joining you?</label>
-            <p class="field-hint">Add anyone else in your party — we just need their name.</p>
-            <div class="guest-list" data-guest-list></div>
-            <button type="button" class="add-guest-btn" data-add-guest>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-              Add a guest
-            </button>
-          </div>
-
-          <fieldset>
-            <legend class="field-label">Food restrictions</legend>
-            <p class="field-hint">Let us know for you and anyone joining you.</p>
-
-            <div class="dietary-block" data-dietary-primary>
-              <div class="chip-group" data-chip-group="dietary-you">
-                <button type="button" class="chip" data-value="Vegetarian" aria-pressed="false">Vegetarian</button>
-                <button type="button" class="chip" data-value="Vegan" aria-pressed="false">Vegan</button>
-                <button type="button" class="chip" data-value="Kosher" aria-pressed="false">Kosher</button>
-              </div>
-              <input class="field" style="margin-top:0.75rem;" data-dietary-other type="text" placeholder="Anything else we should know?" />
-              <div class="entree-picker" data-entree-picker hidden>
-                <p class="field-label" style="margin-top:0.9rem;">Entr&eacute;e selection</p>
-                <div class="entree-options" data-entree-options></div>
-              </div>
-            </div>
-
-            <div data-dietary-guest-list></div>
-          </fieldset>
-
           <div>
             <label class="field-label" for="song_request">Song request (optional)</label>
             <p class="field-hint field-hint-fun">Guaranteed to get us on the dance floor &mdash; we&rsquo;re taking requests.</p>
@@ -609,7 +582,7 @@
 
   <script>window.DOVES_CONFIG = { ambient: false };</script>
   <script src="js/doves.js?v=1" defer></script>
-  <script src="js/guest-list.js?v=7"></script>
-  <script src="js/main.js?v=32"></script>
+  <script src="js/guest-list.js?v=8"></script>
+  <script src="js/main.js?v=33"></script>
 </body>
 </html>

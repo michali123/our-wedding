@@ -1,45 +1,120 @@
-// Wedding guest list — keeps the RSVP form restricted to invited guests.
-// Generated from the family guest-list spreadsheet (names normalized to
-// lowercase, letters/numbers/spaces only). Re-generate this list by hand
-// whenever the spreadsheet changes — it's a static snapshot, not a live
-// fetch, so there's nothing to keep in sync automatically.
+// Wedding guest list — keeps the RSVP form restricted to invited guests,
+// and groups them into households/parties so that recognizing one person
+// reveals their whole party. Generated from the family guest-list
+// spreadsheet. Re-generate this list by hand whenever the spreadsheet
+// changes — it's a static snapshot, not a live fetch.
 (function () {
-  var GUESTS = [
-    "adela mamroud", "adi shitrit", "alexa edelman", "allee chiapetta", "alon dolev",
-    "amit mamroud", "anita pursell", "anna kleinstchen", "avi mamroud", "barry edelman",
-    "becky mamroud", "benjy winkler", "beth weissman", "boman turovac", "brandon pursell",
-    "brett bacho", "brian murphy", "catherine schur", "charlotte gerhardt",
-    "chaya mushka", "chen batach", "chen dolev", "chloe turovac", "cindy purcel",
-    "colleen riccio", "cynthia fernandez", "dalia barness", "dan gerhardt",
-    "daniela hamer", "david weissman", "debbie ziugzda", "donna fleischer", "dorin fatal",
-    "eitan bohbot", "elazzar brandes", "eli malkin", "elior suissa", "eliran yihye",
-    "elise buck", "eliz dolev", "ester moryosef", "eti moryosef", "evie weissman",
-    "gabby ziugzda", "gal zmora", "ganit ohana", "george ziugzda", "hadar moryosef",
-    "haim solomon", "hannah bohbot", "harry", "ido ober", "imri shifman",
-    "isabella vaittinen", "jb gerhardt", "jeffrey mamroud", "jessica gerhardt",
-    "joe chiapetta", "jonah mamroud", "jordan mamroud", "josh edelman", "josh mamroud",
-    "karlee owsiak", "kelly amits mom", "kelly greytsman", "kevin maczuga",
-    "kristen hernandez", "laurianne teboul", "laury hamilton", "liron fatal",
-    "lotte bacho", "luca vaittinen", "luke bacho", "madelana pursell", "madison buck",
-    "mara mamroud", "margaliet themansloss", "matt bourn", "matthew sprung",
-    "maureen kiley", "michal mamroud", "miguel pierra", "mike purcel", "mike riccio",
-    "mohamad", "mor cohen", "moran moryosef", "nadav davidson", "nathan weissman",
-    "nick ziugzda", "niklas vaittinen", "noah luvyud", "nofar moryosef", "olivia bacho",
-    "ori gottesmann", "ortal", "oshrit moryosef", "polanco", "rachel bohbot",
-    "rachel turovac", "rena mamroud", "renate sprung", "reut", "richie hernandez",
-    "robert schur", "robin bohbot", "robin schneck", "ron gur", "ron sapir",
-    "rotem ashury", "roy azulay", "ruthie edelman", "ruty fatal", "ryan turovac",
-    "sam bohbot", "samantha maczuga", "sapir", "sharon byfield", "sherri martin",
-    "shifra schwartz", "shimon moryosef", "shiran moryosef", "shoshi moryosef",
-    "sima mamroud", "sophie mamroud", "tal dadon", "teddy schur", "tristan buck",
-    "tzvika zisk", "vald gratsman", "yael shemesh", "yehoshua moryosef", "yossi dolev",
-    "yrin yardeni", "zack greytsman", "zoe maczuga"
+  // Each entry is one household/party as it appears on the spreadsheet —
+  // the group of names that should all show up together once any one of
+  // them is recognized.
+  var HOUSEHOLDS = [
+    ["Adi Shitrit"],
+    ["Alexa Edelman"],
+    ["Alon Dolev"],
+    ["Amit Mamroud", "Mara Mamroud", "Jonah Mamroud", "Sophie Mamroud"],
+    ["Anita Pursell", "Brandon Pursell", "Madelaina Pursell"],
+    ["Anna Kleinstchen"],
+    ["Avi Mamroud", "Becky Mamroud"],
+    ["Barry Edelman", "Ruthie Edelman"],
+    ["Benjy Winkler"],
+    ["Brett Bacho", "Lotte Bacho"],
+    ["Brian Murphy"],
+    ["Chaya Mushka"],
+    ["Chen Batach"],
+    ["Chen Dolev"],
+    ["Dalia Barness"],
+    ["Dan Gerhardt", "Jessica Gerhardt", "JB Gerhardt", "Charlotte Gerhardt"],
+    ["Daniela Hamer"],
+    ["David Weissman", "Beth Weissman", "Nathan Weissman", "Evie Weissman"],
+    ["Donna Fleischer"],
+    ["Dorin Fatal"],
+    ["Eitan Bohbot"],
+    ["Elazzar Brandes"],
+    ["Eli Malkin", "Cynthia Fernandez"],
+    ["Elior Suissa"],
+    ["Eliran Yihye"],
+    ["Elise Buck"],
+    ["Eliz Dolev"],
+    ["Ester Moryosef"],
+    ["Gal Zmora"],
+    ["Ganit Ohana"],
+    ["George Ziugzda", "Debbie Ziugzda"],
+    ["Hadar Moryosef"],
+    ["Haim Solomon"],
+    ["Hannah Bohbot"],
+    ["Harry"],
+    ["Ido Ober"],
+    ["Imri Shifman"],
+    ["Jeffrey Mamroud"],
+    ["Joe Chiapetta", "Allee Chiapetta"],
+    ["Jordan Mamroud"],
+    ["Josh Edelman"],
+    ["Josh Mamroud", "Michal Mamroud"],
+    ["Karlee Owsiak", "Miguel Pierra"],
+    ["Kelly Escuine-Mamroud"],
+    ["Kevin Maczuga", "Zoe Maczuga"],
+    ["Laurianne Teboul"],
+    ["Laury Hamilton"],
+    ["Liron Fatal"],
+    ["Luke Bacho"],
+    ["Margaliet Themans-loss"],
+    ["Matt Bourn"],
+    ["Maureen Kiley"],
+    ["Mike Purcel", "Cindy Purcel"],
+    ["Mike Riccio", "Colleen Riccio"],
+    ["Mohamad"],
+    ["Mor Cohen"],
+    ["Moran Moryosef"],
+    ["Nadav Davidson"],
+    ["Nick Ziugzda", "Gabby Ziugzda"],
+    ["Niklas Vaittinen", "Isabella Vaittinen", "Luca Vaittinen"],
+    ["Noah Luvyud"],
+    ["Nofar Moryosef"],
+    ["Olivia Bacho"],
+    ["Ori Gottesmann"],
+    ["Ortal"],
+    ["Oshrit Moryosef"],
+    ["Polanco"],
+    ["Rachel Bohbot"],
+    ["Rena Mamroud", "Adela Mamroud"],
+    ["Renate Sprung", "Matthew Sprung"],
+    ["Reut"],
+    ["Richie Hernandez", "Kristen Hernandez"],
+    ["Robert Schur", "Catherine Schur"],
+    ["Robin Bohbot"],
+    ["Robin Schneck"],
+    ["Ron Gur"],
+    ["Ron Sapir"],
+    ["Rotem Ashury"],
+    ["Roy Azulay"],
+    ["Ruty Fatal"],
+    ["Ryan Turovac", "Rachel Turovac", "Boman Turovac", "Chloe Turovac"],
+    ["Sam Bohbot"],
+    ["Samantha Maczuga"],
+    ["Sapir"],
+    ["Sharon Byfield"],
+    ["Sherri Martin"],
+    ["Shifra Schwartz"],
+    ["Shimon Moryosef"],
+    ["Shiran Moryosef"],
+    ["Shoshi Moryosef"],
+    ["Sima Mamroud"],
+    ["Tal Dadon"],
+    ["Teddy Schur"],
+    ["Tristan Buck", "Madison Buck"],
+    ["Tzvika Zisk"],
+    ["Vald Gratsman"],
+    ["Yael Shemesh", "Nir Shemesh"],
+    ["Yehoshua Moryosef", "Eti Moryosef"],
+    ["Yossi Dolev"],
+    ["Yrin Yardeni"],
+    ["Zack Greytsman", "Kelly Greytsman"],
   ];
 
   // First names that match regardless of whatever last name is typed —
   // either because no last name is on file for them, or (margaliet) the
   // last name on file is unusual/hard to spell and shouldn't block her.
-  var FIRST_NAME_ONLY = ["harry", "mohamad", "ortal", "polanco", "reut", "sapir", "margaliet"];
+  var FIRST_NAME_ONLY = ["harry", "margaliet", "mohamad", "ortal", "polanco", "reut", "sapir"];
 
   function normalize(s) {
     return (s || "")
@@ -49,19 +124,31 @@
       .trim();
   }
 
+  var memberToHousehold = {};
+  var tokenSetToHousehold = {};
+  var firstNameToHousehold = {};
   var guestSet = {};
-  var tokenSetByName = {};
-  GUESTS.forEach(function (name) {
-    guestSet[name] = true;
-    tokenSetByName[name] = name.split(" ").sort().join(" ");
+
+  HOUSEHOLDS.forEach(function (household) {
+    household.forEach(function (fullName) {
+      var norm = normalize(fullName);
+      guestSet[norm] = true;
+      memberToHousehold[norm] = household;
+      var tokenSet = norm.split(" ").sort().join(" ");
+      tokenSetToHousehold[tokenSet] = household;
+    });
   });
-  var tokenSets = {};
-  Object.keys(tokenSetByName).forEach(function (name) {
-    tokenSets[tokenSetByName[name]] = true;
-  });
-  var firstNameOnlySet = {};
-  FIRST_NAME_ONLY.forEach(function (name) {
-    firstNameOnlySet[name] = true;
+  FIRST_NAME_ONLY.forEach(function (firstName) {
+    // Find the household this first name actually belongs to (its own
+    // solo entry, if any) so lookups return real party data instead of
+    // a placeholder.
+    var household = null;
+    HOUSEHOLDS.forEach(function (h) {
+      h.forEach(function (fullName) {
+        if (normalize(fullName).split(" ")[0] === firstName) household = h;
+      });
+    });
+    firstNameToHousehold[firstName] = household || [firstName];
   });
 
   // Returns true if the given full name matches an invited guest — exact
@@ -74,13 +161,28 @@
     if (!normalized) return false;
     if (guestSet[normalized]) return true;
     var tokenSet = normalized.split(" ").sort().join(" ");
-    if (tokenSets[tokenSet]) return true;
+    if (tokenSetToHousehold[tokenSet]) return true;
     var firstName = normalized.split(" ")[0];
-    return !!firstNameOnlySet[firstName];
+    return !!firstNameToHousehold[firstName];
+  }
+
+  // Returns the full household/party (array of display names) that the
+  // given name belongs to, or null if the name isn't recognized. Same
+  // matching order as isInvitedGuest.
+  function getHousehold(rawName) {
+    var normalized = normalize(rawName);
+    if (!normalized) return null;
+    if (memberToHousehold[normalized]) return memberToHousehold[normalized];
+    var tokenSet = normalized.split(" ").sort().join(" ");
+    if (tokenSetToHousehold[tokenSet]) return tokenSetToHousehold[tokenSet];
+    var firstName = normalized.split(" ")[0];
+    if (firstNameToHousehold[firstName]) return firstNameToHousehold[firstName];
+    return null;
   }
 
   window.WeddingGuestList = {
     normalize: normalize,
     isInvitedGuest: isInvitedGuest,
+    getHousehold: getHousehold,
   };
 })();

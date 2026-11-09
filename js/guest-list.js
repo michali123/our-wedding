@@ -72,7 +72,7 @@
     ["Nofar Moryosef"],
     ["Olivia Bacho"],
     ["Ori Gottesmann"],
-    ["Ortal"],
+    ["Ortal Mos"],
     ["Oshrit Moryosef"],
     ["Polanco"],
     ["Rachel Bohbot"],
@@ -83,15 +83,14 @@
     ["Robert Schur", "Catherine Schur"],
     ["Robin Bohbot"],
     ["Robin Schneck"],
-    ["Ron Gur"],
-    ["Ron Sapir"],
+    ["Ron Gur", "Sasha Gur"],
     ["Rotem Ashury"],
     ["Roy Azulay"],
     ["Ruty Fatal"],
     ["Ryan Turovac", "Rachel Turovac", "Boman Turovac", "Chloe Turovac"],
     ["Sam Bohbot"],
     ["Samantha Maczuga"],
-    ["Sapir"],
+    ["Sapir Daniel", "Avishai Daniel"],
     ["Sharon Byfield"],
     ["Sherri Martin"],
     ["Shifra Schwartz"],
@@ -114,7 +113,7 @@
   // First names that match regardless of whatever last name is typed —
   // either because no last name is on file for them, or (margaliet) the
   // last name on file is unusual/hard to spell and shouldn't block her.
-  var FIRST_NAME_ONLY = ["harry", "margaliet", "mohamad", "ortal", "polanco", "reut", "sapir"];
+  var FIRST_NAME_ONLY = ["harry", "margaliet", "mohamad", "polanco", "reut"];
 
   function normalize(s) {
     return (s || "")

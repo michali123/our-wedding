@@ -26,11 +26,14 @@
     ["Dan Gerhardt", "Jessica Gerhardt", "JB Gerhardt", "Charlotte Gerhardt"],
     ["Daniela Hamer"],
     ["David Weissman", "Beth Weissman", "Nathan Weissman", "Evie Weissman"],
+    ["Debbie Klugman", "Israel Klugman"],
     ["Donna Fleischer"],
     ["Dorin Fatal"],
+    ["Doron Rainer"],
     ["Eitan Bohbot"],
     ["Elazzar Brandes"],
     ["Eli Malkin", "Cynthia Fernandez"],
+    ["Elias"],
     ["Elior Suissa"],
     ["Eliran Yihye"],
     ["Elise Buck"],
@@ -55,6 +58,7 @@
     ["Kevin Maczuga", "Zoe Maczuga"],
     ["Laurianne Teboul"],
     ["Laury Hamilton"],
+    ["Liam Krausz"],
     ["Liron Fatal"],
     ["Luke Bacho"],
     ["Margaliet Themans-loss"],
@@ -113,7 +117,7 @@
   // First names that match regardless of whatever last name is typed —
   // either because no last name is on file for them, or (margaliet) the
   // last name on file is unusual/hard to spell and shouldn't block her.
-  var FIRST_NAME_ONLY = ["harry", "margaliet", "mohamad", "polanco", "reut"];
+  var FIRST_NAME_ONLY = ["elias", "harry", "margaliet", "mohamad", "polanco", "reut"];
 
   function normalize(s) {
     return (s || "")

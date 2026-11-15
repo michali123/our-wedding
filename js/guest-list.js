@@ -26,7 +26,7 @@
     ["Dan Gerhardt", "Jessica Gerhardt", "JB Gerhardt", "Charlotte Gerhardt"],
     ["Daniela Hamer"],
     ["David Weissman", "Beth Weissman", "Nathan Weissman", "Evie Weissman"],
-    ["Debbie Klugman", "Israel Klugman"],
+    ["Debi Klugman", "Israel Klugman"],
     ["Donna Fleischer"],
     ["Dorin Fatal"],
     ["Doron Rainer"],

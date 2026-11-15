@@ -82,7 +82,7 @@
     ["Rachel Bohbot"],
     ["Rena Mamroud", "Adela Mamroud"],
     ["Renate Sprung", "Matthew Sprung"],
-    ["Reut"],
+    ["Reut Tsizer"],
     ["Richie Hernandez", "Kristen Hernandez"],
     ["Robert Schur", "Catherine Schur"],
     ["Robin Bohbot"],
@@ -117,7 +117,7 @@
   // First names that match regardless of whatever last name is typed —
   // either because no last name is on file for them, or (margaliet) the
   // last name on file is unusual/hard to spell and shouldn't block her.
-  var FIRST_NAME_ONLY = ["elias", "harry", "margaliet", "mohamad", "polanco", "reut"];
+  var FIRST_NAME_ONLY = ["elias", "harry", "margaliet", "mohamad", "polanco"];
 
   function normalize(s) {
     return (s || "")

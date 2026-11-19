@@ -56,7 +56,7 @@
     ["Karlee Owsiak", "Miguel Pierra"],
     ["Kelly Escuine-Mamroud"],
     ["Kevin Maczuga", "Zoe Maczuga"],
-    ["Laurianne Teboul"],
+    ["Laurianne Teboul", "Rafael Teboul"],
     ["Laury Hamilton"],
     ["Liam Krausz"],
     ["Liron Fatal"],
@@ -119,12 +119,19 @@
   // last name on file is unusual/hard to spell and shouldn't block her.
   var FIRST_NAME_ONLY = ["elias", "harry", "margaliet", "mohamad", "polanco"];
 
+  // Common alternate spellings guests type, mapped to the spelling on
+  // the list (e.g. "Lauriane" with one n still finds Laurianne).
+  var SPELLING_ALIASES = { lauriane: "laurianne" };
+
   function normalize(s) {
     return (s || "")
       .toLowerCase()
       .replace(/[^a-z0-9 ]/g, "")
       .replace(/\s+/g, " ")
-      .trim();
+      .trim()
+      .split(" ")
+      .map(function (w) { return SPELLING_ALIASES[w] || w; })
+      .join(" ");
   }
 
   var memberToHousehold = {};
